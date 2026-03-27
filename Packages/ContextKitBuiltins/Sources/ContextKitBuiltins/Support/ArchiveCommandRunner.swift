@@ -34,7 +34,7 @@ enum ArchiveError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case let .failed(message):
-            return message.isEmpty ? "Archive command failed." : message
+            return message.isEmpty ? L10n.string("builtin.archive.commandFailed", fallback: "Archive command failed.") : message
         }
     }
 }

@@ -6,20 +6,20 @@ struct WorkflowEditorView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            TextField("Workflow name", text: $viewModel.draft.name)
+            TextField(L10n.string("app.workflows.editor.namePlaceholder", fallback: "Workflow name"), text: $viewModel.draft.name)
                 .textFieldStyle(.roundedBorder)
 
             ForEach($viewModel.draft.steps) { $step in
                 HStack {
-                    Picker("Action", selection: $step.actionID) {
+                    Picker(L10n.string("app.workflows.editor.action", fallback: "Action"), selection: $step.actionID) {
                         ForEach(viewModel.availableActions, id: \.id) { action in
                             Text(action.name).tag(action.id)
                         }
                     }
 
-                    Picker("Input", selection: $step.input) {
+                    Picker(L10n.string("app.workflows.editor.input", fallback: "Input"), selection: $step.input) {
                         ForEach(WorkflowStepInput.allCases, id: \.self) { input in
-                            Text(input.rawValue).tag(input)
+                            Text(input.displayName).tag(input)
                         }
                     }
 
@@ -32,9 +32,9 @@ struct WorkflowEditorView: View {
             }
 
             HStack {
-                Button("Add Step", action: viewModel.addStep)
+                Button(L10n.string("app.workflows.editor.addStep", fallback: "Add Step"), action: viewModel.addStep)
                 Spacer()
-                Button("Save", action: viewModel.saveDraft)
+                Button(L10n.string("app.workflows.editor.save", fallback: "Save"), action: viewModel.saveDraft)
                     .keyboardShortcut(.defaultAction)
             }
         }

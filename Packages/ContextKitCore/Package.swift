@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "ContextKitCore",
+    defaultLocalization: "en",
     platforms: [
         .macOS(.v15),
     ],
@@ -21,6 +22,9 @@ let package = Package(
             name: "ContextKitCore",
             dependencies: [
                 .product(name: "ContextKitPluginSDK", package: "ContextKitPluginSDK"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
         .testTarget(

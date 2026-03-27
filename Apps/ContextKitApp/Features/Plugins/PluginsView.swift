@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct PluginsView: View {
@@ -6,12 +7,12 @@ struct PluginsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Install")
+                Text(L10n.string("app.plugins.install", fallback: "Install"))
                     .font(.title3.weight(.semibold))
                 HStack {
-                    Button("Import Local Plugin", action: viewModel.installLocalPlugin)
-                    TextField("https://github.com/example/plugin.git", text: $viewModel.gitRepositoryURL)
-                    Button("Install from Git", action: viewModel.installGitPlugin)
+                    Button(L10n.string("app.plugins.importLocal", fallback: "Import Local Plugin"), action: viewModel.installLocalPlugin)
+                    TextField(L10n.string("app.plugins.gitPlaceholder", fallback: "https://github.com/example/plugin.git"), text: $viewModel.gitRepositoryURL)
+                    Button(L10n.string("app.plugins.installFromGit", fallback: "Install from Git"), action: viewModel.installGitPlugin)
                 }
             }
 
@@ -26,7 +27,11 @@ struct PluginsView: View {
                         Text(plugin.package.manifest.name)
                             .font(.headline)
                         Spacer()
-                        Text(plugin.isTrusted ? "Trusted" : "Needs Trust")
+                        Text(
+                            plugin.isTrusted
+                                ? L10n.string("app.plugins.trusted", fallback: "Trusted")
+                                : L10n.string("app.plugins.needsTrust", fallback: "Needs Trust")
+                        )
                             .font(.caption.weight(.medium))
                             .padding(.horizontal, 8)
                             .padding(.vertical, 4)
@@ -43,11 +48,11 @@ struct PluginsView: View {
 
                     HStack {
                         if !plugin.isTrusted {
-                            Button("Trust") {
+                            Button(L10n.string("app.plugins.trust", fallback: "Trust")) {
                                 viewModel.trust(plugin)
                             }
                         }
-                        Button("Remove", role: .destructive) {
+                        Button(L10n.string("app.plugins.remove", fallback: "Remove"), role: .destructive) {
                             viewModel.remove(plugin)
                         }
                     }
@@ -62,7 +67,7 @@ struct PluginsView: View {
             }
         }
         .padding(24)
-        .navigationTitle("Plugins")
+        .navigationTitle(L10n.string("app.plugins.navigation", fallback: "Plugins"))
         .onAppear(perform: viewModel.reload)
     }
 }

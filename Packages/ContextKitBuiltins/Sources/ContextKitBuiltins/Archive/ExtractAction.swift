@@ -8,7 +8,7 @@ struct ExtractAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.extract",
-                name: "解压",
+                name: L10n.string("builtin.extract.name", fallback: "Extract"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(
@@ -21,7 +21,10 @@ struct ExtractAction {
             )
         ) { context in
             guard let archiveURL = context.request.selectedURLs.first else {
-                return ExecutionResult(status: .skipped, message: "Nothing selected.")
+                return ExecutionResult(
+                    status: .skipped,
+                    message: L10n.string("builtin.extract.nothingSelected", fallback: "Nothing selected.")
+                )
             }
 
             let outputDirectoryURL = archiveURL.deletingLastPathComponent().appending(path: archiveURL.deletingPathExtension().lastPathComponent, directoryHint: .isDirectory)
@@ -30,7 +33,7 @@ struct ExtractAction {
 
             return ExecutionResult(
                 status: .success,
-                message: "Archive extracted.",
+                message: L10n.string("builtin.extract.extracted", fallback: "Archive extracted."),
                 producedURLs: [outputDirectoryURL]
             )
         }

@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct OverviewView: View {
@@ -9,17 +10,23 @@ struct OverviewView: View {
                 Text("ContextKit")
                     .font(.largeTitle.weight(.bold))
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 180), spacing: 16)], spacing: 16) {
-                    InfoChip(title: "Actions", value: "\(viewModel.actionCount)")
-                    InfoChip(title: "Plugins", value: "\(viewModel.pluginCount)")
-                    InfoChip(title: "Workflows", value: "\(viewModel.workflowCount)")
-                    InfoChip(title: "Monitored Roots", value: "\(viewModel.monitoredRootCount)")
+                    InfoChip(title: L10n.string("app.overview.actions", fallback: "Actions"), value: "\(viewModel.actionCount)")
+                    InfoChip(title: L10n.string("app.overview.plugins", fallback: "Plugins"), value: "\(viewModel.pluginCount)")
+                    InfoChip(title: L10n.string("app.overview.workflows", fallback: "Workflows"), value: "\(viewModel.workflowCount)")
+                    InfoChip(title: L10n.string("app.overview.monitoredRoots", fallback: "Monitored Roots"), value: "\(viewModel.monitoredRootCount)")
                 }
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("Recent Activity")
+                    Text(L10n.string("app.overview.recentActivity", fallback: "Recent Activity"))
                         .font(.title3.weight(.semibold))
                     if viewModel.recentLogs.isEmpty {
-                        EmptyStateView(title: "No activity yet", message: "Run an action from the app, CLI, or Finder extension and recent results will appear here.")
+                        EmptyStateView(
+                            title: L10n.string("app.overview.emptyTitle", fallback: "No activity yet"),
+                            message: L10n.string(
+                                "app.overview.emptyMessage",
+                                fallback: "Run an action from the app, CLI, or Finder extension and recent results will appear here."
+                            )
+                        )
                             .frame(height: 220)
                     } else {
                         ForEach(viewModel.recentLogs) { entry in
@@ -46,7 +53,7 @@ struct OverviewView: View {
             }
             .padding(28)
         }
-        .navigationTitle("Overview")
+        .navigationTitle(L10n.string("app.overview.navigation", fallback: "Overview"))
         .onAppear(perform: viewModel.reload)
     }
 }

@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct ActionsView: View {
@@ -5,7 +6,12 @@ struct ActionsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Finder menus, app invocations, and CLI all reuse this ordered action catalog.")
+            Text(
+                L10n.string(
+                    "app.actions.description",
+                    fallback: "Finder menus, app invocations, and CLI all reuse this ordered action catalog."
+                )
+            )
                 .foregroundStyle(.secondary)
 
             List {
@@ -13,7 +19,7 @@ struct ActionsView: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(item.manifest.name)
-                            Text("\(item.manifest.category.displayName) · \(item.manifest.kind.rawValue)")
+                            Text("\(item.manifest.category.displayName) · \(item.manifest.kind.displayName)")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -50,7 +56,7 @@ struct ActionsView: View {
             }
         }
         .padding(24)
-        .navigationTitle("Actions")
+        .navigationTitle(L10n.string("app.actions.navigation", fallback: "Actions"))
         .onAppear(perform: viewModel.reload)
     }
 }

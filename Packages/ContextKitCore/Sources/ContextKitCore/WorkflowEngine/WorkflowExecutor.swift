@@ -52,14 +52,22 @@ public final class WorkflowExecutor: Sendable {
                 }
 
                 aggregatedLogs.append(
-                    ExecutionLogLine(level: "warning", message: "Step \(step.actionID) failed: \(error.localizedDescription)")
+                    ExecutionLogLine(
+                        level: "warning",
+                        message: L10n.string(
+                            "workflow.log.stepFailed",
+                            fallback: "Step %@ failed: %@",
+                            step.actionID,
+                            error.localizedDescription
+                        )
+                    )
                 )
             }
         }
 
         return ExecutionResult(
             status: previousResult?.status ?? .skipped,
-            message: previousResult?.message ?? "Workflow completed with no result.",
+            message: previousResult?.message ?? L10n.string("workflow.result.noResult", fallback: "Workflow completed with no result."),
             producedURLs: previousResult?.producedURLs ?? [],
             clipboardText: previousResult?.clipboardText,
             structuredPayload: previousResult?.structuredPayload ?? [:],

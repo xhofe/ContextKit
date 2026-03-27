@@ -19,13 +19,13 @@ struct MenuBuilder {
         target: AnyObject,
         action: Selector
     ) -> NSMenu {
-        let menu = NSMenu(title: "ContextKit")
+        let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
         let matchingDescriptors = descriptors
             .filter(\.isEnabled)
             .filter { $0.contextRules.matches(snapshot: selection.snapshot) }
 
         guard !matchingDescriptors.isEmpty else {
-            let item = NSMenuItem(title: "No matching actions", action: nil, keyEquivalent: "")
+            let item = NSMenuItem(title: L10n.string("finder.menu.noMatchingActions", fallback: "No matching actions"), action: nil, keyEquivalent: "")
             item.isEnabled = false
             menu.addItem(item)
             return menu

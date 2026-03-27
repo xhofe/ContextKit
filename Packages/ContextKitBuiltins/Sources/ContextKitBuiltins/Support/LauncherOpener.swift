@@ -30,7 +30,7 @@ enum OpenApplicationError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case let .failed(message):
-            return message.isEmpty ? "Failed to open application." : message
+            return message.isEmpty ? L10n.string("builtin.openApplication.failed", fallback: "Failed to open application.") : message
         }
     }
 }

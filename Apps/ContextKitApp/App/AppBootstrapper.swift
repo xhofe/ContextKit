@@ -27,7 +27,7 @@ struct AppBootstrapper {
             _ = try pluginRepository.install(
                 from: directory,
                 sourceKind: .bundled,
-                sourceDescription: "Bundled official plugin"
+                sourceDescription: L10n.string("app.bootstrapper.bundledPluginSource", fallback: "Bundled official plugin")
             )
             try pluginRepository.trust(pluginID: package.manifest.id)
         }

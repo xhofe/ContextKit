@@ -8,7 +8,7 @@ struct CompressAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.compress",
-                name: "压缩",
+                name: L10n.string("builtin.compress.name", fallback: "Compress"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -17,18 +17,21 @@ struct CompressAction {
             )
         ) { context in
             guard let firstURL = context.request.selectedURLs.first else {
-                return ExecutionResult(status: .skipped, message: "Nothing selected.")
+                return ExecutionResult(
+                    status: .skipped,
+                    message: L10n.string("builtin.compress.nothingSelected", fallback: "Nothing selected.")
+                )
             }
 
             let outputName = context.request.selectedURLs.count == 1
                 ? "\(firstURL.deletingPathExtension().lastPathComponent).zip"
-                : "ContextKit-Archive.zip"
+                : L10n.string("builtin.compress.defaultArchiveName", fallback: "ContextKit-Archive.zip")
             let outputURL = firstURL.deletingLastPathComponent().appending(path: outputName)
             try self.archiveRunner.zip(inputURLs: context.request.selectedURLs, outputURL: outputURL)
 
             return ExecutionResult(
                 status: .success,
-                message: "Archive created.",
+                message: L10n.string("builtin.compress.created", fallback: "Archive created."),
                 producedURLs: [outputURL]
             )
         }

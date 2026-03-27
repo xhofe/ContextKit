@@ -10,13 +10,13 @@ public enum ExecutionCoordinatorError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case let .unknownAction(identifier):
-            return "Unknown action: \(identifier)"
+            return L10n.string("core.error.unknownAction", fallback: "Unknown action: %@", identifier)
         case let .unknownWorkflow(identifier):
-            return "Unknown workflow: \(identifier)"
+            return L10n.string("core.error.unknownWorkflow", fallback: "Unknown workflow: %@", identifier)
         case let .untrustedPlugin(identifier):
-            return "Plugin \(identifier) requires explicit trust before it can run."
+            return L10n.string("core.error.untrustedPlugin", fallback: "Plugin %@ requires explicit trust before it can run.", identifier)
         case let .invalidPluginEntrypoint(identifier):
-            return "Plugin \(identifier) is missing a valid entrypoint."
+            return L10n.string("core.error.invalidPluginEntrypoint", fallback: "Plugin %@ is missing a valid entrypoint.", identifier)
         case let .processFailed(message):
             return message
         }

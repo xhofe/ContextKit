@@ -9,7 +9,7 @@ struct CopyRelativePathAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.copy-relative-path",
-                name: "复制相对路径",
+                name: L10n.string("builtin.copyRelativePath.name", fallback: "Copy Relative Path"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(requireSameRoot: true),
@@ -25,7 +25,7 @@ struct CopyRelativePathAction {
             self.clipboardWriter.copy(content)
             return ExecutionResult(
                 status: .success,
-                message: "Copied relative path(s).",
+                message: L10n.string("builtin.copyRelativePath.message", fallback: "Copied relative path(s)."),
                 clipboardText: content
             )
         }

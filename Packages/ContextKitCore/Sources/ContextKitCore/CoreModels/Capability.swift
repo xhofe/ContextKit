@@ -14,19 +14,19 @@ public enum Capability: String, Codable, CaseIterable, Hashable, Identifiable, S
     public var displayName: String {
         switch self {
         case .clipboard:
-            return "Clipboard"
+            return L10n.string("capability.clipboard", fallback: "Clipboard")
         case .notification:
-            return "Notification"
+            return L10n.string("capability.notification", fallback: "Notification")
         case .subprocess:
-            return "Subprocess"
+            return L10n.string("capability.subprocess", fallback: "Subprocess")
         case .network:
-            return "Network"
+            return L10n.string("capability.network", fallback: "Network")
         case .git:
-            return "Git"
+            return L10n.string("capability.git", fallback: "Git")
         case .writeGeneratedFiles:
-            return "Write Generated Files"
+            return L10n.string("capability.writeGeneratedFiles", fallback: "Write Generated Files")
         case .openApp:
-            return "Open Application"
+            return L10n.string("capability.openApp", fallback: "Open Application")
         }
     }
 }

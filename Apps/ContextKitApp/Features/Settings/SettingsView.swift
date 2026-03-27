@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct SettingsView: View {
@@ -5,7 +6,7 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Monitored Roots") {
+            Section(L10n.string("app.settings.monitoredRoots", fallback: "Monitored Roots")) {
                 ForEach(viewModel.settings.monitoredRoots) { root in
                     HStack {
                         VStack(alignment: .leading) {
@@ -15,16 +16,16 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                         Spacer()
-                        Button("Remove", role: .destructive) {
+                        Button(L10n.string("app.settings.remove", fallback: "Remove"), role: .destructive) {
                             viewModel.removeRoot(root)
                         }
                     }
                 }
-                Button("Add Root", action: viewModel.addRoot)
+                Button(L10n.string("app.settings.addRoot", fallback: "Add Root"), action: viewModel.addRoot)
             }
 
-            Section("Defaults") {
-                Picker("Terminal", selection: Binding(
+            Section(L10n.string("app.settings.defaults", fallback: "Defaults")) {
+                Picker(L10n.string("app.settings.terminal", fallback: "Terminal"), selection: Binding(
                     get: { viewModel.settings.defaultTerminal.id },
                     set: { id in
                         if let launcher = viewModel.terminalChoices.first(where: { $0.id == id }) {
@@ -37,7 +38,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Picker("Editor", selection: Binding(
+                Picker(L10n.string("app.settings.editor", fallback: "Editor"), selection: Binding(
                     get: { viewModel.settings.defaultEditor.id },
                     set: { id in
                         if let launcher = viewModel.editorChoices.first(where: { $0.id == id }) {
@@ -60,7 +61,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .padding(24)
-        .navigationTitle("Settings")
+        .navigationTitle(L10n.string("app.settings.navigation", fallback: "Settings"))
         .onAppear(perform: viewModel.reload)
     }
 }

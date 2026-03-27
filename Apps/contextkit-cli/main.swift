@@ -1,4 +1,5 @@
 import Darwin
+import ContextKitCore
 import Foundation
 
 let environment = CLIEnvironment()
@@ -33,7 +34,7 @@ func run() throws {
         switch subcommand {
         case "install":
             let plugin = try InstallPluginCommand(environment: environment).execute(arguments: arguments.dropFirst(2))
-            Swift.print("Installed \(plugin.package.manifest.name).")
+            Swift.print(L10n.string("cli.install.success", fallback: "Installed %@.", plugin.package.manifest.name))
         case "list":
             let plugins = try ListPluginsCommand(environment: environment).execute()
             printer.printPlugins(plugins)
@@ -47,7 +48,7 @@ func run() throws {
         let logs = try TailLogsCommand(environment: environment).execute()
         printer.printLogs(logs)
     default:
-        throw CLIError.usage("Unknown command \(command)")
+        throw CLIError.usage(L10n.string("cli.unknownCommand", fallback: "Unknown command %@", command))
     }
 }
 

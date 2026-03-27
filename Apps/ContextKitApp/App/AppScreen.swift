@@ -1,3 +1,4 @@
+import ContextKitCore
 import Foundation
 
 enum AppScreen: String, CaseIterable, Identifiable {
@@ -12,15 +13,15 @@ enum AppScreen: String, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .overview:
-            return "Overview"
+            return L10n.string("app.screen.overview", fallback: "Overview")
         case .actions:
-            return "Actions"
+            return L10n.string("app.screen.actions", fallback: "Actions")
         case .plugins:
-            return "Plugins"
+            return L10n.string("app.screen.plugins", fallback: "Plugins")
         case .workflows:
-            return "Workflows"
+            return L10n.string("app.screen.workflows", fallback: "Workflows")
         case .settings:
-            return "Settings"
+            return L10n.string("app.screen.settings", fallback: "Settings")
         }
     }
 

@@ -1,4 +1,5 @@
 import Foundation
+import ContextKitCore
 
 struct RelativePathCalculator {
     func relativePaths(for urls: [URL], within rootURL: URL) throws -> [String] {
@@ -21,7 +22,11 @@ enum RelativePathError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case let .outsideRoot(url):
-            return "\(url.lastPathComponent) is outside the monitored root."
+            return L10n.string(
+                "builtin.relativePath.outsideRoot",
+                fallback: "%@ is outside the monitored root.",
+                url.lastPathComponent
+            )
         }
     }
 }

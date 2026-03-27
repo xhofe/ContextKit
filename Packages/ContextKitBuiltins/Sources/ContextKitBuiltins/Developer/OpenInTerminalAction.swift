@@ -8,7 +8,7 @@ struct OpenInTerminalAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.open-terminal",
-                name: "在终端打开",
+                name: L10n.string("builtin.openTerminal.name", fallback: "Open in Terminal"),
                 category: .open,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -20,11 +20,14 @@ struct OpenInTerminalAction {
             } ?? context.monitoredRootURL
 
             guard let targetURL else {
-                return ExecutionResult(status: .skipped, message: "No directory available to open.")
+                return ExecutionResult(
+                    status: .skipped,
+                    message: L10n.string("builtin.openTerminal.noDirectory", fallback: "No directory available to open.")
+                )
             }
 
             try self.opener.open([targetURL], with: context.settings.defaultTerminal)
-            return ExecutionResult(status: .success, message: "Opened terminal.")
+            return ExecutionResult(status: .success, message: L10n.string("builtin.openTerminal.opened", fallback: "Opened terminal."))
         }
     }
 }

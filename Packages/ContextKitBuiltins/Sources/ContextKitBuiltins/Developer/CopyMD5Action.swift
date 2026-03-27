@@ -9,7 +9,7 @@ struct CopyMD5Action {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.copy-md5",
-                name: "复制 MD5",
+                name: L10n.string("builtin.copyMD5.name", fallback: "Copy MD5"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(allowDirectories: false),
@@ -22,7 +22,11 @@ struct CopyMD5Action {
             }
             let content = lines.joined(separator: "\n")
             self.clipboardWriter.copy(content)
-            return ExecutionResult(status: .success, message: "Copied MD5 hash(es).", clipboardText: content)
+            return ExecutionResult(
+                status: .success,
+                message: L10n.string("builtin.copyMD5.message", fallback: "Copied MD5 hash(es)."),
+                clipboardText: content
+            )
         }
     }
 }

@@ -8,7 +8,7 @@ struct CopyPathAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.copy-path",
-                name: "复制路径",
+                name: L10n.string("builtin.copyPath.name", fallback: "Copy Path"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -20,7 +20,11 @@ struct CopyPathAction {
             self.clipboardWriter.copy(content)
             return ExecutionResult(
                 status: .success,
-                message: "Copied \(context.request.selectedURLs.count) path(s).",
+                message: L10n.string(
+                    "builtin.copyPath.message",
+                    fallback: "Copied %lld path(s).",
+                    Int64(context.request.selectedURLs.count)
+                ),
                 clipboardText: content
             )
         }

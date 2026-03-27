@@ -27,7 +27,11 @@ final class PluginsViewModel: ObservableObject {
         do {
             guard let directory = services.chooseDirectory() else { return }
             let plugin = try services.installLocalPlugin(from: directory)
-            statusMessage = "Installed \(plugin.package.manifest.name). Review trust status below."
+            statusMessage = L10n.string(
+                "app.plugins.status.installedLocal",
+                fallback: "Installed %@. Review trust status below.",
+                plugin.package.manifest.name
+            )
             reload()
         } catch {
             errorMessage = error.localizedDescription
@@ -38,7 +42,11 @@ final class PluginsViewModel: ObservableObject {
         guard !gitRepositoryURL.isEmpty else { return }
         do {
             let plugin = try services.installGitPlugin(from: gitRepositoryURL)
-            statusMessage = "Installed \(plugin.package.manifest.name) from Git."
+            statusMessage = L10n.string(
+                "app.plugins.status.installedGit",
+                fallback: "Installed %@ from Git.",
+                plugin.package.manifest.name
+            )
             reload()
         } catch {
             errorMessage = error.localizedDescription
@@ -48,7 +56,11 @@ final class PluginsViewModel: ObservableObject {
     func trust(_ plugin: InstalledPlugin) {
         do {
             try services.trustPlugin(plugin.id)
-            statusMessage = "Trusted \(plugin.package.manifest.name)."
+            statusMessage = L10n.string(
+                "app.plugins.status.trusted",
+                fallback: "Trusted %@.",
+                plugin.package.manifest.name
+            )
             reload()
         } catch {
             errorMessage = error.localizedDescription
@@ -58,7 +70,11 @@ final class PluginsViewModel: ObservableObject {
     func remove(_ plugin: InstalledPlugin) {
         do {
             try services.removePlugin(plugin.id)
-            statusMessage = "Removed \(plugin.package.manifest.name)."
+            statusMessage = L10n.string(
+                "app.plugins.status.removed",
+                fallback: "Removed %@.",
+                plugin.package.manifest.name
+            )
             reload()
         } catch {
             errorMessage = error.localizedDescription

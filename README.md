@@ -1,46 +1,48 @@
 # ContextKit
 
-ContextKit 是一个面向 macOS 的 Finder 右键能力平台。它不是把零散小工具堆进一个菜单里，而是把“右键”抽象成可扩展的 `Action` 执行入口，让宿主 App、Finder Extension、Agent、CLI 和插件共享同一套核心模型、规则与执行链路。
+[中文说明](README_cn.md)
 
-当前仓库已经按真实工程方式拆分为多 target + 本地 Swift Package，目标是长期维护，而不是把菜单构建、插件解析、执行器和 UI 状态全部塞进单文件。
+ContextKit is a macOS Finder context-menu platform. Instead of collecting unrelated utilities in one menu, it treats the context menu as an extensible `Action` entry point shared by the host app, Finder extension, agent, CLI, and plugins.
 
-## 当前范围
+The repository is structured as a real multi-target macOS project with local Swift packages, so product logic lives in shared modules rather than growing inside giant app-entry files.
 
-当前 v1 已落地的能力包括：
+## Current Scope
 
-- Finder Sync 作为右键入口，按监控目录与上下文规则动态展示菜单
-- 宿主 App 管理界面：概览、Actions、Plugins、Workflows、Settings
-- Agent 负责处理 Finder Extension 发起的执行请求
-- CLI 调试入口：运行 Action / Workflow、安装插件、列出插件、查看日志
-- 共享 Core：Manifest、上下文规则、执行引擎、工作流、插件仓库、共享存储、IPC、日志
-- 内置 Actions：
-  - 复制路径
-  - 复制相对路径
-  - 在终端打开
-  - 在编辑器打开
-  - 复制 MD5
-  - 复制 SHA256
-  - 压缩
-  - 解压
-- 官方示例插件：
+The current v1 implementation includes:
+
+- Finder Sync as the context-menu entry point, filtered by monitored roots and context rules
+- A host app with `Overview`, `Actions`, `Plugins`, `Workflows`, and `Settings`
+- An agent that executes requests coming from Finder
+- A CLI for running actions and workflows, installing plugins, listing plugins, and reading logs
+- Shared core modules for manifests, context rules, execution, workflows, plugins, shared storage, IPC, and logging
+- Built-in actions:
+  - Copy Path
+  - Copy Relative Path
+  - Open in Terminal
+  - Open in Editor
+  - Copy MD5
+  - Copy SHA256
+  - Compress
+  - Extract
+- Official sample plugins:
   - `JSONFormat`
   - `Base64Encode`
   - `Base64Decode`
 
-## 架构分层
+## Architecture
 
-| 层 | 目录 | 责任 |
+| Layer | Directory | Responsibility |
 | --- | --- | --- |
-| Host App | `Apps/ContextKitApp` | SwiftUI 管理界面、设置、插件管理、工作流编排 |
-| Finder Extension | `Extensions/ContextKitFinderSync` | Finder 右键入口、菜单桥接、选择上下文读取、请求转发 |
-| Agent | `Apps/ContextKitAgent` | 处理 Finder 发起的执行请求、异步执行、写回结果 |
-| CLI | `Apps/contextkit-cli` | 命令解析、参数校验、输出格式化 |
-| Shared Core | `Packages/ContextKitCore` | CoreModels、Manifest、ContextRules、Execution、Workflow、Plugin、Config、Store、Logging、IPC |
-| Built-ins | `Packages/ContextKitBuiltins` | 内置 Action 的独立实现与注册 |
-| Plugin SDK | `Packages/ContextKitPluginSDK` | 插件环境变量和输出契约 |
-| Official Plugins | `Plugins/Official` | 官方示例插件和平台能力验证样板 |
+| Host App | `Apps/ContextKitApp` | SwiftUI management UI, settings, plugin management, workflow authoring |
+| Finder Extension | `Extensions/ContextKitFinderSync` | Finder entry point, menu bridging, selection reading, request dispatching |
+| Agent | `Apps/ContextKitAgent` | Processes Finder requests asynchronously and writes back results |
+| CLI | `Apps/contextkit-cli` | Argument parsing, validation, and console output |
+| Shared Core | `Packages/ContextKitCore` | CoreModels, Manifest, ContextRules, Execution, Workflow, Plugin, Config, Store, Logging, IPC |
+| Built-ins | `Packages/ContextKitBuiltins` | Independent built-in action implementations and registration |
+| Plugin SDK | `Packages/ContextKitPluginSDK` | Minimal plugin contract for environment and output |
+| Official Plugins | `Plugins/Official` | Official examples used to validate platform capabilities |
 
-## 目录结构
+## Repository Layout
 
 ```text
 ContextKit
@@ -63,41 +65,35 @@ ContextKit
 └── project.yml
 ```
 
-`project.yml` 是工程真源，`ContextKit.xcodeproj` 由 `xcodegen` 生成。
+`project.yml` is the source of truth. `ContextKit.xcodeproj` is generated from it with `xcodegen`.
 
-## 开发环境
+## Requirements
 
 - macOS 15.7+
-- Xcode 26.3+ 或兼容 Swift 6 的 toolchain
+- Xcode 26.3+ or another Swift 6 compatible toolchain
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 
-安装 `xcodegen`：
+Install `xcodegen`:
 
 ```bash
 brew install xcodegen
 ```
 
-如果你要在本地模拟 Release 发布，也建议安装 GitHub CLI：
+## Local Development
 
-```bash
-brew install gh
-```
-
-## 本地开发
-
-### 1. 生成工程
+### 1. Generate the project
 
 ```bash
 xcodegen generate
 ```
 
-### 2. 打开工程
+### 2. Open the project
 
 ```bash
 open ContextKit.xcodeproj
 ```
 
-### 3. 运行共享包测试
+### 3. Run package tests
 
 ```bash
 swift test --package-path Packages/ContextKitCore
@@ -105,9 +101,9 @@ swift test --package-path Packages/ContextKitBuiltins
 swift test --package-path Packages/ContextKitPluginSDK
 ```
 
-### 4. 构建各个 target
+### 4. Build the targets
 
-构建宿主 App：
+Build the host app:
 
 ```bash
 xcodebuild \
@@ -118,7 +114,7 @@ xcodebuild \
   build
 ```
 
-构建 Agent：
+Build the agent:
 
 ```bash
 xcodebuild \
@@ -129,7 +125,7 @@ xcodebuild \
   build
 ```
 
-构建 CLI：
+Build the CLI:
 
 ```bash
 xcodebuild \
@@ -139,15 +135,15 @@ xcodebuild \
   build
 ```
 
-### 5. 调试建议
+### 5. Debugging notes
 
-- 宿主 App 负责设置监控目录、插件与工作流管理，首次启动后先在 `Settings` 中添加 monitored roots。
-- Finder Sync 菜单只会在 monitored roots 内显示，这是产品边界的一部分，不会绕过。
-- Finder Extension 自己不执行插件或脚本，只负责读取缓存和派发请求。
-- 如果你要验证 Finder -> Agent 链路，请先运行 `ContextKitAgent`，再从 Finder 菜单触发 Action。
-- CLI 直接复用共享 Core 执行，不复制业务逻辑。
+- The host app owns monitored-root configuration, plugin management, and workflow authoring. Start by adding monitored roots in `Settings`.
+- Finder Sync only appears inside monitored roots. That is a product boundary, not a temporary limitation.
+- The Finder extension only reads cache and dispatches requests. It does not execute plugins or scripts directly.
+- To validate the Finder -> Agent flow locally, run `ContextKitAgent` first and then trigger actions from Finder.
+- The CLI reuses the same shared core logic instead of copying execution code.
 
-### 6. 常用 CLI
+### 6. Common CLI commands
 
 ```bash
 contextkit run <action-id> <path...>
@@ -157,23 +153,23 @@ contextkit plugin list
 contextkit logs tail
 ```
 
-## 打包与分发构建
+## Packaging
 
-仓库内提供统一的分发脚本：
+The repository provides a single distribution script:
 
 ```bash
 ./Support/Scripts/build-distribution.sh
 ```
 
-脚本会执行：
+It performs:
 
-1. 校验依赖工具
-2. 用 `xcodegen` 重新生成工程
-3. 以 `Release` 配置构建 `ContextKit`、`ContextKitAgent`、`contextkit`
-4. 打包产物到 `dist/`
-5. 生成 `SHA256SUMS.txt`
+1. Tool checks
+2. `xcodegen` project generation
+3. `Release` builds for `ContextKit`, `ContextKitAgent`, and `contextkit`
+4. Packaging into `dist/`
+5. SHA256 checksum generation
 
-默认产物：
+Default outputs:
 
 - `dist/ContextKit.app.zip`
 - `dist/ContextKitAgent.app.zip`
@@ -181,7 +177,7 @@ contextkit logs tail
 - `dist/ContextKitOfficialPlugins.zip`
 - `dist/SHA256SUMS.txt`
 
-可选环境变量：
+Optional environment variables:
 
 ```bash
 CONFIGURATION=Release
@@ -190,48 +186,14 @@ DERIVED_DATA_PATH=/absolute/path/to/DerivedData
 DESTINATION='platform=macOS'
 ```
 
-说明：
+Notes:
 
-- CI 中的构建默认关闭代码签名：`CODE_SIGNING_ALLOWED=NO`
-- 当前 Release 产物适合开发测试和内部验收；正式对外分发前通常还需要补签名与 notarization
+- CI-style builds disable code signing with `CODE_SIGNING_ALLOWED=NO`
+- These build artifacts are appropriate for development and internal validation; production distribution still needs signing and notarization
 
-## GitHub Actions
+## Finder Sync and Shared State
 
-仓库包含两条工作流：
-
-### `ci.yml`
-
-触发条件：
-
-- push 到分支
-- pull request
-
-行为：
-
-1. 安装 `xcodegen`
-2. 运行三个共享包的 `swift test`
-3. 调用 `Support/Scripts/build-distribution.sh`
-4. 上传 `dist/` 到 GitHub Actions artifact
-
-### `release.yml`
-
-触发条件：
-
-- push `v*` tag，例如 `v1.0.0`
-
-行为：
-
-1. 安装 `xcodegen`
-2. 运行共享包测试
-3. 构建并打包分发产物
-4. 上传 workflow artifact
-5. 自动创建或更新对应的 GitHub Release，并附带 `dist/` 里的发布资产
-
-如果你希望“任意 tag 都触发 release”，把 `.github/workflows/release.yml` 里的 tag 规则从 `v*` 改成你自己的模式即可。
-
-## Finder Sync 与共享状态
-
-`ContextKitApp`、`ContextKitFinderSync` 和 `ContextKitAgent` 通过 App Group 共享状态。共享目录中会保存：
+`ContextKitApp`, `ContextKitFinderSync`, and `ContextKitAgent` share state through an App Group directory. The shared area contains:
 
 - `settings.json`
 - `menu-descriptors.json`
@@ -241,16 +203,34 @@ DESTINATION='platform=macOS'
 - `Responses/`
 - `execution-log.json`
 
-这意味着：
+This means:
 
-- App 修改设置后，Finder Extension 读取的是缓存后的菜单描述符
-- Finder 点击菜单后，通过共享请求目录与 Agent 通信
-- 日志、插件仓库和工作流定义在多入口之间保持一致
+- The app updates settings and menu descriptors, while Finder reads the cached menu model
+- Finder dispatches requests through shared request files, and the agent processes them
+- Logs, plugin installation state, and workflows stay consistent across all entry points
 
-## 开发原则
+## Engineering Principles
 
-- 入口 target 只保留装配和生命周期代码
-- 共享业务逻辑优先放进 `Packages/ContextKitCore`
-- 内置 Actions 独立实现，不塞进统一 God file
-- Finder Extension 只做入口，不做重执行逻辑
-- README、构建脚本和 GitHub Actions 使用同一套命令，尽量避免文档和 CI 漂移
+- Entry targets should keep only lifecycle and composition code
+- Shared business logic belongs in `Packages/ContextKitCore`
+- Built-in actions should stay isolated instead of collapsing into one god file
+- Finder Extension is only an entry point, not the execution runtime
+- The README and the build script should stay aligned with the actual developer workflow
+
+## Localization
+
+The project currently ships with English and Simplified Chinese. User-facing copy is centralized in:
+
+- `Packages/ContextKitCore/Sources/ContextKitCore/Resources/en.lproj/Localizable.strings`
+- `Packages/ContextKitCore/Sources/ContextKitCore/Resources/zh-Hans.lproj/Localizable.strings`
+
+The host app, Finder extension, CLI, built-in actions, and core error messages all read localized strings through the shared `L10n` helper in `ContextKitCore`.
+
+To contribute another language:
+
+1. Copy an existing `Localizable.strings` file into a new `*.lproj` folder, for example `ja.lproj/Localizable.strings`
+2. Keep all keys unchanged and translate only the values
+3. Run package tests and do a quick smoke test in the app and CLI
+4. Mention the locale identifier and the validated areas in your pull request
+
+In most cases, adding a new language does not require Swift code changes as long as the existing keys are preserved.

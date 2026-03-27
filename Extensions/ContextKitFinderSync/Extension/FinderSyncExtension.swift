@@ -20,7 +20,7 @@ final class FinderSyncExtension: FIFinderSync {
         let controller = FIFinderSyncController.default()
         guard let selection = selectionContextReader.read(from: controller),
               let descriptors = try? cache.load() else {
-            return NSMenu(title: "ContextKit")
+            return NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
         }
 
         return menuBuilder.build(

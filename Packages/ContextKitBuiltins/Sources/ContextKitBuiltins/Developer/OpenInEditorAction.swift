@@ -8,7 +8,7 @@ struct OpenInEditorAction {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.open-editor",
-                name: "在编辑器打开",
+                name: L10n.string("builtin.openEditor.name", fallback: "Open in Editor"),
                 category: .open,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -17,11 +17,14 @@ struct OpenInEditorAction {
         ) { context in
             let targets = context.request.selectedURLs.isEmpty ? (context.monitoredRootURL.map { [$0] } ?? []) : context.request.selectedURLs
             guard !targets.isEmpty else {
-                return ExecutionResult(status: .skipped, message: "No item available to open.")
+                return ExecutionResult(
+                    status: .skipped,
+                    message: L10n.string("builtin.openEditor.noItem", fallback: "No item available to open.")
+                )
             }
 
             try self.opener.open(targets, with: context.settings.defaultEditor)
-            return ExecutionResult(status: .success, message: "Opened editor.")
+            return ExecutionResult(status: .success, message: L10n.string("builtin.openEditor.opened", fallback: "Opened editor."))
         }
     }
 }

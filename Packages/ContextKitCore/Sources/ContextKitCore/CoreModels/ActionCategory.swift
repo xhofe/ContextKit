@@ -11,13 +11,13 @@ public enum ActionCategory: String, Codable, CaseIterable, Identifiable, Sendabl
     public var displayName: String {
         switch self {
         case .open:
-            return "打开类"
+            return L10n.string("action.category.open", fallback: "Open")
         case .tools:
-            return "工具类"
+            return L10n.string("action.category.tools", fallback: "Tools")
         case .intelligent:
-            return "智能操作"
+            return L10n.string("action.category.intelligent", fallback: "Intelligent")
         case .custom:
-            return "自定义"
+            return L10n.string("action.category.custom", fallback: "Custom")
         }
     }
 }

@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct WorkflowsView: View {
@@ -6,10 +7,15 @@ struct WorkflowsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text("Build linear workflows that chain built-in actions and trusted plugins.")
+                Text(
+                    L10n.string(
+                        "app.workflows.description",
+                        fallback: "Build linear workflows that chain built-in actions and trusted plugins."
+                    )
+                )
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button("New Workflow", action: viewModel.createWorkflow)
+                Button(L10n.string("app.workflows.new", fallback: "New Workflow"), action: viewModel.createWorkflow)
             }
 
             List(viewModel.workflows, id: \.id) { workflow in
@@ -18,10 +24,10 @@ struct WorkflowsView: View {
                         Text(workflow.name)
                             .font(.headline)
                         Spacer()
-                        Button("Edit") {
+                        Button(L10n.string("app.workflows.edit", fallback: "Edit")) {
                             viewModel.edit(workflow)
                         }
-                        Button("Delete", role: .destructive) {
+                        Button(L10n.string("app.workflows.delete", fallback: "Delete"), role: .destructive) {
                             viewModel.remove(workflow)
                         }
                     }
@@ -39,7 +45,7 @@ struct WorkflowsView: View {
             }
         }
         .padding(24)
-        .navigationTitle("Workflows")
+        .navigationTitle(L10n.string("app.workflows.navigation", fallback: "Workflows"))
         .sheet(isPresented: $viewModel.isPresentingEditor) {
             WorkflowEditorView(viewModel: viewModel)
         }

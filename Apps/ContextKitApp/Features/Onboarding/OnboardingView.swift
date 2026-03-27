@@ -1,3 +1,4 @@
+import ContextKitCore
 import SwiftUI
 
 struct OnboardingView: View {
@@ -5,12 +6,17 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Text("Choose your first monitored root")
+            Text(L10n.string("app.onboarding.title", fallback: "Choose your first monitored root"))
                 .font(.largeTitle.weight(.bold))
-            Text("Finder Sync can only surface ContextKit menus inside monitored roots, so v1 starts by letting you choose the workspaces that should participate.")
+            Text(
+                L10n.string(
+                    "app.onboarding.description",
+                    fallback: "Finder Sync can only surface ContextKit menus inside monitored roots, so v1 starts by letting you choose the workspaces that should participate."
+                )
+            )
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: 560, alignment: .leading)
-            Button("Add Monitored Root", action: viewModel.addRoot)
+            Button(L10n.string("app.onboarding.addRoot", fallback: "Add Monitored Root"), action: viewModel.addRoot)
                 .buttonStyle(.borderedProminent)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)

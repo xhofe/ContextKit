@@ -9,7 +9,7 @@ struct CopySHA256Action {
         AnyActionCommand(
             manifest: ActionManifest(
                 id: "builtin.copy-sha256",
-                name: "复制 SHA256",
+                name: L10n.string("builtin.copySHA256.name", fallback: "Copy SHA256"),
                 category: .tools,
                 kind: .builtin,
                 contextRules: ContextRules(allowDirectories: false),
@@ -22,7 +22,11 @@ struct CopySHA256Action {
             }
             let content = lines.joined(separator: "\n")
             self.clipboardWriter.copy(content)
-            return ExecutionResult(status: .success, message: "Copied SHA256 hash(es).", clipboardText: content)
+            return ExecutionResult(
+                status: .success,
+                message: L10n.string("builtin.copySHA256.message", fallback: "Copied SHA256 hash(es)."),
+                clipboardText: content
+            )
         }
     }
 }

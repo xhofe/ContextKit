@@ -27,7 +27,7 @@ final class WorkflowsViewModel: ObservableObject {
 
     func createWorkflow() {
         draft = WorkflowDraft(
-            name: "New Workflow",
+            name: L10n.string("app.workflows.defaultName", fallback: "New Workflow"),
             steps: availableActions.prefix(2).enumerated().map { index, manifest in
                 WorkflowDraftStep(
                     actionID: manifest.id,
