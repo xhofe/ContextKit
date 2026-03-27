@@ -6,6 +6,7 @@ options:
 settings:
   base:
     DEVELOPMENT_TEAM: 6UKCRW5N6G
+    CONTEXTKIT_APP_GROUP_ID: $(DEVELOPMENT_TEAM).ci.nn.ContextKit
     SWIFT_VERSION: 6.0
     CODE_SIGN_STYLE: Automatic
     ENABLE_HARDENED_RUNTIME: YES
@@ -35,8 +36,13 @@ targets:
         type: folder
     info:
       path: Support/Plists/ContextKit-Info.plist
+      properties:
+        ContextKitAppGroupIdentifier: $(CONTEXTKIT_APP_GROUP_ID)
     entitlements:
       path: Support/Entitlements/ContextKit.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(CONTEXTKIT_APP_GROUP_ID)
     dependencies:
       - package: ContextKitCore
         product: ContextKitCore
@@ -50,8 +56,6 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ci.nn.ContextKit
         PRODUCT_NAME: ContextKit
-        ENABLE_APP_SANDBOX: YES
-        ENABLE_USER_SELECTED_FILES: readwrite
   ContextKitFinderSync:
     type: app-extension
     platform: macOS
@@ -59,8 +63,17 @@ targets:
       - path: Extensions/ContextKitFinderSync
     info:
       path: Support/Plists/ContextKitFinderSync-Info.plist
+      properties:
+        ContextKitAppGroupIdentifier: $(CONTEXTKIT_APP_GROUP_ID)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.FinderSync
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).FinderSyncExtension
     entitlements:
       path: Support/Entitlements/ContextKitFinderSync.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.application-groups:
+          - $(CONTEXTKIT_APP_GROUP_ID)
     dependencies:
       - package: ContextKitCore
         product: ContextKitCore
@@ -76,8 +89,13 @@ targets:
       - path: Apps/ContextKitAgent
     info:
       path: Support/Plists/ContextKitAgent-Info.plist
+      properties:
+        ContextKitAppGroupIdentifier: $(CONTEXTKIT_APP_GROUP_ID)
     entitlements:
       path: Support/Entitlements/ContextKitAgent.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - $(CONTEXTKIT_APP_GROUP_ID)
     dependencies:
       - package: ContextKitCore
         product: ContextKitCore
@@ -89,7 +107,6 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ci.nn.ContextKit.Agent
         PRODUCT_NAME: ContextKitAgent
-        ENABLE_APP_SANDBOX: YES
   contextkit:
     type: tool
     platform: macOS

@@ -13,6 +13,7 @@ PRODUCTS_DIR="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION"
 DMG_STAGE_DIR="${DMG_STAGE_DIR:-$ROOT_DIR/build/DistributionRoot}"
 DMG_NAME="${DMG_NAME:-ContextKit.dmg}"
 DMG_VOLUME_NAME="${DMG_VOLUME_NAME:-ContextKit}"
+DISTRIBUTION_CODE_SIGNING_ALLOWED="${DISTRIBUTION_CODE_SIGNING_ALLOWED:-YES}"
 
 log() {
   printf '\n[%s] %s\n' "$(date '+%H:%M:%S')" "$*"
@@ -35,7 +36,7 @@ build_app_scheme() {
     -configuration "$CONFIGURATION" \
     -derivedDataPath "$DERIVED_DATA_PATH" \
     -destination "$APP_DESTINATION" \
-    CODE_SIGNING_ALLOWED=NO \
+    CODE_SIGNING_ALLOWED="$DISTRIBUTION_CODE_SIGNING_ALLOWED" \
     build
 }
 
@@ -47,7 +48,7 @@ build_cli_scheme() {
     -scheme "$scheme" \
     -configuration "$CONFIGURATION" \
     -derivedDataPath "$DERIVED_DATA_PATH" \
-    CODE_SIGNING_ALLOWED=NO \
+    CODE_SIGNING_ALLOWED="$DISTRIBUTION_CODE_SIGNING_ALLOWED" \
     build
 }
 
@@ -156,6 +157,8 @@ main() {
 
   mkdir -p "$DIST_DIR" "$DERIVED_DATA_PATH"
   find "$DIST_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+  log "Distribution code signing allowed: $DISTRIBUTION_CODE_SIGNING_ALLOWED"
 
   log "Generating Xcode project from project.yml"
   xcodegen generate --spec "$PROJECT_SPEC"

@@ -17,6 +17,7 @@ jobs:
     runs-on: macos-latest
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
+      DISTRIBUTION_CODE_SIGNING_ALLOWED: NO
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

@@ -205,8 +205,9 @@ DMG_VOLUME_NAME=ContextKit
 
 说明：
 
-- CI 中的构建默认关闭代码签名：`CODE_SIGNING_ALLOWED=NO`
-- 当前 Release 产物适合开发测试和内部验收；正式对外分发前通常还需要补签名与 notarization
+- 本地分发构建默认开启签名，这样内嵌的 Finder 扩展与 App Group 容器才能被 macOS 正常注册。
+- `DISTRIBUTION_CODE_SIGNING_ALLOWED=NO` 只建议用于 CI 内部校验；未签名产物不适合验证 Finder 扩展可见性，也可能出现共享容器相关的异常提示。
+- 正式对外分发仍然建议使用完整的 Developer ID 签名并做 notarization。
 
 ## Finder Sync 与共享状态
 
@@ -230,12 +231,13 @@ DMG_VOLUME_NAME=ContextKit
 
 运行时数据目录由 `ContextKitCore` 中的 `SharedDirectoryProvider` 统一解析。
 
-优先位置：
+已签名构建的优先位置：
+
+- `~/Library/Group Containers/<TeamID>.ci.nn.ContextKit/`
+
+兼容与回退位置：
 
 - `~/Library/Group Containers/group.ci.nn.ContextKit/`
-
-降级回退位置：
-
 - `~/Library/Application Support/ContextKitShared/`
 
 当前会写入的内容包括：
@@ -247,6 +249,10 @@ DMG_VOLUME_NAME=ContextKit
 - `Plugins/`
 - `Requests/`
 - `Responses/`
+
+`<TeamID>` 来自构建时使用的签名身份。本仓库当前默认的本地设置会得到 `6UKCRW5N6G`，因此已签名构建通常会落在 `~/Library/Group Containers/6UKCRW5N6G.ci.nn.ContextKit/`。
+
+如果应用之前运行在 fallback 路径，后续又拿到了可用的 App Group 容器，ContextKit 会自动把共享数据迁移过去。
 
 如果在本地开发环境里 App Group 容器不可用，ContextKit 会自动回退到上面的 `Application Support` 路径。
 
@@ -271,7 +277,8 @@ App、Finder Extension、CLI、Built-in Actions 和 Core 错误文案都通过 `
 
 1. 复制一份现有的 `Localizable.strings` 到新的 `*.lproj` 目录，例如 `ja.lproj/Localizable.strings`
 2. 保持 key 不变，只翻译 value
-3. 运行共享包测试并至少本地打开一次 App / CLI 检查关键界面文案
-4. 提交 PR 时说明新增的语言代码和已验证范围
-
-只要遵守现有 key 约定，通常不需要改动 Swift 代码。
+3. 在 `Packages/ContextKitCore/Sources/ContextKitCore/ConfigKit/AppLanguage.swift` 中加入新的语言枚举
+4. 更新 `Packages/ContextKitCore/Sources/ContextKitCore/Localization/LocalizationBundleResolver.swift`
+5. 更新 `Apps/ContextKitApp/Features/Settings/AppLanguage+DisplayName.swift`
+6. 运行共享包测试并至少本地打开一次 App / CLI 检查关键界面文案
+7. 提交 PR 时说明新增的语言代码和已验证范围

@@ -205,8 +205,9 @@ DMG_VOLUME_NAME=ContextKit
 
 Notes:
 
-- CI-style builds disable code signing with `CODE_SIGNING_ALLOWED=NO`
-- These build artifacts are appropriate for development and internal validation; production distribution still needs signing and notarization
+- Local distribution builds sign the app by default so the embedded Finder extension and App Group container can register correctly on macOS.
+- Set `DISTRIBUTION_CODE_SIGNING_ALLOWED=NO` only for internal CI validation. Unsigned artifacts are not suitable for validating Finder extension visibility or shared-container behavior.
+- Production distribution still needs proper Developer ID signing and notarization.
 
 ## Finder Sync and Shared State
 
@@ -230,12 +231,13 @@ This means:
 
 Runtime data is resolved by `SharedDirectoryProvider` in `ContextKitCore`.
 
-Preferred location:
+Preferred location for signed builds:
+
+- `~/Library/Group Containers/<TeamID>.ci.nn.ContextKit/`
+
+Compatibility and fallback locations:
 
 - `~/Library/Group Containers/group.ci.nn.ContextKit/`
-
-Fallback location:
-
 - `~/Library/Application Support/ContextKitShared/`
 
 The store currently contains:
@@ -247,6 +249,10 @@ The store currently contains:
 - `Plugins/`
 - `Requests/`
 - `Responses/`
+
+`<TeamID>` comes from the signing identity used at build time. In this repository's default local setup it resolves to `6UKCRW5N6G`, so the signed path becomes `~/Library/Group Containers/6UKCRW5N6G.ci.nn.ContextKit/`.
+
+If the preferred App Group container becomes available after earlier fallback-based runs, ContextKit migrates the shared data forward automatically.
 
 If the app group container is unavailable in a local development environment, ContextKit automatically falls back to the `Application Support` path above.
 
@@ -271,7 +277,8 @@ To contribute another language:
 
 1. Copy an existing `Localizable.strings` file into a new `*.lproj` folder, for example `ja.lproj/Localizable.strings`
 2. Keep all keys unchanged and translate only the values
-3. Run package tests and do a quick smoke test in the app and CLI
-4. Mention the locale identifier and the validated areas in your pull request
-
-In most cases, adding a new language does not require Swift code changes as long as the existing keys are preserved.
+3. Add the language to `Packages/ContextKitCore/Sources/ContextKitCore/ConfigKit/AppLanguage.swift`
+4. Update `Packages/ContextKitCore/Sources/ContextKitCore/Localization/LocalizationBundleResolver.swift`
+5. Update `Apps/ContextKitApp/Features/Settings/AppLanguage+DisplayName.swift`
+6. Run package tests and do a quick smoke test in the app and CLI
+7. Mention the locale identifier and the validated areas in your pull request
