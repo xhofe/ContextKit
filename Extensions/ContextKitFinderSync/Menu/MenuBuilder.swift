@@ -5,18 +5,22 @@ import Foundation
 struct MenuBuilder {
     private let sectionProvider = MenuSectionProvider()
 
-    func build(
+    func matchingDescriptors(
         descriptors: [MenuDescriptor],
-        selection: SelectionContext,
+        selection: SelectionContext
+    ) -> [MenuDescriptor] {
+        descriptors
+            .filter(\.isEnabled)
+            .filter { $0.contextRules.matches(snapshot: selection.snapshot) }
+    }
+
+    func build(
+        matchingDescriptors: [MenuDescriptor],
         target: AnyObject,
         action: Selector
     ) -> NSMenu {
         let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
         menu.autoenablesItems = false
-        let matchingDescriptors = descriptors
-            .filter(\.isEnabled)
-            .filter { $0.contextRules.matches(snapshot: selection.snapshot) }
-
         guard !matchingDescriptors.isEmpty else {
             let item = NSMenuItem(title: L10n.string("finder.menu.noMatchingActions", fallback: "No matching actions"), action: nil, keyEquivalent: "")
             item.isEnabled = false

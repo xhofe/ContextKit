@@ -7,6 +7,7 @@ final class FinderSyncExtension: FIFinderSync {
     private let settingsStore = SharedSettingsStore()
     private let cache = MenuDescriptorCache()
     private let selectionContextReader = SelectionContextReader()
+    private let menuInvocationCache = MenuInvocationCache()
     private let menuBuilder = MenuBuilder()
     private let dispatcher = ExtensionActionDispatcher()
 
@@ -23,39 +24,78 @@ final class FinderSyncExtension: FIFinderSync {
             return NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
         }
 
-        return menuBuilder.build(
+        let matchingDescriptors = menuBuilder.matchingDescriptors(
             descriptors: descriptors,
-            selection: selection,
+            selection: selection
+        )
+        menuInvocationCache.update(selection: selection, descriptors: matchingDescriptors)
+
+        return menuBuilder.build(
+            matchingDescriptors: matchingDescriptors,
             target: self,
             action: #selector(handleMenuItem(_:))
         )
     }
 
     @IBAction nonisolated func handleMenuItem(_ sender: Any?) {
-        guard let targetId = Self.actionIdentifier(from: sender) else {
-            NSLog("ContextKitFinderSync menu click missing action identifier")
+        let targetId = Self.actionIdentifier(from: sender)
+        let fallbackTitle = Self.menuItemTitle(from: sender)
+
+        guard targetId != nil || fallbackTitle != nil else {
+            NSLog(
+                "ContextKitFinderSync menu click missing action identifier and title. senderType=%@ sender=%@",
+                Self.senderTypeDescription(sender),
+                Self.senderDebugDescription(sender)
+            )
             return
         }
 
-        NSLog("ContextKitFinderSync handling menu click: %@", targetId)
+        NSLog(
+            "ContextKitFinderSync handling menu click: id=%@ title=%@",
+            targetId ?? "<nil>",
+            fallbackTitle ?? "<nil>"
+        )
+        let snapshot = menuInvocationCache.currentSnapshot()
         Task { @MainActor in
-            Self.dispatchMenuAction(targetId: targetId)
+            Self.dispatchMenuAction(
+                targetId: targetId,
+                fallbackTitle: fallbackTitle,
+                snapshot: snapshot
+            )
         }
     }
 
     @MainActor
-    private static func dispatchMenuAction(targetId: String) {
+    private static func dispatchMenuAction(
+        targetId: String?,
+        fallbackTitle: String?,
+        snapshot: MenuInvocationSnapshot?
+    ) {
         let selectionContextReader = SelectionContextReader()
         let cache = MenuDescriptorCache()
         let dispatcher = ExtensionActionDispatcher()
         let controller = FIFinderSyncController.default()
-        guard let selection = selectionContextReader.read(from: controller) else {
-            NSLog("ContextKitFinderSync could not resolve current selection for target: %@", targetId)
+        guard let selection = selectionContextReader.read(from: controller) ?? snapshot?.selection else {
+            NSLog(
+                "ContextKitFinderSync could not resolve current selection for target: %@ title: %@",
+                targetId ?? "<nil>",
+                fallbackTitle ?? "<nil>"
+            )
             return
         }
 
-        guard let descriptor = descriptor(for: targetId, cache: cache) else {
-            NSLog("ContextKitFinderSync missing descriptor for target: %@", targetId)
+        guard let descriptor = descriptor(
+            for: targetId,
+            fallbackTitle: fallbackTitle,
+            selection: selection,
+            cachedDescriptors: snapshot?.descriptors,
+            cache: cache
+        ) else {
+            NSLog(
+                "ContextKitFinderSync missing descriptor for target: %@ title: %@",
+                targetId ?? "<nil>",
+                fallbackTitle ?? "<nil>"
+            )
             return
         }
 
@@ -87,29 +127,153 @@ final class FinderSyncExtension: FIFinderSync {
     }
 
     nonisolated private static func actionIdentifier(from sender: Any?) -> String? {
+        if let item = sender as? NSMenuItem {
+            if let identifier = item.identifier?.rawValue, !identifier.isEmpty {
+                return identifier
+            }
+
+            if let representedIdentifier = representedIdentifier(from: item.representedObject) {
+                return representedIdentifier
+            }
+        }
+
+        if let dictionary = sender as? NSDictionary {
+            for key in ["identifier", "id", "representedObject"] {
+                if let identifier = representedIdentifier(from: dictionary[key]) {
+                    return identifier
+                }
+            }
+        }
+
         guard let object = sender as AnyObject?,
-              let representedObject = object.value(forKey: "representedObject") else {
+              let identifier = identifierFromKeyValueCoding(object) ?? representedObjectFromKeyValueCoding(object) else {
             return nil
         }
 
-        if let identifier = representedObject as? String, !identifier.isEmpty {
-            return identifier
+        return identifier
+    }
+
+    nonisolated private static func menuItemTitle(from sender: Any?) -> String? {
+        if let item = sender as? NSMenuItem {
+            let title = item.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            return title.isEmpty ? nil : title
         }
 
-        if let identifier = representedObject as? NSString {
-            let value = identifier as String
-            if !value.isEmpty {
-                return value
+        if let dictionary = sender as? NSDictionary {
+            for key in ["title", "name"] {
+                if let value = dictionary[key] as? String {
+                    let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !trimmed.isEmpty {
+                        return trimmed
+                    }
+                }
             }
+        }
+
+        guard let object = sender as AnyObject?,
+              let value = object.value(forKey: "title") as? String else {
+            return nil
+        }
+
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    private static func identifierFromKeyValueCoding(_ object: AnyObject) -> String? {
+        guard let value = object.value(forKey: "identifier") else {
+            return nil
+        }
+
+        if let identifier = value as? NSUserInterfaceItemIdentifier {
+            return normalizedIdentifier(identifier.rawValue)
+        }
+
+        return representedIdentifier(from: value)
+    }
+
+    private static func representedObjectFromKeyValueCoding(_ object: AnyObject) -> String? {
+        guard let value = object.value(forKey: "representedObject") else {
+            return nil
+        }
+
+        return representedIdentifier(from: value)
+    }
+
+    private static func representedIdentifier(from value: Any?) -> String? {
+        if let identifier = value as? String {
+            return normalizedIdentifier(identifier)
+        }
+
+        if let identifier = value as? NSString {
+            return normalizedIdentifier(identifier as String)
         }
 
         return nil
     }
 
-    private static func descriptor(for targetId: String, cache: MenuDescriptorCache) -> MenuDescriptor? {
-        guard let descriptors = try? cache.load() else {
+    private static func descriptor(
+        for targetId: String?,
+        fallbackTitle: String?,
+        selection: SelectionContext,
+        cachedDescriptors: [MenuDescriptor]?,
+        cache: MenuDescriptorCache
+    ) -> MenuDescriptor? {
+        let matchingDescriptors = cachedDescriptors ?? {
+            guard let descriptors = try? cache.load() else {
+                return []
+            }
+
+            return descriptors
+                .filter(\.isEnabled)
+                .filter { $0.contextRules.matches(snapshot: selection.snapshot) }
+        }()
+
+        if let targetId,
+           let matchedDescriptor = matchingDescriptors.first(where: { $0.id == targetId }) {
+            return matchedDescriptor
+        }
+
+        guard let fallbackTitle else {
             return nil
         }
-        return descriptors.first { $0.id == targetId }
+
+        return matchingDescriptors.first { $0.title == fallbackTitle }
+    }
+
+    private static func normalizedIdentifier(_ rawValue: String) -> String? {
+        let trimmed = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            return nil
+        }
+
+        if trimmed == "handleMenuItem:" || trimmed.hasSuffix(":") {
+            return nil
+        }
+
+        return trimmed
+    }
+
+    private static func senderTypeDescription(_ sender: Any?) -> String {
+        guard let sender else {
+            return "nil"
+        }
+
+        if let object = sender as AnyObject? {
+            return NSStringFromClass(type(of: object))
+        }
+
+        return String(describing: type(of: sender))
+    }
+
+    private static func senderDebugDescription(_ sender: Any?) -> String {
+        guard let sender else {
+            return "nil"
+        }
+
+        if let object = sender as AnyObject? {
+            return String(describing: object)
+        }
+
+        return String(describing: sender)
     }
 }

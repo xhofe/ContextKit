@@ -2,7 +2,7 @@ import ContextKitCore
 import FinderSync
 import Foundation
 
-struct SelectionContext {
+struct SelectionContext: Sendable {
     var selectedURLs: [URL]
     var monitoredRootURL: URL?
     var snapshot: ContextSnapshot

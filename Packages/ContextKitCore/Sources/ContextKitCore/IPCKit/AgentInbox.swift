@@ -18,9 +18,7 @@ public final class AgentInbox: @unchecked Sendable {
     public func enqueue(_ request: ExecutionRequest) throws -> ExecutionRequestEnvelope {
         let envelope = ExecutionRequestEnvelope(request: request)
         let data = try encoder.encode(envelope)
-        for url in try requestURLs(for: envelope.id) {
-            try data.write(to: url, options: .atomic)
-        }
+        try write(data, to: requestURLs(for: envelope.id))
         DistributedNotificationCenter.default().post(name: IPCNotification.requestQueued, object: nil)
         return envelope
     }
@@ -44,9 +42,7 @@ public final class AgentInbox: @unchecked Sendable {
 
     public func writeResponse(_ response: ExecutionResponseEnvelope) throws {
         let data = try encoder.encode(response)
-        for url in try responseURLs(for: response.requestID) {
-            try data.write(to: url, options: .atomic)
-        }
+        try write(data, to: responseURLs(for: response.requestID))
     }
 
     public func waitForResponse(requestID: UUID, timeout: TimeInterval = 5.0) throws -> ExecutionResponseEnvelope? {
@@ -88,18 +84,52 @@ public final class AgentInbox: @unchecked Sendable {
     }
 
     private func requestDirectoryURLs() throws -> [URL] {
-        try directoryProvider.ipcBaseURLs().map { baseURL in
-            let url = baseURL.appending(path: "Requests", directoryHint: .isDirectory)
-            try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-            return url
-        }
+        try accessibleDirectoryURLs(named: "Requests")
     }
 
     private func responseDirectoryURLs() throws -> [URL] {
-        try directoryProvider.ipcBaseURLs().map { baseURL in
-            let url = baseURL.appending(path: "Responses", directoryHint: .isDirectory)
-            try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-            return url
+        try accessibleDirectoryURLs(named: "Responses")
+    }
+
+    private func accessibleDirectoryURLs(named directoryName: String) throws -> [URL] {
+        var accessibleURLs: [URL] = []
+        var lastError: Error?
+
+        for baseURL in try directoryProvider.ipcBaseURLs() {
+            let directoryURL = baseURL.appending(path: directoryName, directoryHint: .isDirectory)
+
+            do {
+                try fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true)
+                accessibleURLs.append(directoryURL)
+            } catch {
+                lastError = error
+            }
         }
+
+        if !accessibleURLs.isEmpty {
+            return accessibleURLs
+        }
+
+        throw lastError ?? CocoaError(.fileWriteUnknown)
+    }
+
+    private func write(_ data: Data, to urls: [URL]) throws {
+        var lastError: Error?
+        var didWrite = false
+
+        for url in urls {
+            do {
+                try data.write(to: url, options: .atomic)
+                didWrite = true
+            } catch {
+                lastError = error
+            }
+        }
+
+        if didWrite {
+            return
+        }
+
+        throw lastError ?? CocoaError(.fileWriteUnknown)
     }
 }
