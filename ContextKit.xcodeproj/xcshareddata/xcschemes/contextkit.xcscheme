@@ -15,9 +15,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F2D1153340948C3C9CC4F85E"
-               BuildableName = "contextkit"
-               BlueprintName = "contextkit"
+               BlueprintIdentifier = "62968126A95673FB080A0BBC"
+               BuildableName = "ContextKit.app"
+               BlueprintName = "ContextKit"
+               ReferencedContainer = "container:ContextKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5A15DB53FB598465A3681CBC"
+               BuildableName = "ContextKitFinderSync.appex"
+               BlueprintName = "ContextKitFinderSync"
                ReferencedContainer = "container:ContextKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +46,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2D1153340948C3C9CC4F85E"
-            BuildableName = "contextkit"
-            BlueprintName = "contextkit"
+            BlueprintIdentifier = "62968126A95673FB080A0BBC"
+            BuildableName = "ContextKit.app"
+            BlueprintName = "ContextKit"
             ReferencedContainer = "container:ContextKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +69,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2D1153340948C3C9CC4F85E"
-            BuildableName = "contextkit"
-            BlueprintName = "contextkit"
+            BlueprintIdentifier = "62968126A95673FB080A0BBC"
+            BuildableName = "ContextKit.app"
+            BlueprintName = "ContextKit"
             ReferencedContainer = "container:ContextKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -72,9 +86,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F2D1153340948C3C9CC4F85E"
-            BuildableName = "contextkit"
-            BlueprintName = "contextkit"
+            BlueprintIdentifier = "62968126A95673FB080A0BBC"
+            BuildableName = "ContextKit.app"
+            BlueprintName = "ContextKit"
             ReferencedContainer = "container:ContextKit.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

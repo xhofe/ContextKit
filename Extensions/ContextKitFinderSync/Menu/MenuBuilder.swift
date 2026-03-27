@@ -8,6 +8,7 @@ struct MenuBuilder {
     func build(
         descriptors: [MenuDescriptor],
         selection: SelectionContext,
+        target: AnyObject,
         action: Selector
     ) -> NSMenu {
         let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
@@ -29,6 +30,7 @@ struct MenuBuilder {
             for itemDescriptor in items {
                 let item = NSMenuItem(title: itemDescriptor.title, action: action, keyEquivalent: "")
                 item.isEnabled = true
+                item.target = target
                 item.identifier = NSUserInterfaceItemIdentifier(itemDescriptor.id)
                 item.representedObject = itemDescriptor.id as NSString
                 submenu.addItem(item)

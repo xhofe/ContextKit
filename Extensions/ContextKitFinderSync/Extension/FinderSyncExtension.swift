@@ -26,6 +26,7 @@ final class FinderSyncExtension: FIFinderSync {
         return menuBuilder.build(
             descriptors: descriptors,
             selection: selection,
+            target: self,
             action: #selector(handleMenuItem(_:))
         )
     }
@@ -36,6 +37,7 @@ final class FinderSyncExtension: FIFinderSync {
             return
         }
 
+        NSLog("ContextKitFinderSync handling menu click: %@", targetId)
         Task { @MainActor in
             Self.dispatchMenuAction(targetId: targetId)
         }
