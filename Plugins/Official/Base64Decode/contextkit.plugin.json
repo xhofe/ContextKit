@@ -1,0 +1,28 @@
+{
+  "id" : "plugin.official.base64-decode",
+  "name" : "Base64 Decode",
+  "category" : "tools",
+  "kind" : "plugin",
+  "contextRules" : {
+    "allowFiles" : true,
+    "allowDirectories" : false,
+    "minSelection" : 1,
+    "maxSelection" : 1,
+    "requireSameRoot" : false,
+    "allowedUTTypes" : [ ]
+  },
+  "capabilities" : [
+    "subprocess",
+    "writeGeneratedFiles"
+  ],
+  "entrypoint" : "base64-decode.sh",
+  "argsTemplate" : [
+    "{firstFile}"
+  ],
+  "resultPolicy" : {
+    "deliversClipboard" : false,
+    "deliversFiles" : true,
+    "deliversStructuredPayload" : true,
+    "showsUserMessage" : true
+  }
+}

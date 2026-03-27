@@ -1,0 +1,122 @@
+name: ContextKit
+options:
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "15.7"
+settings:
+  base:
+    DEVELOPMENT_TEAM: 6UKCRW5N6G
+    SWIFT_VERSION: 6.0
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_HARDENED_RUNTIME: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    REGISTER_APP_GROUPS: YES
+    LD_RUNPATH_SEARCH_PATHS:
+      - $(inherited)
+      - "@executable_path/../Frameworks"
+packages:
+  ContextKitCore:
+    path: Packages/ContextKitCore
+    group: Packages
+  ContextKitBuiltins:
+    path: Packages/ContextKitBuiltins
+    group: Packages
+  ContextKitPluginSDK:
+    path: Packages/ContextKitPluginSDK
+    group: Packages
+targets:
+  ContextKit:
+    type: application
+    platform: macOS
+    sources:
+      - path: Apps/ContextKitApp
+      - path: Plugins/Official
+        buildPhase: resources
+        type: folder
+    info:
+      path: Support/Plists/ContextKit-Info.plist
+    entitlements:
+      path: Support/Entitlements/ContextKit.entitlements
+    dependencies:
+      - package: ContextKitCore
+        product: ContextKitCore
+      - package: ContextKitBuiltins
+        product: ContextKitBuiltins
+      - package: ContextKitPluginSDK
+        product: ContextKitPluginSDK
+      - target: ContextKitFinderSync
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ci.nn.ContextKit
+        PRODUCT_NAME: ContextKit
+        ENABLE_APP_SANDBOX: YES
+        ENABLE_USER_SELECTED_FILES: readwrite
+  ContextKitFinderSync:
+    type: app-extension
+    platform: macOS
+    sources:
+      - path: Extensions/ContextKitFinderSync
+    info:
+      path: Support/Plists/ContextKitFinderSync-Info.plist
+    entitlements:
+      path: Support/Entitlements/ContextKitFinderSync.entitlements
+    dependencies:
+      - package: ContextKitCore
+        product: ContextKitCore
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ci.nn.ContextKit.FinderSync
+        PRODUCT_NAME: ContextKitFinderSync
+        ENABLE_APP_SANDBOX: YES
+  ContextKitAgent:
+    type: application
+    platform: macOS
+    sources:
+      - path: Apps/ContextKitAgent
+    info:
+      path: Support/Plists/ContextKitAgent-Info.plist
+    entitlements:
+      path: Support/Entitlements/ContextKitAgent.entitlements
+    dependencies:
+      - package: ContextKitCore
+        product: ContextKitCore
+      - package: ContextKitBuiltins
+        product: ContextKitBuiltins
+      - package: ContextKitPluginSDK
+        product: ContextKitPluginSDK
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ci.nn.ContextKit.Agent
+        PRODUCT_NAME: ContextKitAgent
+        ENABLE_APP_SANDBOX: YES
+  contextkit:
+    type: tool
+    platform: macOS
+    sources:
+      - path: Apps/contextkit-cli
+    dependencies:
+      - package: ContextKitCore
+        product: ContextKitCore
+      - package: ContextKitBuiltins
+        product: ContextKitBuiltins
+      - package: ContextKitPluginSDK
+        product: ContextKitPluginSDK
+    settings:
+      base:
+        PRODUCT_NAME: contextkit
+        CODE_SIGNING_ALLOWED: NO
+schemes:
+  ContextKit:
+    build:
+      targets:
+        ContextKit: all
+        ContextKitFinderSync: all
+  ContextKitAgent:
+    build:
+      targets:
+        ContextKitAgent: all
+  contextkit:
+    build:
+      targets:
+        contextkit: all

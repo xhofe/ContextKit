@@ -1,0 +1,30 @@
+{
+  "id" : "plugin.official.json-format",
+  "name" : "JSON Format",
+  "category" : "tools",
+  "kind" : "plugin",
+  "contextRules" : {
+    "allowFiles" : true,
+    "allowDirectories" : false,
+    "minSelection" : 1,
+    "maxSelection" : 1,
+    "requireSameRoot" : false,
+    "allowedUTTypes" : [
+      "public.json"
+    ]
+  },
+  "capabilities" : [
+    "clipboard",
+    "subprocess"
+  ],
+  "entrypoint" : "format-json.sh",
+  "argsTemplate" : [
+    "{firstFile}"
+  ],
+  "resultPolicy" : {
+    "deliversClipboard" : true,
+    "deliversFiles" : false,
+    "deliversStructuredPayload" : true,
+    "showsUserMessage" : true
+  }
+}

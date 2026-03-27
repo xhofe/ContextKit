@@ -1,0 +1,28 @@
+{
+  "id" : "plugin.official.base64-encode",
+  "name" : "Base64 Encode",
+  "category" : "tools",
+  "kind" : "plugin",
+  "contextRules" : {
+    "allowFiles" : true,
+    "allowDirectories" : false,
+    "minSelection" : 1,
+    "maxSelection" : 1,
+    "requireSameRoot" : false,
+    "allowedUTTypes" : [ ]
+  },
+  "capabilities" : [
+    "clipboard",
+    "subprocess"
+  ],
+  "entrypoint" : "base64-encode.sh",
+  "argsTemplate" : [
+    "{firstFile}"
+  ],
+  "resultPolicy" : {
+    "deliversClipboard" : true,
+    "deliversFiles" : false,
+    "deliversStructuredPayload" : true,
+    "showsUserMessage" : true
+  }
+}
