@@ -20,6 +20,7 @@ struct MenuBuilder {
         action: Selector
     ) -> NSMenu {
         let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
+        menu.autoenablesItems = false
         let matchingDescriptors = descriptors
             .filter(\.isEnabled)
             .filter { $0.contextRules.matches(snapshot: selection.snapshot) }
@@ -33,9 +34,11 @@ struct MenuBuilder {
 
         for (category, items) in sectionProvider.sections(for: matchingDescriptors) {
             let submenu = NSMenu(title: category.displayName)
+            submenu.autoenablesItems = false
             for itemDescriptor in items {
                 let item = NSMenuItem(title: itemDescriptor.title, action: action, keyEquivalent: "")
                 item.target = target
+                item.isEnabled = true
                 item.representedObject = MenuInvocationPayload(
                     request: ExecutionRequest(
                         targetId: itemDescriptor.id,

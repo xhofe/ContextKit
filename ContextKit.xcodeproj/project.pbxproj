@@ -36,6 +36,7 @@
 		6E01C2BDA73AC76BF628DF2D /* TailLogsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */; };
 		7454CBD7AA5BB55E2B74CAFC /* LocalPluginInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */; };
 		760BD748145E8C924FE35031 /* WorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */; };
+		7E8518F80069BBB777B23661 /* MenuActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98854859B67B100D72DDF71D /* MenuActionHandler.swift */; };
 		801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */; };
 		8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD01C2CA91875C089BA948 /* InfoChip.swift */; };
 		95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0A2875A5522DC179D9195 /* ActionListItem.swift */; };
@@ -124,6 +125,7 @@
 		931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
 		96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		97D3757E8A42CD5FD263F00B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		98854859B67B100D72DDF71D /* MenuActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuActionHandler.swift; sourceTree = "<group>"; };
 		A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsView.swift; sourceTree = "<group>"; };
 		A8A4B0DA5D23CF31D12AC7B0 /* CLIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIEnvironment.swift; sourceTree = "<group>"; };
 		AEFD01C2CA91875C089BA948 /* InfoChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChip.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */,
+				98854859B67B100D72DDF71D /* MenuActionHandler.swift */,
 				5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */,
 			);
 			path = Bridge;
@@ -629,6 +632,7 @@
 			files = (
 				4C9B040A7E9408ED719AE9F8 /* ExtensionActionDispatcher.swift in Sources */,
 				DA781DD94F14D58A4146EB69 /* FinderSyncExtension.swift in Sources */,
+				7E8518F80069BBB777B23661 /* MenuActionHandler.swift in Sources */,
 				2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */,
 				AD65EE29C10F43ADD3C38E0D /* MenuSectionProvider.swift in Sources */,
 				C8FC80BC6205FC54B6B0C954 /* SelectionContextReader.swift in Sources */,

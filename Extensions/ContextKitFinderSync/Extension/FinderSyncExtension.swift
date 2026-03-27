@@ -8,7 +8,6 @@ final class FinderSyncExtension: FIFinderSync {
     private let cache = MenuDescriptorCache()
     private let selectionContextReader = SelectionContextReader()
     private let menuBuilder = MenuBuilder()
-    private let dispatcher = ExtensionActionDispatcher()
 
     override init() {
         super.init()
@@ -26,16 +25,9 @@ final class FinderSyncExtension: FIFinderSync {
         return menuBuilder.build(
             descriptors: descriptors,
             selection: selection,
-            target: self,
-            action: #selector(handleMenuItem(_:))
+            target: MenuActionHandler.shared,
+            action: #selector(MenuActionHandler.handleMenuItem(_:))
         )
-    }
-
-    @objc private func handleMenuItem(_ sender: NSMenuItem) {
-        guard let payload = sender.representedObject as? MenuInvocationPayload else {
-            return
-        }
-        dispatcher.dispatch(payload.request)
     }
 
     private func syncObservedDirectories() {
