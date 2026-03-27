@@ -1,8 +1,15 @@
+import ContextKitCore
 import SwiftUI
 
 struct RootView: View {
     @ObservedObject var container: ContextKitAppContainer
+    @ObservedObject private var settingsViewModel: SettingsViewModel
     @State private var selection: AppScreen? = .overview
+
+    init(container: ContextKitAppContainer) {
+        _container = ObservedObject(wrappedValue: container)
+        _settingsViewModel = ObservedObject(wrappedValue: container.settingsViewModel)
+    }
 
     var body: some View {
         NavigationSplitView {
@@ -13,13 +20,14 @@ struct RootView: View {
             .navigationTitle("ContextKit")
             .listStyle(.sidebar)
         } detail: {
-            if container.settingsViewModel.settings.monitoredRoots.isEmpty, selection != .settings {
-                OnboardingView(viewModel: container.settingsViewModel)
+            if settingsViewModel.settings.monitoredRoots.isEmpty, selection != .settings {
+                OnboardingView(viewModel: settingsViewModel)
             } else {
                 detailContent
             }
         }
         .frame(minWidth: 960, minHeight: 640)
+        .environment(\.locale, settingsViewModel.settings.language.locale)
     }
 
     @ViewBuilder
@@ -34,7 +42,7 @@ struct RootView: View {
         case .workflows:
             WorkflowsView(viewModel: container.workflowsViewModel)
         case .settings:
-            SettingsView(viewModel: container.settingsViewModel)
+            SettingsView(viewModel: settingsViewModel)
         }
     }
 }

@@ -44,6 +44,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: contextkit-${{ github.run_number }}-${{ github.sha }}
-          path: dist/
+          path: |
+            dist/ContextKit.dmg
+            dist/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 14

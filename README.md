@@ -138,6 +138,7 @@ xcodebuild \
 ### 5. Debugging notes
 
 - The host app owns monitored-root configuration, plugin management, and workflow authoring. Start by adding monitored roots in `Settings`.
+- Language can be overridden from `Settings` -> `Language`; the default is `System Default`.
 - Finder Sync only appears inside monitored roots. That is a product boundary, not a temporary limitation.
 - The Finder extension only reads cache and dispatches requests. It does not execute plugins or scripts directly.
 - To validate the Finder -> Agent flow locally, run `ContextKitAgent` first and then trigger actions from Finder.
@@ -166,16 +167,21 @@ It performs:
 1. Tool checks
 2. `xcodegen` project generation
 3. `Release` builds for `ContextKit`, `ContextKitAgent`, and `contextkit`
-4. Packaging into `dist/`
+4. Staging a single installable DMG
 5. SHA256 checksum generation
 
 Default outputs:
 
-- `dist/ContextKit.app.zip`
-- `dist/ContextKitAgent.app.zip`
-- `dist/contextkit-macos.tar.gz`
-- `dist/ContextKitOfficialPlugins.zip`
+- `dist/ContextKit.dmg`
 - `dist/SHA256SUMS.txt`
+
+The DMG contains:
+
+- `ContextKit.app`
+- `ContextKitAgent.app`
+- `/Applications` shortcut
+- `Extras/CLI/contextkit`
+- `Extras/Official Plugins/`
 
 Optional environment variables:
 
@@ -184,6 +190,8 @@ CONFIGURATION=Release
 DIST_DIR=/absolute/path/to/dist
 DERIVED_DATA_PATH=/absolute/path/to/DerivedData
 DESTINATION='platform=macOS'
+DMG_NAME=ContextKit.dmg
+DMG_VOLUME_NAME=ContextKit
 ```
 
 Notes:
@@ -219,7 +227,7 @@ This means:
 
 ## Localization
 
-The project currently ships with English and Simplified Chinese. User-facing copy is centralized in:
+The project currently ships with English and Simplified Chinese. The default language follows the system language, and users can override it in the app settings. User-facing copy is centralized in:
 
 - `Packages/ContextKitCore/Sources/ContextKitCore/Resources/en.lproj/Localizable.strings`
 - `Packages/ContextKitCore/Sources/ContextKitCore/Resources/zh-Hans.lproj/Localizable.strings`

@@ -138,6 +138,7 @@ xcodebuild \
 ### 5. 调试建议
 
 - 宿主 App 负责设置监控目录、插件与工作流管理，首次启动后先在 `Settings` 中添加 monitored roots。
+- 可在 `Settings` -> `Language` 中覆盖界面语言，默认会跟随系统语言。
 - Finder Sync 菜单只会在 monitored roots 内显示，这是产品边界的一部分，不会绕过。
 - Finder Extension 自己不执行插件或脚本，只负责读取缓存和派发请求。
 - 如果你要验证 Finder -> Agent 链路，请先运行 `ContextKitAgent`，再从 Finder 菜单触发 Action。
@@ -166,16 +167,21 @@ contextkit logs tail
 1. 校验依赖工具
 2. 用 `xcodegen` 重新生成工程
 3. 以 `Release` 配置构建 `ContextKit`、`ContextKitAgent`、`contextkit`
-4. 打包产物到 `dist/`
+4. 生成单个可分发的 DMG 安装包
 5. 生成 `SHA256SUMS.txt`
 
 默认产物：
 
-- `dist/ContextKit.app.zip`
-- `dist/ContextKitAgent.app.zip`
-- `dist/contextkit-macos.tar.gz`
-- `dist/ContextKitOfficialPlugins.zip`
+- `dist/ContextKit.dmg`
 - `dist/SHA256SUMS.txt`
+
+DMG 中包含：
+
+- `ContextKit.app`
+- `ContextKitAgent.app`
+- `/Applications` 快捷方式
+- `Extras/CLI/contextkit`
+- `Extras/Official Plugins/`
 
 可选环境变量：
 
@@ -184,6 +190,8 @@ CONFIGURATION=Release
 DIST_DIR=/absolute/path/to/dist
 DERIVED_DATA_PATH=/absolute/path/to/DerivedData
 DESTINATION='platform=macOS'
+DMG_NAME=ContextKit.dmg
+DMG_VOLUME_NAME=ContextKit
 ```
 
 说明：
@@ -219,7 +227,7 @@ DESTINATION='platform=macOS'
 
 ## 国际化
 
-当前仓库内置了英文和简体中文两套文案，用户可见字符串统一收敛在：
+当前仓库内置了英文和简体中文两套文案，默认跟随系统语言，用户也可以在设置页中手动切换。用户可见字符串统一收敛在：
 
 - `Packages/ContextKitCore/Sources/ContextKitCore/Resources/en.lproj/Localizable.strings`
 - `Packages/ContextKitCore/Sources/ContextKitCore/Resources/zh-Hans.lproj/Localizable.strings`

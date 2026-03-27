@@ -6,6 +6,8 @@ final class SettingsViewModel: ObservableObject {
     @Published var settings = AppSettings()
     @Published var errorMessage: String?
 
+    var didSaveSettings: (() -> Void)?
+
     let terminalChoices: [AppLauncher] = [
         .terminalDefault,
         AppLauncher(id: "terminal.iterm", name: "iTerm", bundleIdentifier: "com.googlecode.iterm2"),
@@ -34,37 +36,41 @@ final class SettingsViewModel: ObservableObject {
     }
 
     func addRoot() {
-        do {
-            guard let url = services.chooseDirectory() else { return }
+        guard let url = services.chooseDirectory() else { return }
+        performSettingsMutation {
             try services.addMonitoredRoot(url: url)
-            reload()
-        } catch {
-            errorMessage = error.localizedDescription
         }
     }
 
     func removeRoot(_ root: MonitoredRoot) {
-        do {
+        performSettingsMutation {
             try services.removeMonitoredRoot(root)
-            reload()
-        } catch {
-            errorMessage = error.localizedDescription
         }
     }
 
     func saveTerminal(_ launcher: AppLauncher) {
-        do {
+        performSettingsMutation {
             try services.updateDefaultTerminal(launcher)
-            reload()
-        } catch {
-            errorMessage = error.localizedDescription
         }
     }
 
     func saveEditor(_ launcher: AppLauncher) {
-        do {
+        performSettingsMutation {
             try services.updateDefaultEditor(launcher)
+        }
+    }
+
+    func saveLanguage(_ language: AppLanguage) {
+        performSettingsMutation {
+            try services.updateLanguage(language)
+        }
+    }
+
+    private func performSettingsMutation(_ operation: () throws -> Void) {
+        do {
+            try operation()
             reload()
+            didSaveSettings?()
         } catch {
             errorMessage = error.localizedDescription
         }

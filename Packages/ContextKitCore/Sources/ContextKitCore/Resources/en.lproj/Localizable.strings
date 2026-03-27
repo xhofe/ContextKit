@@ -47,10 +47,15 @@
 "app.plugins.status.removed" = "Removed %@.";
 "app.settings.monitoredRoots" = "Monitored Roots";
 "app.settings.defaults" = "Defaults";
+"app.settings.localization" = "Localization";
 "app.settings.remove" = "Remove";
 "app.settings.addRoot" = "Add Root";
 "app.settings.terminal" = "Terminal";
 "app.settings.editor" = "Editor";
+"app.settings.language" = "Language";
+"app.settings.language.system" = "System Default";
+"app.settings.language.english" = "English";
+"app.settings.language.simplifiedChinese" = "Simplified Chinese";
 "app.settings.navigation" = "Settings";
 "app.workflows.description" = "Build linear workflows that chain built-in actions and trusted plugins.";
 "app.workflows.new" = "New Workflow";

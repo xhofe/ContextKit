@@ -48,6 +48,7 @@ final class ContextKitAppServices {
 
     func saveSettings(_ settings: AppSettings) throws {
         try settingsStore.save(settings)
+        L10n.invalidateCache()
         try executionCoordinator.refreshMenuCache()
     }
 
@@ -107,6 +108,12 @@ final class ContextKitAppServices {
     func updateDefaultEditor(_ launcher: AppLauncher) throws {
         var settings = try settingsStore.load()
         settings.defaultEditor = launcher
+        try saveSettings(settings)
+    }
+
+    func updateLanguage(_ language: AppLanguage) throws {
+        var settings = try settingsStore.load()
+        settings.language = language
         try saveSettings(settings)
     }
 

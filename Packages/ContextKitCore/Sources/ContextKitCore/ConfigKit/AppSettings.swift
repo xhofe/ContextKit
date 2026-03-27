@@ -7,6 +7,17 @@ public struct AppSettings: Codable, Hashable, Sendable {
     public var disabledActionIDs: [String]
     public var orderedActionIDs: [String]
     public var trustedPlugins: [TrustedPluginGrant]
+    public var language: AppLanguage
+
+    enum CodingKeys: String, CodingKey {
+        case monitoredRoots
+        case defaultTerminal
+        case defaultEditor
+        case disabledActionIDs
+        case orderedActionIDs
+        case trustedPlugins
+        case language
+    }
 
     public init(
         monitoredRoots: [MonitoredRoot] = [],
@@ -14,7 +25,8 @@ public struct AppSettings: Codable, Hashable, Sendable {
         defaultEditor: AppLauncher = .editorDefault,
         disabledActionIDs: [String] = [],
         orderedActionIDs: [String] = [],
-        trustedPlugins: [TrustedPluginGrant] = []
+        trustedPlugins: [TrustedPluginGrant] = [],
+        language: AppLanguage = .system
     ) {
         self.monitoredRoots = monitoredRoots
         self.defaultTerminal = defaultTerminal
@@ -22,6 +34,29 @@ public struct AppSettings: Codable, Hashable, Sendable {
         self.disabledActionIDs = disabledActionIDs
         self.orderedActionIDs = orderedActionIDs
         self.trustedPlugins = trustedPlugins
+        self.language = language
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        monitoredRoots = try container.decodeIfPresent([MonitoredRoot].self, forKey: .monitoredRoots) ?? []
+        defaultTerminal = try container.decodeIfPresent(AppLauncher.self, forKey: .defaultTerminal) ?? .terminalDefault
+        defaultEditor = try container.decodeIfPresent(AppLauncher.self, forKey: .defaultEditor) ?? .editorDefault
+        disabledActionIDs = try container.decodeIfPresent([String].self, forKey: .disabledActionIDs) ?? []
+        orderedActionIDs = try container.decodeIfPresent([String].self, forKey: .orderedActionIDs) ?? []
+        trustedPlugins = try container.decodeIfPresent([TrustedPluginGrant].self, forKey: .trustedPlugins) ?? []
+        language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .system
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(monitoredRoots, forKey: .monitoredRoots)
+        try container.encode(defaultTerminal, forKey: .defaultTerminal)
+        try container.encode(defaultEditor, forKey: .defaultEditor)
+        try container.encode(disabledActionIDs, forKey: .disabledActionIDs)
+        try container.encode(orderedActionIDs, forKey: .orderedActionIDs)
+        try container.encode(trustedPlugins, forKey: .trustedPlugins)
+        try container.encode(language, forKey: .language)
     }
 
     public func monitoredRoot(for url: URL?) -> URL? {

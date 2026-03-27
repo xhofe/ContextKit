@@ -10,6 +10,9 @@ DIST_DIR="${DIST_DIR:-$ROOT_DIR/dist}"
 DERIVED_DATA_PATH="${DERIVED_DATA_PATH:-$ROOT_DIR/build/DerivedData}"
 APP_DESTINATION="${DESTINATION:-platform=macOS}"
 PRODUCTS_DIR="$DERIVED_DATA_PATH/Build/Products/$CONFIGURATION"
+DMG_STAGE_DIR="${DMG_STAGE_DIR:-$ROOT_DIR/build/DistributionRoot}"
+DMG_NAME="${DMG_NAME:-ContextKit.dmg}"
+DMG_VOLUME_NAME="${DMG_VOLUME_NAME:-ContextKit}"
 
 log() {
   printf '\n[%s] %s\n' "$(date '+%H:%M:%S')" "$*"
@@ -48,9 +51,9 @@ build_cli_scheme() {
     build
 }
 
-package_app() {
+copy_app_bundle() {
   local bundle_name="$1"
-  local archive_name="$2"
+  local destination_dir="$2"
   local bundle_path="$PRODUCTS_DIR/$bundle_name"
 
   if [[ ! -d "$bundle_path" ]]; then
@@ -58,13 +61,13 @@ package_app() {
     exit 1
   fi
 
-  log "Packaging $bundle_name -> $archive_name"
-  ditto -c -k --sequesterRsrc --keepParent "$bundle_path" "$DIST_DIR/$archive_name"
+  log "Staging $bundle_name"
+  ditto "$bundle_path" "$destination_dir/$bundle_name"
 }
 
-package_binary() {
+copy_binary() {
   local binary_name="$1"
-  local archive_name="$2"
+  local destination_path="$2"
   local binary_path="$PRODUCTS_DIR/$binary_name"
 
   if [[ ! -f "$binary_path" ]]; then
@@ -72,21 +75,46 @@ package_binary() {
     exit 1
   fi
 
-  log "Packaging $binary_name -> $archive_name"
-  tar -C "$PRODUCTS_DIR" -czf "$DIST_DIR/$archive_name" "$binary_name"
+  log "Staging $binary_name"
+  cp "$binary_path" "$destination_path"
+  chmod +x "$destination_path"
 }
 
-package_directory() {
+copy_directory() {
   local source_dir="$1"
-  local archive_name="$2"
+  local destination_dir="$2"
 
   if [[ ! -d "$source_dir" ]]; then
     printf 'Expected directory not found: %s\n' "$source_dir" >&2
     exit 1
   fi
 
-  log "Packaging $(basename "$source_dir") -> $archive_name"
-  ditto -c -k --sequesterRsrc --keepParent "$source_dir" "$DIST_DIR/$archive_name"
+  log "Staging $(basename "$source_dir")"
+  ditto "$source_dir" "$destination_dir"
+}
+
+stage_distribution_root() {
+  log "Preparing DMG staging directory"
+  rm -rf "$DMG_STAGE_DIR"
+  mkdir -p "$DMG_STAGE_DIR/Extras/CLI" "$DMG_STAGE_DIR/Extras/Official Plugins"
+
+  copy_app_bundle "ContextKit.app" "$DMG_STAGE_DIR"
+  copy_app_bundle "ContextKitAgent.app" "$DMG_STAGE_DIR"
+  copy_binary "contextkit" "$DMG_STAGE_DIR/Extras/CLI/contextkit"
+  copy_directory "$ROOT_DIR/Plugins/Official" "$DMG_STAGE_DIR/Extras/Official Plugins"
+
+  ln -s /Applications "$DMG_STAGE_DIR/Applications"
+}
+
+create_dmg() {
+  local dmg_path="$DIST_DIR/$DMG_NAME"
+  log "Creating DMG -> $DMG_NAME"
+  hdiutil create \
+    -volname "$DMG_VOLUME_NAME" \
+    -srcfolder "$DMG_STAGE_DIR" \
+    -format UDZO \
+    -ov \
+    "$dmg_path"
 }
 
 write_checksums() {
@@ -94,10 +122,7 @@ write_checksums() {
   (
     cd "$DIST_DIR"
     shasum -a 256 \
-      ContextKit.app.zip \
-      ContextKitAgent.app.zip \
-      contextkit-macos.tar.gz \
-      ContextKitOfficialPlugins.zip \
+      "$DMG_NAME" \
       > SHA256SUMS.txt
   )
 }
@@ -106,7 +131,7 @@ main() {
   require_tool xcodegen
   require_tool xcodebuild
   require_tool ditto
-  require_tool tar
+  require_tool hdiutil
   require_tool shasum
 
   mkdir -p "$DIST_DIR" "$DERIVED_DATA_PATH"
@@ -119,12 +144,11 @@ main() {
   build_app_scheme "ContextKitAgent"
   build_cli_scheme "contextkit"
 
-  package_app "ContextKit.app" "ContextKit.app.zip"
-  package_app "ContextKitAgent.app" "ContextKitAgent.app.zip"
-  package_binary "contextkit" "contextkit-macos.tar.gz"
-  package_directory "$ROOT_DIR/Plugins/Official" "ContextKitOfficialPlugins.zip"
+  stage_distribution_root
+  create_dmg
   find "$DIST_DIR" -name '.DS_Store' -delete
   write_checksums
+  rm -rf "$DMG_STAGE_DIR"
 
   log "Distribution artifacts are ready in $DIST_DIR"
 }
