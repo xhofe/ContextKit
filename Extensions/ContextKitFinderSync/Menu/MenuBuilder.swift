@@ -2,21 +2,12 @@ import AppKit
 import ContextKitCore
 import Foundation
 
-final class MenuInvocationPayload: NSObject {
-    let request: ExecutionRequest
-
-    init(request: ExecutionRequest) {
-        self.request = request
-    }
-}
-
 struct MenuBuilder {
     private let sectionProvider = MenuSectionProvider()
 
     func build(
         descriptors: [MenuDescriptor],
         selection: SelectionContext,
-        target: AnyObject,
         action: Selector
     ) -> NSMenu {
         let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
@@ -37,17 +28,9 @@ struct MenuBuilder {
             submenu.autoenablesItems = false
             for itemDescriptor in items {
                 let item = NSMenuItem(title: itemDescriptor.title, action: action, keyEquivalent: "")
-                item.target = target
                 item.isEnabled = true
-                item.representedObject = MenuInvocationPayload(
-                    request: ExecutionRequest(
-                        targetId: itemDescriptor.id,
-                        targetType: itemDescriptor.targetType,
-                        selectedURLs: selection.selectedURLs,
-                        invocationSource: .finder,
-                        monitoredRootURL: selection.monitoredRootURL
-                    )
-                )
+                item.identifier = NSUserInterfaceItemIdentifier(itemDescriptor.id)
+                item.representedObject = itemDescriptor.id as NSString
                 submenu.addItem(item)
             }
 
