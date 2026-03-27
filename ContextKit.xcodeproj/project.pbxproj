@@ -18,6 +18,7 @@
 		23110BF1E69AF9C54A5DD229 /* RunActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */; };
 		23C9999007AD402FB2207009 /* WorkflowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */; };
 		2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */; };
+		36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */; };
 		37A443D0FAC4C6E18D42AA04 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = A4213454845D19C1A85AEB65 /* ContextKitCore */; };
 		385EC482B29A027FF6EA953C /* WorkflowDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C456137101D4F589EE19F /* WorkflowDraft.swift */; };
 		3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */; };
@@ -145,6 +146,7 @@
 		F59AC8EE8F9AE523B3A66876 /* ContextKitAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContextKitAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsView.swift; sourceTree = "<group>"; };
 		FB281B9C355522A14882EE9A /* ConsolePrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePrinter.swift; sourceTree = "<group>"; };
+		FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSettingsLauncher.swift; sourceTree = "<group>"; };
 		FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunActionCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -403,6 +405,7 @@
 				90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */,
 				3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */,
 				0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */,
+				FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				B942BE269F9C86383F1E57CF /* RootView.swift in Sources */,
 				A8C1B343EA940B41BE091842 /* SettingsView.swift in Sources */,
 				09F7D8009CC7A281A4F029D0 /* SettingsViewModel.swift in Sources */,
+				36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */,
 				385EC482B29A027FF6EA953C /* WorkflowDraft.swift in Sources */,
 				DB8FFDA89893C8DAACCEEA7B /* WorkflowDraftStep.swift in Sources */,
 				4AF89720CAD1CFBE4108B9E2 /* WorkflowEditorView.swift in Sources */,

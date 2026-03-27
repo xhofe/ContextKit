@@ -46,6 +46,10 @@
 "app.plugins.status.trusted" = "已信任 %@。";
 "app.plugins.status.removed" = "已删除 %@。";
 "app.settings.monitoredRoots" = "监控目录";
+"app.settings.finder" = "Finder 集成";
+"app.settings.finderHint" = "先在系统设置里启用 ContextKit 的 Finder 扩展，再到上面的任一监控目录中使用 Finder。监控目录之外不会显示菜单。";
+"app.settings.finderOpenButton" = "打开 Finder 扩展设置";
+"app.settings.finderOpenFailed" = "无法打开 macOS 的 Finder 扩展设置。";
 "app.settings.defaults" = "默认应用";
 "app.settings.localization" = "语言与本地化";
 "app.settings.remove" = "删除";

@@ -139,10 +139,20 @@ xcodebuild \
 
 - 宿主 App 负责设置监控目录、插件与工作流管理，首次启动后先在 `Settings` 中添加 monitored roots。
 - 可在 `Settings` -> `Language` 中覆盖界面语言，默认会跟随系统语言。
+- 安装应用后，需要先在 macOS 系统设置中启用 `ContextKit` 的 Finder 扩展，Finder 里才会出现对应菜单。
 - Finder Sync 菜单只会在 monitored roots 内显示，这是产品边界的一部分，不会绕过。
 - Finder Extension 自己不执行插件或脚本，只负责读取缓存和派发请求。
 - 如果你要验证 Finder -> Agent 链路，请先运行 `ContextKitAgent`，再从 Finder 菜单触发 Action。
 - CLI 直接复用共享 Core 执行，不复制业务逻辑。
+
+### Finder 菜单排查
+
+如果安装后 Finder 中看不到 `ContextKit`，请依次检查：
+
+1. 先打开一次 `ContextKit.app`，让宿主 App 完成共享状态初始化并刷新菜单缓存。
+2. 在 `Settings` 中至少添加一个监控目录。
+3. 在 macOS 系统设置中启用 `ContextKit` 的 Finder 扩展。
+4. 在上述某个监控目录内，对文件或文件夹执行右键。
 
 ### 6. 常用 CLI
 

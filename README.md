@@ -139,10 +139,20 @@ xcodebuild \
 
 - The host app owns monitored-root configuration, plugin management, and workflow authoring. Start by adding monitored roots in `Settings`.
 - Language can be overridden from `Settings` -> `Language`; the default is `System Default`.
+- After installing the app, enable the `ContextKit` Finder extension in macOS System Settings before expecting the menu to appear in Finder.
 - Finder Sync only appears inside monitored roots. That is a product boundary, not a temporary limitation.
 - The Finder extension only reads cache and dispatches requests. It does not execute plugins or scripts directly.
 - To validate the Finder -> Agent flow locally, run `ContextKitAgent` first and then trigger actions from Finder.
 - The CLI reuses the same shared core logic instead of copying execution code.
+
+### Finder menu troubleshooting
+
+If `ContextKit` does not appear in Finder after installation, check the following:
+
+1. Open `ContextKit.app` once so it can bootstrap shared state and refresh the menu cache.
+2. In `Settings`, add at least one monitored root.
+3. Enable the `ContextKit` Finder extension in macOS System Settings.
+4. Right-click a file or folder inside one of the monitored roots.
 
 ### 6. Common CLI commands
 

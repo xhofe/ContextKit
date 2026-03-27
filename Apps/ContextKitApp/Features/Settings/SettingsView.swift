@@ -7,6 +7,7 @@ struct SettingsView: View {
     var body: some View {
         Form {
             monitoredRootsSection
+            finderSection
             defaultsSection
             localizationSection
             errorSection
@@ -50,6 +51,27 @@ struct SettingsView: View {
                     Text(launcher.name).tag(launcher.id)
                 }
             }
+        }
+    }
+
+    private var finderSection: some View {
+        Section(L10n.string("app.settings.finder", fallback: "Finder Integration")) {
+            Text(
+                L10n.string(
+                    "app.settings.finderHint",
+                    fallback: "Enable the ContextKit Finder extension in System Settings, then use Finder inside one of the monitored roots above. The menu will not appear outside monitored roots."
+                )
+            )
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Button(
+                L10n.string(
+                    "app.settings.finderOpenButton",
+                    fallback: "Open Finder Extension Settings"
+                ),
+                action: viewModel.openFinderExtensionsSettings
+            )
         }
     }
 

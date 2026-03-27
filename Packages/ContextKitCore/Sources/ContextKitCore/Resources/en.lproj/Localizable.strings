@@ -46,6 +46,10 @@
 "app.plugins.status.trusted" = "Trusted %@.";
 "app.plugins.status.removed" = "Removed %@.";
 "app.settings.monitoredRoots" = "Monitored Roots";
+"app.settings.finder" = "Finder Integration";
+"app.settings.finderHint" = "Enable the ContextKit Finder extension in System Settings, then use Finder inside one of the monitored roots above. The menu will not appear outside monitored roots.";
+"app.settings.finderOpenButton" = "Open Finder Extension Settings";
+"app.settings.finderOpenFailed" = "Couldn't open macOS Finder extension settings.";
 "app.settings.defaults" = "Defaults";
 "app.settings.localization" = "Localization";
 "app.settings.remove" = "Remove";

@@ -15,6 +15,7 @@ final class ContextKitAppServices {
     private let executionCoordinator: ExecutionCoordinator
     private let bootstrapper: AppBootstrapper
     private let agentLauncher: EmbeddedAgentLauncher
+    private let systemSettingsLauncher: SystemSettingsLauncher
 
     init() {
         let settingsStore = SharedSettingsStore()
@@ -37,6 +38,7 @@ final class ContextKitAppServices {
         )
         self.bootstrapper = AppBootstrapper(pluginRepository: pluginRepository)
         self.agentLauncher = EmbeddedAgentLauncher()
+        self.systemSettingsLauncher = SystemSettingsLauncher()
     }
 
     func bootstrap(bundle: Bundle = .main) throws {
@@ -181,6 +183,21 @@ final class ContextKitAppServices {
         panel.canChooseFiles = false
         panel.allowsMultipleSelection = false
         return panel.runModal() == .OK ? panel.url : nil
+    }
+
+    func openFinderExtensionsSettings() throws {
+        guard systemSettingsLauncher.openFinderExtensionsSettings() else {
+            throw NSError(
+                domain: "ContextKitAppServices",
+                code: 1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: L10n.string(
+                        "app.settings.finderOpenFailed",
+                        fallback: "Couldn't open macOS Finder extension settings."
+                    ),
+                ]
+            )
+        }
     }
 
     private func slug(for value: String) -> String {

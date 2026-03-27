@@ -66,6 +66,15 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
+    func openFinderExtensionsSettings() {
+        do {
+            try services.openFinderExtensionsSettings()
+            errorMessage = nil
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
     private func performSettingsMutation(_ operation: () throws -> Void) {
         do {
             try operation()
