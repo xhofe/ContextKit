@@ -178,10 +178,9 @@ Default outputs:
 The DMG contains:
 
 - `ContextKit.app`
-- `ContextKitAgent.app`
 - `/Applications` shortcut
-- `Extras/CLI/contextkit`
-- `Extras/Official Plugins/`
+
+`ContextKitAgent.app` is embedded inside `ContextKit.app`, so end users only need to drag a single app into `/Applications`. The host app launches the embedded agent on startup, while local development builds can still run the standalone `ContextKitAgent.app` from Xcode.
 
 Optional environment variables:
 
@@ -216,6 +215,30 @@ This means:
 - The app updates settings and menu descriptors, while Finder reads the cached menu model
 - Finder dispatches requests through shared request files, and the agent processes them
 - Logs, plugin installation state, and workflows stay consistent across all entry points
+
+## Data Storage
+
+Runtime data is resolved by `SharedDirectoryProvider` in `ContextKitCore`.
+
+Preferred location:
+
+- `~/Library/Group Containers/group.ci.nn.ContextKit/`
+
+Fallback location:
+
+- `~/Library/Application Support/ContextKitShared/`
+
+The store currently contains:
+
+- `settings.json`
+- `menu-descriptors.json`
+- `execution-log.json`
+- `Workflows/`
+- `Plugins/`
+- `Requests/`
+- `Responses/`
+
+If the app group container is unavailable in a local development environment, ContextKit automatically falls back to the `Application Support` path above.
 
 ## Engineering Principles
 

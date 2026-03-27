@@ -14,6 +14,7 @@ final class ContextKitAppServices {
     private let gitPluginInstaller: GitPluginInstaller
     private let executionCoordinator: ExecutionCoordinator
     private let bootstrapper: AppBootstrapper
+    private let agentLauncher: EmbeddedAgentLauncher
 
     init() {
         let settingsStore = SharedSettingsStore()
@@ -35,11 +36,13 @@ final class ContextKitAppServices {
             builtins: BuiltinActionRegistry.commands()
         )
         self.bootstrapper = AppBootstrapper(pluginRepository: pluginRepository)
+        self.agentLauncher = EmbeddedAgentLauncher()
     }
 
     func bootstrap(bundle: Bundle = .main) throws {
         try bootstrapper.installBundledPluginsIfNeeded(from: bundle)
         try executionCoordinator.refreshMenuCache()
+        agentLauncher.launchIfNeeded(hostBundle: bundle)
     }
 
     func loadSettings() throws -> AppSettings {

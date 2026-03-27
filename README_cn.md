@@ -178,10 +178,9 @@ contextkit logs tail
 DMG 中包含：
 
 - `ContextKit.app`
-- `ContextKitAgent.app`
 - `/Applications` 快捷方式
-- `Extras/CLI/contextkit`
-- `Extras/Official Plugins/`
+
+`ContextKitAgent.app` 会内嵌在 `ContextKit.app` 内，所以终端用户安装时只需要把一个 App 拖到 `/Applications`。宿主 App 启动时会自动拉起内嵌 agent；本地开发时仍然可以继续从 Xcode 单独运行 `ContextKitAgent.app`。
 
 可选环境变量：
 
@@ -216,6 +215,30 @@ DMG_VOLUME_NAME=ContextKit
 - App 修改设置后，Finder Extension 读取的是缓存后的菜单描述符
 - Finder 点击菜单后，通过共享请求目录与 Agent 通信
 - 日志、插件仓库和工作流定义在多入口之间保持一致
+
+## 数据存储位置
+
+运行时数据目录由 `ContextKitCore` 中的 `SharedDirectoryProvider` 统一解析。
+
+优先位置：
+
+- `~/Library/Group Containers/group.ci.nn.ContextKit/`
+
+降级回退位置：
+
+- `~/Library/Application Support/ContextKitShared/`
+
+当前会写入的内容包括：
+
+- `settings.json`
+- `menu-descriptors.json`
+- `execution-log.json`
+- `Workflows/`
+- `Plugins/`
+- `Requests/`
+- `Responses/`
+
+如果在本地开发环境里 App Group 容器不可用，ContextKit 会自动回退到上面的 `Application Support` 路径。
 
 ## 开发原则
 

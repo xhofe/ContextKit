@@ -93,15 +93,35 @@ copy_directory() {
   ditto "$source_dir" "$destination_dir"
 }
 
+embed_agent_in_app_bundle() {
+  local app_bundle="$1"
+  local agent_bundle="$PRODUCTS_DIR/ContextKitAgent.app"
+  local login_items_dir="$app_bundle/Contents/Library/LoginItems"
+  local embedded_agent_bundle="$login_items_dir/ContextKitAgent.app"
+
+  if [[ ! -d "$app_bundle" ]]; then
+    printf 'Expected host app bundle not found: %s\n' "$app_bundle" >&2
+    exit 1
+  fi
+
+  if [[ ! -d "$agent_bundle" ]]; then
+    printf 'Expected agent app bundle not found: %s\n' "$agent_bundle" >&2
+    exit 1
+  fi
+
+  log "Embedding ContextKitAgent.app inside ContextKit.app"
+  mkdir -p "$login_items_dir"
+  rm -rf "$embedded_agent_bundle"
+  ditto "$agent_bundle" "$embedded_agent_bundle"
+}
+
 stage_distribution_root() {
   log "Preparing DMG staging directory"
   rm -rf "$DMG_STAGE_DIR"
-  mkdir -p "$DMG_STAGE_DIR/Extras/CLI" "$DMG_STAGE_DIR/Extras/Official Plugins"
+  mkdir -p "$DMG_STAGE_DIR"
 
   copy_app_bundle "ContextKit.app" "$DMG_STAGE_DIR"
-  copy_app_bundle "ContextKitAgent.app" "$DMG_STAGE_DIR"
-  copy_binary "contextkit" "$DMG_STAGE_DIR/Extras/CLI/contextkit"
-  copy_directory "$ROOT_DIR/Plugins/Official" "$DMG_STAGE_DIR/Extras/Official Plugins"
+  embed_agent_in_app_bundle "$DMG_STAGE_DIR/ContextKit.app"
 
   ln -s /Applications "$DMG_STAGE_DIR/Applications"
 }
