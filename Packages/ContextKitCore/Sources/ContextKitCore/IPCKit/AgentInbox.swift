@@ -4,34 +4,49 @@ public final class AgentInbox: @unchecked Sendable {
     private let directoryProvider: SharedDirectoryProvider
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
+    private let fileManager: FileManager
 
-    public init(directoryProvider: SharedDirectoryProvider = SharedDirectoryProvider()) {
+    public init(
+        directoryProvider: SharedDirectoryProvider = SharedDirectoryProvider(),
+        fileManager: FileManager = .default
+    ) {
         self.directoryProvider = directoryProvider
+        self.fileManager = fileManager
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
     }
 
     public func enqueue(_ request: ExecutionRequest) throws -> ExecutionRequestEnvelope {
         let envelope = ExecutionRequestEnvelope(request: request)
-        let url = try requestURL(for: envelope.id)
         let data = try encoder.encode(envelope)
-        try data.write(to: url, options: .atomic)
+        for url in try requestURLs(for: envelope.id) {
+            try data.write(to: url, options: .atomic)
+        }
         DistributedNotificationCenter.default().post(name: IPCNotification.requestQueued, object: nil)
         return envelope
     }
 
     public func pendingRequests() throws -> [ExecutionRequestEnvelope] {
-        let directory = try directoryProvider.requestDirectoryURL()
-        let urls = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-        return try urls
-            .filter { $0.pathExtension == "json" }
-            .map { try decoder.decode(ExecutionRequestEnvelope.self, from: Data(contentsOf: $0)) }
-            .sorted(by: { $0.createdAt < $1.createdAt })
+        var envelopesByID: [UUID: ExecutionRequestEnvelope] = [:]
+
+        for directory in try requestDirectoryURLs() {
+            let urls = try fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+            for url in urls where url.pathExtension == "json" {
+                let envelope = try decoder.decode(ExecutionRequestEnvelope.self, from: Data(contentsOf: url))
+                if let existing = envelopesByID[envelope.id], existing.createdAt <= envelope.createdAt {
+                    continue
+                }
+                envelopesByID[envelope.id] = envelope
+            }
+        }
+
+        return envelopesByID.values.sorted(by: { $0.createdAt < $1.createdAt })
     }
 
     public func writeResponse(_ response: ExecutionResponseEnvelope) throws {
-        let url = try responseURL(for: response.requestID)
         let data = try encoder.encode(response)
-        try data.write(to: url, options: .atomic)
+        for url in try responseURLs(for: response.requestID) {
+            try data.write(to: url, options: .atomic)
+        }
     }
 
     public func waitForResponse(requestID: UUID, timeout: TimeInterval = 5.0) throws -> ExecutionResponseEnvelope? {
@@ -46,34 +61,45 @@ public final class AgentInbox: @unchecked Sendable {
     }
 
     public func loadResponse(requestID: UUID) throws -> ExecutionResponseEnvelope? {
-        let url = try responseURL(for: requestID)
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            return nil
+        for url in try responseURLs(for: requestID) where fileManager.fileExists(atPath: url.path) {
+            return try decoder.decode(ExecutionResponseEnvelope.self, from: Data(contentsOf: url))
         }
-        return try decoder.decode(ExecutionResponseEnvelope.self, from: Data(contentsOf: url))
+        return nil
     }
 
     public func removeRequest(id: UUID) throws {
-        let url = try requestURL(for: id)
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            return
+        for url in try requestURLs(for: id) where fileManager.fileExists(atPath: url.path) {
+            try fileManager.removeItem(at: url)
         }
-        try FileManager.default.removeItem(at: url)
     }
 
     public func removeResponse(requestID: UUID) throws {
-        let url = try responseURL(for: requestID)
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            return
+        for url in try responseURLs(for: requestID) where fileManager.fileExists(atPath: url.path) {
+            try fileManager.removeItem(at: url)
         }
-        try FileManager.default.removeItem(at: url)
     }
 
-    private func requestURL(for id: UUID) throws -> URL {
-        try directoryProvider.requestDirectoryURL().appending(path: "\(id.uuidString).json")
+    private func requestURLs(for id: UUID) throws -> [URL] {
+        try requestDirectoryURLs().map { $0.appending(path: "\(id.uuidString).json") }
     }
 
-    private func responseURL(for id: UUID) throws -> URL {
-        try directoryProvider.responseDirectoryURL().appending(path: "\(id.uuidString).json")
+    private func responseURLs(for id: UUID) throws -> [URL] {
+        try responseDirectoryURLs().map { $0.appending(path: "\(id.uuidString).json") }
+    }
+
+    private func requestDirectoryURLs() throws -> [URL] {
+        try directoryProvider.ipcBaseURLs().map { baseURL in
+            let url = baseURL.appending(path: "Requests", directoryHint: .isDirectory)
+            try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+            return url
+        }
+    }
+
+    private func responseDirectoryURLs() throws -> [URL] {
+        try directoryProvider.ipcBaseURLs().map { baseURL in
+            let url = baseURL.appending(path: "Responses", directoryHint: .isDirectory)
+            try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+            return url
+        }
     }
 }

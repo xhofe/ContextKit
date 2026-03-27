@@ -20,9 +20,8 @@ final class EmbeddedAgentLauncher {
         }
 
         let bundleIdentifier = Bundle(url: agentURL)?.bundleIdentifier ?? "ci.nn.ContextKit.Agent"
-        guard NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier).isEmpty else {
-            return
-        }
+        let runningApplications = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
+        terminateRunningAgents(runningApplications)
 
         let configuration = NSWorkspace.OpenConfiguration()
         configuration.activates = false
@@ -42,5 +41,28 @@ final class EmbeddedAgentLauncher {
         ]
 
         return candidateURLs.first(where: { fileManager.fileExists(atPath: $0.path) })
+    }
+
+    private func terminateRunningAgents(_ applications: [NSRunningApplication]) {
+        guard !applications.isEmpty else {
+            return
+        }
+
+        for application in applications {
+            _ = application.terminate()
+        }
+
+        let deadline = Date().addingTimeInterval(1.0)
+        while Date() < deadline {
+            let remaining = applications.filter { !$0.isTerminated }
+            guard !remaining.isEmpty else {
+                return
+            }
+            RunLoop.current.run(mode: .default, before: Date().addingTimeInterval(0.05))
+        }
+
+        for application in applications where !application.isTerminated {
+            _ = application.forceTerminate()
+        }
     }
 }

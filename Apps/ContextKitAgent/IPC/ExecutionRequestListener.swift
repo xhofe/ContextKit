@@ -23,11 +23,16 @@ final class ExecutionRequestListener: NSObject {
         processor.processPendingRequests()
     }
 
-    @objc private func handleRequestQueued() {
+    deinit {
+        timer?.invalidate()
+        DistributedNotificationCenter.default().removeObserver(self)
+    }
+
+    @objc private func handleRequestQueued(_ notification: Notification) {
         processor.processPendingRequests()
     }
 
-    @objc private func handlePeriodicSweep() {
+    @objc private func handlePeriodicSweep(_ timer: Timer) {
         processor.processPendingRequests()
     }
 }

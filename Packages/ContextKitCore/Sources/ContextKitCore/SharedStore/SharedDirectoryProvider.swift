@@ -16,19 +16,15 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
     }
 
     public func baseURL() throws -> URL {
-        if let groupURL = preferredGroupURL() {
-            try prepareGroupDirectory(at: groupURL)
+        if let groupURL = try preferredBaseURL() {
             return groupURL
         }
 
-        if let legacyGroupURL = legacyGroupURL() {
-            try createDirectoryIfNeeded(at: legacyGroupURL)
+        if let legacyGroupURL = try legacyBaseURL() {
             return legacyGroupURL
         }
 
-        let fallback = try fallbackURL()
-        try createDirectoryIfNeeded(at: fallback)
-        return fallback
+        return try fallbackBaseURL()
     }
 
     public static func defaultAppGroupIdentifier(bundle: Bundle = .main) -> String? {
@@ -58,6 +54,42 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
 
     public func logsURL() throws -> URL {
         try baseURL().appending(path: "execution-log.json")
+    }
+
+    public func preferredBaseURL() throws -> URL? {
+        guard let groupURL = preferredGroupURL() else {
+            return nil
+        }
+        try prepareGroupDirectory(at: groupURL)
+        return groupURL
+    }
+
+    public func legacyBaseURL() throws -> URL? {
+        guard let groupURL = legacyGroupURL() else {
+            return nil
+        }
+        try createDirectoryIfNeeded(at: groupURL)
+        return groupURL
+    }
+
+    public func fallbackBaseURL() throws -> URL {
+        let fallback = try fallbackURL()
+        try createDirectoryIfNeeded(at: fallback)
+        return fallback
+    }
+
+    public func ipcBaseURLs() throws -> [URL] {
+        let candidates = [
+            try preferredBaseURL(),
+            try legacyBaseURL(),
+            try fallbackBaseURL(),
+        ].compactMap { $0?.resolvingSymlinksInPath().standardizedFileURL }
+
+        var uniqueURLs: [URL] = []
+        for candidate in candidates where !uniqueURLs.contains(candidate) {
+            uniqueURLs.append(candidate)
+        }
+        return uniqueURLs
     }
 
     public func requestDirectoryURL() throws -> URL {
