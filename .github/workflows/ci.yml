@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: 1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install XcodeGen
+        run: |
+          if ! command -v xcodegen >/dev/null 2>&1; then
+            brew install xcodegen
+          fi
+
+      - name: Test ContextKitCore
+        run: swift test --package-path Packages/ContextKitCore
+
+      - name: Test ContextKitBuiltins
+        run: swift test --package-path Packages/ContextKitBuiltins
+
+      - name: Test ContextKitPluginSDK
+        run: swift test --package-path Packages/ContextKitPluginSDK
+
+      - name: Build distribution artifacts
+        run: ./Support/Scripts/build-distribution.sh
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: contextkit-${{ github.run_number }}-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
