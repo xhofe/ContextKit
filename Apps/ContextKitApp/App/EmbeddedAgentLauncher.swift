@@ -28,8 +28,10 @@ final class EmbeddedAgentLauncher {
         configuration.addsToRecentItems = false
 
         workspace.openApplication(at: agentURL, configuration: configuration) { _, error in
-            if let error {
-                NSLog("ContextKit failed to launch agent: %@", error.localizedDescription)
+            Task { @MainActor in
+                if let error {
+                    NSLog("ContextKit failed to launch agent: %@", error.localizedDescription)
+                }
             }
         }
     }
