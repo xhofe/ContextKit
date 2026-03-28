@@ -43,7 +43,7 @@ final class ContextKitAppServices {
 
     func bootstrap(bundle: Bundle = .main) throws {
         try bootstrapper.installBundledPluginsIfNeeded(from: bundle)
-        try normalizeMenuLayoutIfNeeded()
+        try executionCoordinator.refreshMenuCache()
         agentLauncher.launchIfNeeded(hostBundle: bundle)
     }
 
@@ -233,23 +233,5 @@ final class ContextKitAppServices {
             .replacingOccurrences(of: #"[^a-z0-9]+"#, with: "-", options: .regularExpression)
             .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
         return normalized.isEmpty ? "workflow-\(UUID().uuidString.lowercased())" : normalized
-    }
-
-    private func normalizeMenuLayoutIfNeeded() throws {
-        var settings = try settingsStore.load()
-        let catalog = try executionCoordinator.catalog()
-        let resolvedLayout = MenuLayoutResolver.resolve(
-            actions: catalog.actions,
-            workflows: catalog.workflows,
-            settings: settings
-        )
-
-        guard resolvedLayout != settings.menuLayout else {
-            try executionCoordinator.refreshMenuCache()
-            return
-        }
-
-        settings.menuLayout = resolvedLayout
-        try saveSettings(settings)
     }
 }

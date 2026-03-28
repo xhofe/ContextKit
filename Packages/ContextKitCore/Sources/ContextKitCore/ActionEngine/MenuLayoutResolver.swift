@@ -162,10 +162,6 @@ public enum MenuLayoutResolver {
         workflowIDs: Set<String>
     ) -> [MenuLayoutItem] {
         items.compactMap { item in
-            if let migratedItem = migrateLegacyItem(item, actionIDs: actionIDs) {
-                return migratedItem
-            }
-
             switch item.kind {
             case .group:
                 var group = item
@@ -176,40 +172,6 @@ public enum MenuLayoutResolver {
             case .workflow:
                 return workflowIDs.contains(item.id) ? item : nil
             }
-        }
-    }
-
-    private static func migrateLegacyItem(
-        _ item: MenuLayoutItem,
-        actionIDs: Set<String>
-    ) -> MenuLayoutItem? {
-        guard item.kind == .action else {
-            return nil
-        }
-
-        switch item.id {
-        case "builtin.open-terminal":
-            let children = AppLauncher.knownTerminalLaunchers
-                .map(BuiltinActionIdentifier.openInTerminalActionID(for:))
-                .filter(actionIDs.contains)
-                .map(MenuLayoutItem.action)
-            return children.isEmpty ? nil : .group(
-                id: "group.open-terminals",
-                title: L10n.string("menu.group.openInTerminal", fallback: "Open in Terminal"),
-                children: children
-            )
-        case "builtin.open-editor":
-            let children = AppLauncher.knownEditorLaunchers
-                .map(BuiltinActionIdentifier.openInEditorActionID(for:))
-                .filter(actionIDs.contains)
-                .map(MenuLayoutItem.action)
-            return children.isEmpty ? nil : .group(
-                id: "group.open-editors",
-                title: L10n.string("menu.group.openInEditor", fallback: "Open in Editor"),
-                children: children
-            )
-        default:
-            return nil
         }
     }
 
