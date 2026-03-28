@@ -1,18 +1,27 @@
 import Foundation
+import Security
 
 public final class SharedDirectoryProvider: @unchecked Sendable {
     public let appGroupIdentifier: String?
     public let legacyAppGroupIdentifier: String?
     private let fileManager: FileManager
+    private let containerURLProvider: (String) -> URL?
+    private let hasApplicationGroupEntitlement: (String) -> Bool
 
     public init(
         appGroupIdentifier: String? = SharedDirectoryProvider.defaultAppGroupIdentifier(),
         legacyAppGroupIdentifier: String? = "group.ci.nn.ContextKit",
-        fileManager: FileManager = .default
+        fileManager: FileManager = .default,
+        containerURLProvider: ((String) -> URL?)? = nil,
+        hasApplicationGroupEntitlement: ((String) -> Bool)? = nil
     ) {
         self.appGroupIdentifier = appGroupIdentifier
         self.legacyAppGroupIdentifier = legacyAppGroupIdentifier
         self.fileManager = fileManager
+        self.containerURLProvider = containerURLProvider ?? { identifier in
+            fileManager.containerURL(forSecurityApplicationGroupIdentifier: identifier)
+        }
+        self.hasApplicationGroupEntitlement = hasApplicationGroupEntitlement ?? Self.currentProcessHasAppGroupEntitlement(_:)
     }
 
     public func baseURL() throws -> URL {
@@ -117,7 +126,11 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
             return nil
         }
 
-        return fileManager.containerURL(forSecurityApplicationGroupIdentifier: identifier)
+        guard hasApplicationGroupEntitlement(identifier) else {
+            return nil
+        }
+
+        return containerURLProvider(identifier)
     }
 
     private func fallbackURL() throws -> URL {
@@ -176,5 +189,22 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
 
     private func createDirectoryIfNeeded(at url: URL) throws {
         try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+    }
+
+    private static func currentProcessHasAppGroupEntitlement(_ identifier: String) -> Bool {
+        guard let task = SecTaskCreateFromSelf(nil),
+              let value = SecTaskCopyValueForEntitlement(
+                task,
+                "com.apple.security.application-groups" as CFString,
+                nil
+              ) else {
+            return false
+        }
+
+        guard let groups = value as? [String] else {
+            return false
+        }
+
+        return groups.contains(identifier)
     }
 }
