@@ -8,9 +8,6 @@ final class SettingsViewModel: ObservableObject {
 
     var didSaveSettings: (() -> Void)?
 
-    let terminalChoices = AppLauncher.knownTerminalLaunchers
-    let editorChoices = AppLauncher.knownEditorLaunchers
-
     private let services: ContextKitAppServices
 
     init(services: ContextKitAppServices) {
@@ -39,38 +36,6 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
-    func setTerminalVisibility(_ isVisible: Bool, for launcher: AppLauncher) {
-        performSettingsMutation {
-            var visibleIDs = settings.visibleTerminalLauncherIDs
-            visibleIDs.removeAll(where: { $0 == launcher.id })
-
-            if isVisible {
-                visibleIDs.append(launcher.id)
-            }
-
-            try services.updateVisibleTerminalLauncherIDs(visibleIDs)
-        }
-    }
-
-    func setEditorVisibility(_ isVisible: Bool, for launcher: AppLauncher) {
-        performSettingsMutation {
-            var visibleIDs = settings.visibleEditorLauncherIDs
-            visibleIDs.removeAll(where: { $0 == launcher.id })
-
-            if isVisible {
-                visibleIDs.append(launcher.id)
-            }
-
-            try services.updateVisibleEditorLauncherIDs(visibleIDs)
-        }
-    }
-
-    func saveEditor(_ launcher: AppLauncher) {
-        performSettingsMutation {
-            try services.updateDefaultEditor(launcher)
-        }
-    }
-
     func saveLanguage(_ language: AppLanguage) {
         performSettingsMutation {
             try services.updateLanguage(language)
@@ -84,14 +49,6 @@ final class SettingsViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
-    }
-
-    func isTerminalVisible(_ launcher: AppLauncher) -> Bool {
-        settings.visibleTerminalLauncherIDs.contains(launcher.id)
-    }
-
-    func isEditorVisible(_ launcher: AppLauncher) -> Bool {
-        settings.visibleEditorLauncherIDs.contains(launcher.id)
     }
 
     private func performSettingsMutation(_ operation: () throws -> Void) {

@@ -2,10 +2,6 @@ import Foundation
 
 public struct AppSettings: Codable, Hashable, Sendable {
     public var monitoredRoots: [MonitoredRoot]
-    public var defaultTerminal: AppLauncher
-    public var defaultEditor: AppLauncher
-    public var visibleTerminalLauncherIDs: [String]
-    public var visibleEditorLauncherIDs: [String]
     public var disabledActionIDs: [String]
     public var orderedActionIDs: [String]
     public var menuLayout: [MenuLayoutItem]
@@ -14,10 +10,6 @@ public struct AppSettings: Codable, Hashable, Sendable {
 
     enum CodingKeys: String, CodingKey {
         case monitoredRoots
-        case defaultTerminal
-        case defaultEditor
-        case visibleTerminalLauncherIDs
-        case visibleEditorLauncherIDs
         case disabledActionIDs
         case orderedActionIDs
         case menuLayout
@@ -27,10 +19,6 @@ public struct AppSettings: Codable, Hashable, Sendable {
 
     public init(
         monitoredRoots: [MonitoredRoot] = [],
-        defaultTerminal: AppLauncher = .terminalDefault,
-        defaultEditor: AppLauncher = .editorDefault,
-        visibleTerminalLauncherIDs: [String] = AppLauncher.knownTerminalLaunchers.map(\.id),
-        visibleEditorLauncherIDs: [String] = AppLauncher.knownEditorLaunchers.map(\.id),
         disabledActionIDs: [String] = [],
         orderedActionIDs: [String] = [],
         menuLayout: [MenuLayoutItem] = [],
@@ -38,10 +26,6 @@ public struct AppSettings: Codable, Hashable, Sendable {
         language: AppLanguage = .system
     ) {
         self.monitoredRoots = monitoredRoots
-        self.defaultTerminal = defaultTerminal
-        self.defaultEditor = defaultEditor
-        self.visibleTerminalLauncherIDs = visibleTerminalLauncherIDs
-        self.visibleEditorLauncherIDs = visibleEditorLauncherIDs
         self.disabledActionIDs = disabledActionIDs
         self.orderedActionIDs = orderedActionIDs
         self.menuLayout = menuLayout
@@ -52,12 +36,6 @@ public struct AppSettings: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         monitoredRoots = try container.decodeIfPresent([MonitoredRoot].self, forKey: .monitoredRoots) ?? []
-        defaultTerminal = try container.decodeIfPresent(AppLauncher.self, forKey: .defaultTerminal) ?? .terminalDefault
-        defaultEditor = try container.decodeIfPresent(AppLauncher.self, forKey: .defaultEditor) ?? .editorDefault
-        visibleTerminalLauncherIDs = try container.decodeIfPresent([String].self, forKey: .visibleTerminalLauncherIDs)
-            ?? AppLauncher.knownTerminalLaunchers.map(\.id)
-        visibleEditorLauncherIDs = try container.decodeIfPresent([String].self, forKey: .visibleEditorLauncherIDs)
-            ?? AppLauncher.knownEditorLaunchers.map(\.id)
         disabledActionIDs = try container.decodeIfPresent([String].self, forKey: .disabledActionIDs) ?? []
         orderedActionIDs = try container.decodeIfPresent([String].self, forKey: .orderedActionIDs) ?? []
         menuLayout = try container.decodeIfPresent([MenuLayoutItem].self, forKey: .menuLayout) ?? []
@@ -68,10 +46,6 @@ public struct AppSettings: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(monitoredRoots, forKey: .monitoredRoots)
-        try container.encode(defaultTerminal, forKey: .defaultTerminal)
-        try container.encode(defaultEditor, forKey: .defaultEditor)
-        try container.encode(visibleTerminalLauncherIDs, forKey: .visibleTerminalLauncherIDs)
-        try container.encode(visibleEditorLauncherIDs, forKey: .visibleEditorLauncherIDs)
         try container.encode(disabledActionIDs, forKey: .disabledActionIDs)
         try container.encode(orderedActionIDs, forKey: .orderedActionIDs)
         try container.encode(menuLayout, forKey: .menuLayout)

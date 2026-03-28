@@ -263,23 +263,6 @@ public enum MenuLayoutResolver {
     }
 
     private static func isActionVisible(_ actionID: String, settings: AppSettings) -> Bool {
-        guard settings.isActionEnabled(actionID) else {
-            return false
-        }
-
-        guard BuiltinActionIdentifier.isOpenInTerminalActionID(actionID) else {
-            if BuiltinActionIdentifier.isOpenInEditorActionID(actionID) {
-                return AppLauncher.knownEditorLaunchers.contains { launcher in
-                    BuiltinActionIdentifier.openInEditorActionID(for: launcher) == actionID &&
-                    settings.visibleEditorLauncherIDs.contains(launcher.id)
-                }
-            }
-            return true
-        }
-
-        return AppLauncher.knownTerminalLaunchers.contains { launcher in
-            BuiltinActionIdentifier.openInTerminalActionID(for: launcher) == actionID &&
-            settings.visibleTerminalLauncherIDs.contains(launcher.id)
-        }
+        settings.isActionEnabled(actionID)
     }
 }

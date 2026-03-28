@@ -8,8 +8,6 @@ struct SettingsView: View {
         Form {
             monitoredRootsSection
             finderSection
-            terminalMenuSection
-            editorMenuSection
             localizationSection
             errorSection
         }
@@ -36,52 +34,6 @@ struct SettingsView: View {
                 }
             }
             Button(L10n.string("app.settings.addRoot", fallback: "Add Root"), action: viewModel.addRoot)
-        }
-    }
-
-    private var terminalMenuSection: some View {
-        Section(L10n.string("app.settings.terminalMenu", fallback: "Terminal Menu")) {
-            Text(
-                L10n.string(
-                    "app.settings.terminalMenuHint",
-                    fallback: "ContextKit shows a terminal submenu in Finder. Choose which terminal apps should appear there."
-                )
-            )
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
-
-            ForEach(viewModel.terminalChoices) { launcher in
-                Toggle(
-                    launcher.name,
-                    isOn: Binding(
-                        get: { viewModel.isTerminalVisible(launcher) },
-                        set: { viewModel.setTerminalVisibility($0, for: launcher) }
-                    )
-                )
-            }
-        }
-    }
-
-    private var editorMenuSection: some View {
-        Section(L10n.string("app.settings.editorMenu", fallback: "Editor Menu")) {
-            Text(
-                L10n.string(
-                    "app.settings.editorMenuHint",
-                    fallback: "ContextKit shows an editor submenu in Finder. Choose which editors should appear there."
-                )
-            )
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
-
-            ForEach(viewModel.editorChoices) { launcher in
-                Toggle(
-                    launcher.name,
-                    isOn: Binding(
-                        get: { viewModel.isEditorVisible(launcher) },
-                        set: { viewModel.setEditorVisibility($0, for: launcher) }
-                    )
-                )
-            }
         }
     }
 

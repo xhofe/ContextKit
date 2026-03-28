@@ -120,30 +120,6 @@ final class ContextKitAppServices {
         try saveSettings(settings)
     }
 
-    func updateDefaultTerminal(_ launcher: AppLauncher) throws {
-        var settings = try settingsStore.load()
-        settings.defaultTerminal = launcher
-        try saveSettings(settings)
-    }
-
-    func updateVisibleTerminalLauncherIDs(_ launcherIDs: [String]) throws {
-        var settings = try settingsStore.load()
-        settings.visibleTerminalLauncherIDs = launcherIDs
-        try saveSettings(settings)
-    }
-
-    func updateVisibleEditorLauncherIDs(_ launcherIDs: [String]) throws {
-        var settings = try settingsStore.load()
-        settings.visibleEditorLauncherIDs = launcherIDs
-        try saveSettings(settings)
-    }
-
-    func updateDefaultEditor(_ launcher: AppLauncher) throws {
-        var settings = try settingsStore.load()
-        settings.defaultEditor = launcher
-        try saveSettings(settings)
-    }
-
     func updateLanguage(_ language: AppLanguage) throws {
         var settings = try settingsStore.load()
         settings.language = language
