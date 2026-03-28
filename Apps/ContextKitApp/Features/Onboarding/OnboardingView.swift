@@ -2,7 +2,7 @@ import ContextKitCore
 import SwiftUI
 
 struct OnboardingView: View {
-    @ObservedObject var viewModel: SettingsViewModel
+    let viewModel: SettingsViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {

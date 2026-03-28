@@ -1,8 +1,9 @@
 import ContextKitCore
+import Observation
 import SwiftUI
 
 struct WorkflowEditorView: View {
-    @ObservedObject var viewModel: WorkflowsViewModel
+    @Bindable var viewModel: WorkflowsViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -10,25 +11,13 @@ struct WorkflowEditorView: View {
                 .textFieldStyle(.roundedBorder)
 
             ForEach($viewModel.draft.steps) { $step in
-                HStack {
-                    Picker(L10n.string("app.workflows.editor.action", fallback: "Action"), selection: $step.actionID) {
-                        ForEach(viewModel.availableActions, id: \.id) { action in
-                            Text(action.name).tag(action.id)
-                        }
-                    }
-
-                    Picker(L10n.string("app.workflows.editor.input", fallback: "Input"), selection: $step.input) {
-                        ForEach(WorkflowStepInput.allCases, id: \.self) { input in
-                            Text(input.displayName).tag(input)
-                        }
-                    }
-
-                    Button(role: .destructive) {
+                WorkflowStepRowView(
+                    step: $step,
+                    availableActions: viewModel.availableActions,
+                    removeStep: {
                         viewModel.draft.steps.removeAll(where: { $0.id == step.id })
-                    } label: {
-                        Image(systemName: "trash")
                     }
-                }
+                )
             }
 
             HStack {

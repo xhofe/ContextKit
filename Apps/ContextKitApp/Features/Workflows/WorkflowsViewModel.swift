@@ -1,13 +1,15 @@
 import ContextKitCore
 import Foundation
+import Observation
 
+@Observable
 @MainActor
-final class WorkflowsViewModel: ObservableObject {
-    @Published var workflows: [WorkflowManifest] = []
-    @Published var availableActions: [ActionManifest] = []
-    @Published var isPresentingEditor = false
-    @Published var draft = WorkflowDraft()
-    @Published var errorMessage: String?
+final class WorkflowsViewModel {
+    var workflows: [WorkflowManifest] = []
+    var availableActions: [ActionManifest] = []
+    var isPresentingEditor = false
+    var draft = WorkflowDraft()
+    var errorMessage: String?
 
     private let services: ContextKitAppServices
 

@@ -1,14 +1,16 @@
 import ContextKitCore
 import Foundation
+import Observation
 
+@Observable
 @MainActor
-final class OverviewViewModel: ObservableObject {
-    @Published var actionCount = 0
-    @Published var pluginCount = 0
-    @Published var workflowCount = 0
-    @Published var monitoredRootCount = 0
-    @Published var recentLogs: [ExecutionLogEntry] = []
-    @Published var errorMessage: String?
+final class OverviewViewModel {
+    var actionCount = 0
+    var pluginCount = 0
+    var workflowCount = 0
+    var monitoredRootCount = 0
+    var recentLogs: [ExecutionLogEntry] = []
+    var errorMessage: String?
 
     private let services: ContextKitAppServices
 

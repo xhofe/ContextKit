@@ -1,12 +1,14 @@
 import ContextKitCore
 import Foundation
+import Observation
 
+@Observable
 @MainActor
-final class PluginsViewModel: ObservableObject {
-    @Published var plugins: [InstalledPlugin] = []
-    @Published var gitRepositoryURL = ""
-    @Published var statusMessage: String?
-    @Published var errorMessage: String?
+final class PluginsViewModel {
+    var plugins: [InstalledPlugin] = []
+    var gitRepositoryURL = ""
+    var statusMessage: String?
+    var errorMessage: String?
 
     private let services: ContextKitAppServices
 

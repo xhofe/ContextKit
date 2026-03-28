@@ -18,23 +18,29 @@
 		23110BF1E69AF9C54A5DD229 /* RunActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */; };
 		23C9999007AD402FB2207009 /* WorkflowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */; };
 		2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */; };
+		330CD94AE3B66BFD9938BB7B /* AppDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */; };
 		36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */; };
 		37A443D0FAC4C6E18D42AA04 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = A4213454845D19C1A85AEB65 /* ContextKitCore */; };
 		385EC482B29A027FF6EA953C /* WorkflowDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C456137101D4F589EE19F /* WorkflowDraft.swift */; };
+		3F06D2BDE367EBC19CB33C2B /* ActionsDropZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055600E2DA2B6B0B68E26AB6 /* ActionsDropZoneView.swift */; };
 		3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */; };
 		40F0FDBDB7E916656CEB12A4 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 36D151E699090D63666303EC /* ContextKitCore */; };
+		41863322C886708957EE6EEF /* ActionsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3889C6D4CC2E22DE6AE3039F /* ActionsHeaderView.swift */; };
 		41DEF7C2FB82E058B8D90256 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF1CBF717A170D49E8C9B7E /* main.swift */; };
 		48B1BA2AA6098612E9A4581A /* ContextKitAppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3105F444A7E89958528D094 /* ContextKitAppContainer.swift */; };
 		4AF89720CAD1CFBE4108B9E2 /* WorkflowEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25853C53482A7B0F97DDEF59 /* WorkflowEditorView.swift */; };
 		4C9B040A7E9408ED719AE9F8 /* ExtensionActionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */; };
+		4E2945843A64930B9A78DC4D /* WorkflowStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2F32A0073D19E0CED2BC139 /* WorkflowStepRowView.swift */; };
 		4F867BAA9A17FF1977B5E9C0 /* PluginsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAE74AD8E078D96ED8BC71B /* PluginsViewModel.swift */; };
 		5211B91FDC40AC9594B0B917 /* MenuInvocationSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */; };
+		5B766EED3415FF3F7959DEF1 /* LanguageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69242D31E9E6E1CE66E13CBC /* LanguageSectionView.swift */; };
 		5EB6BAD3EE037F7B2EF75942 /* ConsolePrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB281B9C355522A14882EE9A /* ConsolePrinter.swift */; };
 		5EBDD881D4A8C4F03ABB9883 /* CLIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A4B0DA5D23CF31D12AC7B0 /* CLIEnvironment.swift */; };
 		5FFCF1093B56EE352FF8413A /* AgentRuntimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */; };
 		695862EFB52101242ECEC33D /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */; };
 		6BF5BEF884CD808B7ED1B31F /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = EFAEC11F333E35BC1AC8000D /* ContextKitPluginSDK */; };
 		6E01C2BDA73AC76BF628DF2D /* TailLogsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */; };
+		73CB966421397DCA664337CD /* SettingsErrorSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */; };
 		7454CBD7AA5BB55E2B74CAFC /* LocalPluginInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */; };
 		760BD748145E8C924FE35031 /* WorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */; };
 		801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */; };
@@ -49,9 +55,13 @@
 		ABBC67E0C84B84EDA11584ED /* AgentAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */; };
 		AD65EE29C10F43ADD3C38E0D /* MenuSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6817E06F791B150126B280E /* MenuSectionProvider.swift */; };
 		B04A7EF74263DDC30578C0A7 /* AppLanguage+DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AEE2291AE624224EB4CEB8 /* AppLanguage+DisplayName.swift */; };
+		B36B4C9E4DB65740904445DF /* ActionListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAD6EBBD845DFA72D78EB7D /* ActionListRowView.swift */; };
 		B942BE269F9C86383F1E57CF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */; };
 		BB387949BD78953DAE9FF480 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */; };
 		BBAD8E26D9561EBF53EB11FB /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = EB764D038D95CEE23AC4A6BC /* ContextKitPluginSDK */; };
+		BEB406F6BB423C5344CD378C /* FinderIntegrationSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C1C57A612104F5D1DD668D /* FinderIntegrationSectionView.swift */; };
+		C2E7A625AF76F58358EA8E13 /* MonitoredRootsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE8868B830DCB23211DB0EC /* MonitoredRootsSectionView.swift */; };
+		C817D17FEE8E0D115DE76862 /* ActionsDropIntoGroupIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93077348A3AC08A0B47C71B9 /* ActionsDropIntoGroupIndicator.swift */; };
 		C8FC80BC6205FC54B6B0C954 /* SelectionContextReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */; };
 		CA699A078E3B50A8983E2F1A /* ContextKitBuiltins in Frameworks */ = {isa = PBXBuildFile; productRef = 72510A7C819E654A7F867FE4 /* ContextKitBuiltins */; };
 		D6CFD199E0D25A326AD45B61 /* ActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */; };
@@ -60,6 +70,7 @@
 		DB8FFDA89893C8DAACCEEA7B /* WorkflowDraftStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DAE405D91090030B148B2C /* WorkflowDraftStep.swift */; };
 		DD2A7A3E179E07D057A583A8 /* ExecutionRequestListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26161C1B388EE213F1B5B746 /* ExecutionRequestListener.swift */; };
 		DFC3CD251CDEB0224B84C5CF /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0765A526B88295A1D08E5F25 /* ContextKitPluginSDK */; };
+		E1F798F7AF4759D70CBF6CEE /* AppSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */; };
 		E25E09314642079EAD68F4D9 /* ContextKitFinderSync.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5AF293C60E528F7387BF71F /* ContextKitAppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */; };
 		EE16DAAD29727C83E5DB0A09 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678AFF850BE4CD1CE6022DB /* AppScreen.swift */; };
@@ -95,6 +106,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00C1C57A612104F5D1DD668D /* FinderIntegrationSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderIntegrationSectionView.swift; sourceTree = "<group>"; };
+		055600E2DA2B6B0B68E26AB6 /* ActionsDropZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsDropZoneView.swift; sourceTree = "<group>"; };
 		0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		135C456137101D4F589EE19F /* WorkflowDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowDraft.swift; sourceTree = "<group>"; };
@@ -107,33 +120,40 @@
 		353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionActionDispatcher.swift; sourceTree = "<group>"; };
 		36AEE2291AE624224EB4CEB8 /* AppLanguage+DisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppLanguage+DisplayName.swift"; sourceTree = "<group>"; };
 		38814B12B844A59DD017C46B /* Official */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Official; path = Plugins/Official; sourceTree = SOURCE_ROOT; };
+		3889C6D4CC2E22DE6AE3039F /* ActionsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsHeaderView.swift; sourceTree = "<group>"; };
 		3A7B0F4FC6E6B11A056F4DA2 /* FinderSyncExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderSyncExtension.swift; sourceTree = "<group>"; };
 		3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBuilder.swift; sourceTree = "<group>"; };
 		3C92EDADE7A0D70B9E0089B8 /* RunWorkflowCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunWorkflowCommand.swift; sourceTree = "<group>"; };
 		3DF22F1635ABD98151239A32 /* ListPluginsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPluginsCommand.swift; sourceTree = "<group>"; };
 		3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAgentLauncher.swift; sourceTree = "<group>"; };
+		4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebarView.swift; sourceTree = "<group>"; };
 		4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsViewModel.swift; sourceTree = "<group>"; };
 		4E48026D7AA6286D3D8C8C25 /* ContextKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContextKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitAppServices.swift; sourceTree = "<group>"; };
 		5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionContextReader.swift; sourceTree = "<group>"; };
+		69242D31E9E6E1CE66E13CBC /* LanguageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSectionView.swift; sourceTree = "<group>"; };
 		6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailLogsCommand.swift; sourceTree = "<group>"; };
 		7748088E397BC353ABA79D04 /* ContextKitBuiltins */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ContextKitBuiltins; path = Packages/ContextKitBuiltins; sourceTree = SOURCE_ROOT; };
+		79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsErrorSectionView.swift; sourceTree = "<group>"; };
 		8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentAppDelegate.swift; sourceTree = "<group>"; };
 		8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInvocationSnapshot.swift; sourceTree = "<group>"; };
 		8AF1CBF717A170D49E8C9B7E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8BBC35E880382397DFEFA8F7 /* InstallPluginCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPluginCommand.swift; sourceTree = "<group>"; };
 		8CA6598AC7D7A126F467C0E0 /* contextkit */ = {isa = PBXFileReference; includeInIndex = 0; path = contextkit; sourceTree = BUILT_PRODUCTS_DIR; };
 		90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitMacApp.swift; sourceTree = "<group>"; };
+		93077348A3AC08A0B47C71B9 /* ActionsDropIntoGroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsDropIntoGroupIndicator.swift; sourceTree = "<group>"; };
 		931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
 		96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		97D3757E8A42CD5FD263F00B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FCD9A518AE7D4FA5E78F529 /* MenuLayoutEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLayoutEditor.swift; sourceTree = "<group>"; };
 		A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsView.swift; sourceTree = "<group>"; };
 		A8A4B0DA5D23CF31D12AC7B0 /* CLIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIEnvironment.swift; sourceTree = "<group>"; };
+		A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailView.swift; sourceTree = "<group>"; };
 		AEFD01C2CA91875C089BA948 /* InfoChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChip.swift; sourceTree = "<group>"; };
 		B678AFF850BE4CD1CE6022DB /* AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreen.swift; sourceTree = "<group>"; };
 		BDC2900B90C9ABC1A0ECBBFA /* ContextKitCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ContextKitCore; path = Packages/ContextKitCore; sourceTree = SOURCE_ROOT; };
 		C14246F8B756E9660590551A /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		C2F32A0073D19E0CED2BC139 /* WorkflowStepRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowStepRowView.swift; sourceTree = "<group>"; };
 		C8ABEA37DC00D94B0A6F114F /* ContextKitPluginSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ContextKitPluginSDK; path = Packages/ContextKitPluginSDK; sourceTree = SOURCE_ROOT; };
 		CDAE74AD8E078D96ED8BC71B /* PluginsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsViewModel.swift; sourceTree = "<group>"; };
 		CEFAF3298086C8708449A0D8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -142,6 +162,7 @@
 		D6817E06F791B150126B280E /* MenuSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionProvider.swift; sourceTree = "<group>"; };
 		D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsViewModel.swift; sourceTree = "<group>"; };
 		DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContextKitFinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEE8868B830DCB23211DB0EC /* MonitoredRootsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoredRootsSectionView.swift; sourceTree = "<group>"; };
 		E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRuntimeFactory.swift; sourceTree = "<group>"; };
 		EAC3CC9A08A2A554A90ED518 /* PluginsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsView.swift; sourceTree = "<group>"; };
 		EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPluginInstaller.swift; sourceTree = "<group>"; };
@@ -151,6 +172,7 @@
 		F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsView.swift; sourceTree = "<group>"; };
 		FB281B9C355522A14882EE9A /* ConsolePrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePrinter.swift; sourceTree = "<group>"; };
 		FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSettingsLauncher.swift; sourceTree = "<group>"; };
+		FFAD6EBBD845DFA72D78EB7D /* ActionListRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListRowView.swift; sourceTree = "<group>"; };
 		FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunActionCommand.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -306,6 +328,10 @@
 			isa = PBXGroup;
 			children = (
 				D0F0A2875A5522DC179D9195 /* ActionListItem.swift */,
+				FFAD6EBBD845DFA72D78EB7D /* ActionListRowView.swift */,
+				93077348A3AC08A0B47C71B9 /* ActionsDropIntoGroupIndicator.swift */,
+				055600E2DA2B6B0B68E26AB6 /* ActionsDropZoneView.swift */,
+				3889C6D4CC2E22DE6AE3039F /* ActionsHeaderView.swift */,
 				F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */,
 				4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */,
 				9FCD9A518AE7D4FA5E78F529 /* MenuLayoutEditor.swift */,
@@ -350,6 +376,7 @@
 				135C456137101D4F589EE19F /* WorkflowDraft.swift */,
 				D0DAE405D91090030B148B2C /* WorkflowDraftStep.swift */,
 				25853C53482A7B0F97DDEF59 /* WorkflowEditorView.swift */,
+				C2F32A0073D19E0CED2BC139 /* WorkflowStepRowView.swift */,
 				A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */,
 				D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */,
 			);
@@ -405,7 +432,9 @@
 			isa = PBXGroup;
 			children = (
 				931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */,
+				A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */,
 				B678AFF850BE4CD1CE6022DB /* AppScreen.swift */,
+				4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */,
 				F3105F444A7E89958528D094 /* ContextKitAppContainer.swift */,
 				59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */,
 				90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */,
@@ -447,6 +476,10 @@
 			isa = PBXGroup;
 			children = (
 				36AEE2291AE624224EB4CEB8 /* AppLanguage+DisplayName.swift */,
+				00C1C57A612104F5D1DD668D /* FinderIntegrationSectionView.swift */,
+				69242D31E9E6E1CE66E13CBC /* LanguageSectionView.swift */,
+				DEE8868B830DCB23211DB0EC /* MonitoredRootsSectionView.swift */,
+				79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */,
 				2D41E7C7AA5E907624845EEE /* SettingsView.swift */,
 				CEFAF3298086C8708449A0D8 /* SettingsViewModel.swift */,
 			);
@@ -661,30 +694,41 @@
 			buildActionMask = 2147483647;
 			files = (
 				95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */,
+				B36B4C9E4DB65740904445DF /* ActionListRowView.swift in Sources */,
+				C817D17FEE8E0D115DE76862 /* ActionsDropIntoGroupIndicator.swift in Sources */,
+				3F06D2BDE367EBC19CB33C2B /* ActionsDropZoneView.swift in Sources */,
+				41863322C886708957EE6EEF /* ActionsHeaderView.swift in Sources */,
 				9B29B7A76A66FF26DCE23129 /* ActionsView.swift in Sources */,
 				D6CFD199E0D25A326AD45B61 /* ActionsViewModel.swift in Sources */,
 				695862EFB52101242ECEC33D /* AppBootstrapper.swift in Sources */,
+				330CD94AE3B66BFD9938BB7B /* AppDetailView.swift in Sources */,
 				B04A7EF74263DDC30578C0A7 /* AppLanguage+DisplayName.swift in Sources */,
 				EE16DAAD29727C83E5DB0A09 /* AppScreen.swift in Sources */,
+				E1F798F7AF4759D70CBF6CEE /* AppSidebarView.swift in Sources */,
 				48B1BA2AA6098612E9A4581A /* ContextKitAppContainer.swift in Sources */,
 				E5AF293C60E528F7387BF71F /* ContextKitAppServices.swift in Sources */,
 				3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */,
 				A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */,
 				801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */,
+				BEB406F6BB423C5344CD378C /* FinderIntegrationSectionView.swift in Sources */,
 				8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */,
+				5B766EED3415FF3F7959DEF1 /* LanguageSectionView.swift in Sources */,
 				D901C3BA603419AB74AD6C4A /* MenuLayoutEditor.swift in Sources */,
+				C2E7A625AF76F58358EA8E13 /* MonitoredRootsSectionView.swift in Sources */,
 				0E3532492F2239D1F0E73119 /* OnboardingView.swift in Sources */,
 				064703F1EB10D30A5C38EA66 /* OverviewView.swift in Sources */,
 				BB387949BD78953DAE9FF480 /* OverviewViewModel.swift in Sources */,
 				A36D005EA4628D1311865413 /* PluginsView.swift in Sources */,
 				4F867BAA9A17FF1977B5E9C0 /* PluginsViewModel.swift in Sources */,
 				B942BE269F9C86383F1E57CF /* RootView.swift in Sources */,
+				73CB966421397DCA664337CD /* SettingsErrorSectionView.swift in Sources */,
 				A8C1B343EA940B41BE091842 /* SettingsView.swift in Sources */,
 				09F7D8009CC7A281A4F029D0 /* SettingsViewModel.swift in Sources */,
 				36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */,
 				385EC482B29A027FF6EA953C /* WorkflowDraft.swift in Sources */,
 				DB8FFDA89893C8DAACCEEA7B /* WorkflowDraftStep.swift in Sources */,
 				4AF89720CAD1CFBE4108B9E2 /* WorkflowEditorView.swift in Sources */,
+				4E2945843A64930B9A78DC4D /* WorkflowStepRowView.swift in Sources */,
 				760BD748145E8C924FE35031 /* WorkflowsView.swift in Sources */,
 				23C9999007AD402FB2207009 /* WorkflowsViewModel.swift in Sources */,
 			);

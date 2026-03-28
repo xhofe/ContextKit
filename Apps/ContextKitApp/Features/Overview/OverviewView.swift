@@ -2,7 +2,7 @@ import ContextKitCore
 import SwiftUI
 
 struct OverviewView: View {
-    @ObservedObject var viewModel: OverviewViewModel
+    let viewModel: OverviewViewModel
 
     var body: some View {
         ScrollView {
@@ -54,6 +54,8 @@ struct OverviewView: View {
             .padding(28)
         }
         .navigationTitle(L10n.string("app.overview.navigation", fallback: "Overview"))
-        .onAppear(perform: viewModel.reload)
+        .task {
+            viewModel.reload()
+        }
     }
 }

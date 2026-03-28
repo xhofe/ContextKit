@@ -1,7 +1,9 @@
+import Observation
 import Foundation
 
+@Observable
 @MainActor
-final class ContextKitAppContainer: ObservableObject {
+final class ContextKitAppContainer {
     let services: ContextKitAppServices
     let overviewViewModel: OverviewViewModel
     let actionsViewModel: ActionsViewModel

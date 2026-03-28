@@ -1,8 +1,9 @@
 import ContextKitCore
+import Observation
 import SwiftUI
 
 struct WorkflowsView: View {
-    @ObservedObject var viewModel: WorkflowsViewModel
+    @Bindable var viewModel: WorkflowsViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -49,6 +50,8 @@ struct WorkflowsView: View {
         .sheet(isPresented: $viewModel.isPresentingEditor) {
             WorkflowEditorView(viewModel: viewModel)
         }
-        .onAppear(perform: viewModel.reload)
+        .task {
+            viewModel.reload()
+        }
     }
 }

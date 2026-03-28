@@ -1,8 +1,9 @@
 import ContextKitCore
+import Observation
 import SwiftUI
 
 struct PluginsView: View {
-    @ObservedObject var viewModel: PluginsViewModel
+    @Bindable var viewModel: PluginsViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -68,6 +69,8 @@ struct PluginsView: View {
         }
         .padding(24)
         .navigationTitle(L10n.string("app.plugins.navigation", fallback: "Plugins"))
-        .onAppear(perform: viewModel.reload)
+        .task {
+            viewModel.reload()
+        }
     }
 }

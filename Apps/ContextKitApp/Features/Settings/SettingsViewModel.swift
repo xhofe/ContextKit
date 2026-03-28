@@ -1,10 +1,12 @@
 import ContextKitCore
 import Foundation
+import Observation
 
+@Observable
 @MainActor
-final class SettingsViewModel: ObservableObject {
-    @Published var settings = AppSettings()
-    @Published var errorMessage: String?
+final class SettingsViewModel {
+    var settings = AppSettings()
+    var errorMessage: String?
 
     var didSaveSettings: (() -> Void)?
 

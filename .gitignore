@@ -6,3 +6,4 @@ ContextKit.xcodeproj/xcuserdata/
 dist/
 Packages/*/.build/
 Packages/*/build/
+.agents/skills

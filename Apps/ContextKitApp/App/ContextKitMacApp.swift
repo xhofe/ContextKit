@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct ContextKitMacApp: App {
-    @StateObject private var container = ContextKitAppContainer()
+    @State private var container = ContextKitAppContainer()
 
     var body: some Scene {
         WindowGroup {

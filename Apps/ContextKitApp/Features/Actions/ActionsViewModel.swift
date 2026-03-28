@@ -1,10 +1,12 @@
 import ContextKitCore
 import Foundation
+import Observation
 
+@Observable
 @MainActor
-final class ActionsViewModel: ObservableObject {
-    @Published var items: [ActionListItem] = []
-    @Published var errorMessage: String?
+final class ActionsViewModel {
+    var items: [ActionListItem] = []
+    var errorMessage: String?
 
     private let services: ContextKitAppServices
     private var menuLayout: [MenuLayoutItem] = []
