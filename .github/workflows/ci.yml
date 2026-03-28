@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-26
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       DISTRIBUTION_CODE_SIGNING_ALLOWED: NO
