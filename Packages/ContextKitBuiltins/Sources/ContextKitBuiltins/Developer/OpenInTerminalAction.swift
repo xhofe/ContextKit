@@ -2,13 +2,14 @@ import Foundation
 import ContextKitCore
 
 struct OpenInTerminalAction {
+    let launcher: AppLauncher
     private let opener = LauncherOpener()
 
     var command: AnyActionCommand {
         AnyActionCommand(
             manifest: ActionManifest(
-                id: "builtin.open-terminal",
-                name: L10n.string("builtin.openTerminal.name", fallback: "Open in Terminal"),
+                id: BuiltinActionIdentifier.openInTerminalActionID(for: launcher),
+                name: launcher.name,
                 category: .open,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -26,8 +27,14 @@ struct OpenInTerminalAction {
                 )
             }
 
-            try self.opener.open([targetURL], with: context.settings.defaultTerminal)
-            return ExecutionResult(status: .success, message: L10n.string("builtin.openTerminal.opened", fallback: "Opened terminal."))
+            try self.opener.open([targetURL], with: launcher)
+            return ExecutionResult(
+                status: .success,
+                message: String(
+                    format: L10n.string("builtin.openTerminal.openedNamed", fallback: "Opened %@."),
+                    launcher.name
+                )
+            )
         }
     }
 }

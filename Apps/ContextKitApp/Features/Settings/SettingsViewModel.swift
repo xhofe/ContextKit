@@ -8,17 +8,8 @@ final class SettingsViewModel: ObservableObject {
 
     var didSaveSettings: (() -> Void)?
 
-    let terminalChoices: [AppLauncher] = [
-        .terminalDefault,
-        AppLauncher(id: "terminal.iterm", name: "iTerm", bundleIdentifier: "com.googlecode.iterm2"),
-        AppLauncher(id: "terminal.warp", name: "Warp", bundleIdentifier: "dev.warp.Warp-Stable"),
-        AppLauncher(id: "terminal.ghostty", name: "Ghostty", bundleIdentifier: "com.mitchellh.ghostty"),
-    ]
-
-    let editorChoices: [AppLauncher] = [
-        .editorDefault,
-        AppLauncher(id: "editor.cursor", name: "Cursor", bundleIdentifier: "com.todesktop.230313mzl4w4u92"),
-    ]
+    let terminalChoices = AppLauncher.knownTerminalLaunchers
+    let editorChoices = AppLauncher.knownEditorLaunchers
 
     private let services: ContextKitAppServices
 
@@ -48,9 +39,16 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
-    func saveTerminal(_ launcher: AppLauncher) {
+    func setTerminalVisibility(_ isVisible: Bool, for launcher: AppLauncher) {
         performSettingsMutation {
-            try services.updateDefaultTerminal(launcher)
+            var visibleIDs = settings.visibleTerminalLauncherIDs
+            visibleIDs.removeAll(where: { $0 == launcher.id })
+
+            if isVisible {
+                visibleIDs.append(launcher.id)
+            }
+
+            try services.updateVisibleTerminalLauncherIDs(visibleIDs)
         }
     }
 
@@ -73,6 +71,10 @@ final class SettingsViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    func isTerminalVisible(_ launcher: AppLauncher) -> Bool {
+        settings.visibleTerminalLauncherIDs.contains(launcher.id)
     }
 
     private func performSettingsMutation(_ operation: () throws -> Void) {

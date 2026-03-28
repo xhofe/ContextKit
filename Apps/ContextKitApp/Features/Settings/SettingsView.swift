@@ -9,6 +9,7 @@ struct SettingsView: View {
             monitoredRootsSection
             finderSection
             defaultsSection
+            terminalMenuSection
             localizationSection
             errorSection
         }
@@ -40,16 +41,33 @@ struct SettingsView: View {
 
     private var defaultsSection: some View {
         Section(L10n.string("app.settings.defaults", fallback: "Defaults")) {
-            Picker(L10n.string("app.settings.terminal", fallback: "Terminal"), selection: terminalSelection) {
-                ForEach(viewModel.terminalChoices) { launcher in
-                    Text(launcher.name).tag(launcher.id)
-                }
-            }
-
             Picker(L10n.string("app.settings.editor", fallback: "Editor"), selection: editorSelection) {
                 ForEach(viewModel.editorChoices) { launcher in
                     Text(launcher.name).tag(launcher.id)
                 }
+            }
+        }
+    }
+
+    private var terminalMenuSection: some View {
+        Section(L10n.string("app.settings.terminalMenu", fallback: "Terminal Menu")) {
+            Text(
+                L10n.string(
+                    "app.settings.terminalMenuHint",
+                    fallback: "ContextKit shows a terminal submenu in Finder. Choose which terminal apps should appear there."
+                )
+            )
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+
+            ForEach(viewModel.terminalChoices) { launcher in
+                Toggle(
+                    launcher.name,
+                    isOn: Binding(
+                        get: { viewModel.isTerminalVisible(launcher) },
+                        set: { viewModel.setTerminalVisibility($0, for: launcher) }
+                    )
+                )
             }
         }
     }
@@ -93,17 +111,6 @@ struct SettingsView: View {
                     .foregroundStyle(.red)
             }
         }
-    }
-
-    private var terminalSelection: Binding<String> {
-        Binding(
-            get: { viewModel.settings.defaultTerminal.id },
-            set: { id in
-                if let launcher = viewModel.terminalChoices.first(where: { $0.id == id }) {
-                    viewModel.saveTerminal(launcher)
-                }
-            }
-        )
     }
 
     private var editorSelection: Binding<String> {

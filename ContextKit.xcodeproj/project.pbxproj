@@ -41,6 +41,7 @@
 		95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0A2875A5522DC179D9195 /* ActionListItem.swift */; };
 		979CB9E615D26B949B001B9D /* InstallPluginCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBC35E880382397DFEFA8F7 /* InstallPluginCommand.swift */; };
 		9B29B7A76A66FF26DCE23129 /* ActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* MenuLayoutEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* MenuLayoutEditor.swift */; };
 		A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */; };
 		A36D005EA4628D1311865413 /* PluginsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC3CC9A08A2A554A90ED518 /* PluginsView.swift */; };
 		A8C1B343EA940B41BE091842 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D41E7C7AA5E907624845EEE /* SettingsView.swift */; };
@@ -137,6 +138,7 @@
 		CEFAF3298086C8708449A0D8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		D0DAE405D91090030B148B2C /* WorkflowDraftStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowDraftStep.swift; sourceTree = "<group>"; };
 		D0F0A2875A5522DC179D9195 /* ActionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListItem.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* MenuLayoutEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLayoutEditor.swift; sourceTree = "<group>"; };
 		D6817E06F791B150126B280E /* MenuSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionProvider.swift; sourceTree = "<group>"; };
 		D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsViewModel.swift; sourceTree = "<group>"; };
 		DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContextKitFinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,6 +308,7 @@
 				D0F0A2875A5522DC179D9195 /* ActionListItem.swift */,
 				F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */,
 				4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */,
+				A1B2C3D4E5F60718293A4B5D /* MenuLayoutEditor.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */,
 				9B29B7A76A66FF26DCE23129 /* ActionsView.swift in Sources */,
 				D6CFD199E0D25A326AD45B61 /* ActionsViewModel.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* MenuLayoutEditor.swift in Sources */,
 				695862EFB52101242ECEC33D /* AppBootstrapper.swift in Sources */,
 				B04A7EF74263DDC30578C0A7 /* AppLanguage+DisplayName.swift in Sources */,
 				EE16DAAD29727C83E5DB0A09 /* AppScreen.swift in Sources */,

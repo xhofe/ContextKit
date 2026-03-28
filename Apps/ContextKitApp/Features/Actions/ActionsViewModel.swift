@@ -7,6 +7,10 @@ final class ActionsViewModel: ObservableObject {
     @Published var errorMessage: String?
 
     private let services: ContextKitAppServices
+    private var menuLayout: [MenuLayoutItem] = []
+    private var actionManifestsByID: [String: ActionManifest] = [:]
+    private var workflowsByID: [String: WorkflowManifest] = [:]
+    private var settings = AppSettings()
 
     init(services: ContextKitAppServices) {
         self.services = services
@@ -15,10 +19,11 @@ final class ActionsViewModel: ObservableObject {
     func reload() {
         do {
             let catalog = try services.loadCatalog()
-            let settings = try services.loadSettings()
-            items = catalog.actions.map { manifest in
-                ActionListItem(manifest: manifest, isEnabled: settings.isActionEnabled(manifest.id))
-            }
+            settings = try services.loadSettings()
+            menuLayout = try services.loadResolvedMenuLayout()
+            actionManifestsByID = Dictionary(uniqueKeysWithValues: catalog.actions.map { ($0.id, $0) })
+            workflowsByID = Dictionary(uniqueKeysWithValues: catalog.workflows.map { ($0.id, $0) })
+            rebuildItems()
             errorMessage = nil
         } catch {
             errorMessage = error.localizedDescription
@@ -26,45 +31,96 @@ final class ActionsViewModel: ObservableObject {
     }
 
     func setEnabled(_ enabled: Bool, for item: ActionListItem) {
+        guard item.isAction else {
+            return
+        }
+
         do {
             try services.toggleAction(item.id, enabled: enabled)
-            reload()
+            settings = try services.loadSettings()
+            rebuildItems()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func move(from offsets: IndexSet, to destination: Int) {
-        var updated = items
-        updated.move(fromOffsets: offsets, toOffset: destination)
-        do {
-            try services.updateOrderedActionIDs(updated.map(\.id))
-            reload()
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+    func addGroup(parentID: String? = nil) {
+        menuLayout = MenuLayoutEditor.addGroup(
+            title: L10n.string("app.actions.newGroup", fallback: "New Group"),
+            parentID: parentID,
+            to: menuLayout
+        )
+        saveMenuLayout()
     }
 
     func moveUp(_ item: ActionListItem) {
-        guard let index = items.firstIndex(where: { $0.id == item.id }), index > 0 else {
-            return
-        }
-        updateOrder(swapping: index, with: index - 1)
+        menuLayout = MenuLayoutEditor.moveUp(id: item.id, in: menuLayout)
+        saveMenuLayout()
     }
 
     func moveDown(_ item: ActionListItem) {
-        guard let index = items.firstIndex(where: { $0.id == item.id }), index < items.count - 1 else {
-            return
-        }
-        updateOrder(swapping: index, with: index + 1)
+        menuLayout = MenuLayoutEditor.moveDown(id: item.id, in: menuLayout)
+        saveMenuLayout()
     }
 
-    private func updateOrder(swapping firstIndex: Int, with secondIndex: Int) {
-        var updated = items
-        updated.swapAt(firstIndex, secondIndex)
+    func indent(_ item: ActionListItem) {
+        menuLayout = MenuLayoutEditor.indent(id: item.id, in: menuLayout)
+        saveMenuLayout()
+    }
+
+    func outdent(_ item: ActionListItem) {
+        menuLayout = MenuLayoutEditor.outdent(id: item.id, in: menuLayout)
+        saveMenuLayout()
+    }
+
+    func removeGroup(_ item: ActionListItem) {
+        guard item.isGroup else {
+            return
+        }
+
+        menuLayout = MenuLayoutEditor.removeGroup(id: item.id, from: menuLayout)
+        saveMenuLayout()
+    }
+
+    func updateGroupTitle(_ title: String, for item: ActionListItem) {
+        guard item.isGroup else {
+            return
+        }
+
+        menuLayout = MenuLayoutEditor.renameGroup(id: item.id, title: title, in: menuLayout)
+        saveMenuLayout()
+    }
+
+    func canMoveUp(_ item: ActionListItem) -> Bool {
+        MenuLayoutEditor.canMoveUp(id: item.id, in: menuLayout)
+    }
+
+    func canMoveDown(_ item: ActionListItem) -> Bool {
+        MenuLayoutEditor.canMoveDown(id: item.id, in: menuLayout)
+    }
+
+    func canIndent(_ item: ActionListItem) -> Bool {
+        MenuLayoutEditor.canIndent(id: item.id, in: menuLayout)
+    }
+
+    func canOutdent(_ item: ActionListItem) -> Bool {
+        MenuLayoutEditor.canOutdent(id: item.id, in: menuLayout)
+    }
+
+    private func rebuildItems() {
+        items = MenuLayoutEditor.flatten(
+            items: menuLayout,
+            actionsByID: actionManifestsByID,
+            workflowsByID: workflowsByID,
+            settings: settings
+        )
+    }
+
+    private func saveMenuLayout() {
         do {
-            try services.updateOrderedActionIDs(updated.map(\.id))
-            reload()
+            try services.saveMenuLayout(menuLayout)
+            rebuildItems()
+            errorMessage = nil
         } catch {
             errorMessage = error.localizedDescription
         }

@@ -30,8 +30,13 @@
 "app.overview.emptyTitle" = "还没有执行记录";
 "app.overview.emptyMessage" = "从 App、CLI 或 Finder Extension 运行一次 Action 后，最近结果会显示在这里。";
 "app.overview.navigation" = "概览";
-"app.actions.description" = "Finder 菜单、App 内调用和 CLI 都共用这份有序的 Action 目录。";
+"app.actions.description" = "在这里编辑 Finder 菜单树。你可以重排项目、创建分组，并自由调整嵌套关系，而不需要复制 Action 逻辑。";
 "app.actions.navigation" = "操作";
+"app.actions.addGroup" = "添加分组";
+"app.actions.newGroup" = "新分组";
+"app.actions.groupName" = "分组名称";
+"app.actions.groupLabel" = "菜单分组";
+"app.actions.workflowLabel" = "工作流";
 "app.plugins.install" = "安装";
 "app.plugins.importLocal" = "导入本地插件";
 "app.plugins.installFromGit" = "从 Git 安装";
@@ -55,6 +60,8 @@
 "app.settings.remove" = "删除";
 "app.settings.addRoot" = "添加目录";
 "app.settings.terminal" = "终端";
+"app.settings.terminalMenu" = "终端菜单";
+"app.settings.terminalMenuHint" = "ContextKit 会在 Finder 中显示“在终端打开”子菜单。你可以在这里选择哪些终端应用显示出来。";
 "app.settings.editor" = "编辑器";
 "app.settings.language" = "语言";
 "app.settings.language.system" = "跟随系统";
@@ -74,6 +81,7 @@
 "app.workflows.defaultName" = "新建工作流";
 "finder.menu.title" = "ContextKit";
 "finder.menu.noMatchingActions" = "没有可用操作";
+"menu.group.openInTerminal" = "在终端打开";
 "builtin.copyPath.name" = "复制路径";
 "builtin.copyPath.message" = "已复制 %lld 个路径。";
 "builtin.copyRelativePath.name" = "复制相对路径";
@@ -81,6 +89,7 @@
 "builtin.openTerminal.name" = "在终端打开";
 "builtin.openTerminal.noDirectory" = "没有可打开的目录。";
 "builtin.openTerminal.opened" = "已打开终端。";
+"builtin.openTerminal.openedNamed" = "已打开 %@。";
 "builtin.openEditor.name" = "在编辑器打开";
 "builtin.openEditor.noItem" = "没有可打开的项目。";
 "builtin.openEditor.opened" = "已打开编辑器。";

@@ -38,35 +38,22 @@ public final class ExecutionCoordinator: @unchecked Sendable {
         let actionManifests = builtins.values.map(\.manifest) + plugins.map(\.package.manifest)
         let orderedActions = sort(manifests: actionManifests, settings: settings)
         let workflows = try workflowRepository.list()
-
-        let workflowDescriptors = workflows.enumerated().map { index, workflow in
-            MenuDescriptor(
-                id: workflow.id,
-                title: workflow.name,
-                category: .intelligent,
-                targetType: .workflow,
-                contextRules: ContextRules(),
-                isEnabled: true,
-                sortOrder: 1_000 + index
-            )
-        }
-
-        let actionDescriptors = orderedActions.enumerated().map { index, manifest in
-            MenuDescriptor(
-                id: manifest.id,
-                title: manifest.name,
-                category: manifest.category,
-                targetType: .action,
-                contextRules: manifest.contextRules,
-                isEnabled: settings.isActionEnabled(manifest.id),
-                sortOrder: index
-            )
-        }
+        let menuLayout = MenuLayoutResolver.resolve(
+            actions: orderedActions,
+            workflows: workflows,
+            settings: settings
+        )
+        let menuDescriptors = MenuLayoutResolver.descriptors(
+            from: menuLayout,
+            actions: orderedActions,
+            workflows: workflows,
+            settings: settings
+        )
 
         return RuntimeCatalog(
             actions: orderedActions,
             workflows: workflows,
-            menuDescriptors: actionDescriptors + workflowDescriptors
+            menuDescriptors: menuDescriptors
         )
     }
 

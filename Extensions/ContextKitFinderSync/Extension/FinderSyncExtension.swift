@@ -101,7 +101,7 @@ final class FinderSyncExtension: FIFinderSync {
 
         let request = ExecutionRequest(
             targetId: descriptor.id,
-            targetType: descriptor.targetType,
+            targetType: descriptor.targetType ?? .action,
             selectedURLs: selection.selectedURLs,
             invocationSource: .finder,
             monitoredRootURL: selection.monitoredRootURL
@@ -128,7 +128,7 @@ final class FinderSyncExtension: FIFinderSync {
 
     nonisolated private static func actionIdentifier(from sender: Any?) -> String? {
         if let item = sender as? NSMenuItem {
-            if let identifier = item.identifier?.rawValue, !identifier.isEmpty {
+            if let identifier = normalizedIdentifier(item.identifier?.rawValue ?? "") {
                 return identifier
             }
 

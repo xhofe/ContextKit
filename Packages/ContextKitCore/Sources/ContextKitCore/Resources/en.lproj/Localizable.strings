@@ -30,8 +30,13 @@
 "app.overview.emptyTitle" = "No activity yet";
 "app.overview.emptyMessage" = "Run an action from the app, CLI, or Finder extension and recent results will appear here.";
 "app.overview.navigation" = "Overview";
-"app.actions.description" = "Finder menus, app invocations, and CLI all reuse this ordered action catalog.";
+"app.actions.description" = "Edit the Finder menu tree here. Reorder items, create groups, and change nesting without duplicating action logic.";
 "app.actions.navigation" = "Actions";
+"app.actions.addGroup" = "Add Group";
+"app.actions.newGroup" = "New Group";
+"app.actions.groupName" = "Group Name";
+"app.actions.groupLabel" = "Menu Group";
+"app.actions.workflowLabel" = "Workflow";
 "app.plugins.install" = "Install";
 "app.plugins.importLocal" = "Import Local Plugin";
 "app.plugins.installFromGit" = "Install from Git";
@@ -55,6 +60,8 @@
 "app.settings.remove" = "Remove";
 "app.settings.addRoot" = "Add Root";
 "app.settings.terminal" = "Terminal";
+"app.settings.terminalMenu" = "Terminal Menu";
+"app.settings.terminalMenuHint" = "ContextKit shows a terminal submenu in Finder. Choose which terminal apps should appear there.";
 "app.settings.editor" = "Editor";
 "app.settings.language" = "Language";
 "app.settings.language.system" = "System Default";
@@ -74,6 +81,7 @@
 "app.workflows.defaultName" = "New Workflow";
 "finder.menu.title" = "ContextKit";
 "finder.menu.noMatchingActions" = "No matching actions";
+"menu.group.openInTerminal" = "Open in Terminal";
 "builtin.copyPath.name" = "Copy Path";
 "builtin.copyPath.message" = "Copied %lld path(s).";
 "builtin.copyRelativePath.name" = "Copy Relative Path";
@@ -81,6 +89,7 @@
 "builtin.openTerminal.name" = "Open in Terminal";
 "builtin.openTerminal.noDirectory" = "No directory available to open.";
 "builtin.openTerminal.opened" = "Opened terminal.";
+"builtin.openTerminal.openedNamed" = "Opened %@.";
 "builtin.openEditor.name" = "Open in Editor";
 "builtin.openEditor.noItem" = "No item available to open.";
 "builtin.openEditor.opened" = "Opened editor.";

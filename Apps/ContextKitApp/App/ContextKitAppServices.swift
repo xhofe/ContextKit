@@ -62,6 +62,16 @@ final class ContextKitAppServices {
         return try executionCoordinator.catalog()
     }
 
+    func loadResolvedMenuLayout() throws -> [MenuLayoutItem] {
+        let catalog = try loadCatalog()
+        let settings = try loadSettings()
+        return MenuLayoutResolver.resolve(
+            actions: catalog.actions,
+            workflows: catalog.workflows,
+            settings: settings
+        )
+    }
+
     func loadPlugins() throws -> [InstalledPlugin] {
         try pluginRepository.installedPlugins()
     }
@@ -89,6 +99,12 @@ final class ContextKitAppServices {
         try saveSettings(settings)
     }
 
+    func saveMenuLayout(_ menuLayout: [MenuLayoutItem]) throws {
+        var settings = try settingsStore.load()
+        settings.menuLayout = menuLayout
+        try saveSettings(settings)
+    }
+
     func addMonitoredRoot(url: URL) throws {
         var settings = try settingsStore.load()
         guard !settings.monitoredRoots.contains(where: { $0.path == url.path }) else {
@@ -107,6 +123,12 @@ final class ContextKitAppServices {
     func updateDefaultTerminal(_ launcher: AppLauncher) throws {
         var settings = try settingsStore.load()
         settings.defaultTerminal = launcher
+        try saveSettings(settings)
+    }
+
+    func updateVisibleTerminalLauncherIDs(_ launcherIDs: [String]) throws {
+        var settings = try settingsStore.load()
+        settings.visibleTerminalLauncherIDs = launcherIDs
         try saveSettings(settings)
     }
 

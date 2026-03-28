@@ -7,7 +7,7 @@ struct OpenInEditorAction {
     var command: AnyActionCommand {
         AnyActionCommand(
             manifest: ActionManifest(
-                id: "builtin.open-editor",
+                id: BuiltinActionIdentifier.openInEditor,
                 name: L10n.string("builtin.openEditor.name", fallback: "Open in Editor"),
                 category: .open,
                 kind: .builtin,
