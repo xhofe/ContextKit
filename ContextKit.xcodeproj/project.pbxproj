@@ -67,6 +67,7 @@
 		D6CFD199E0D25A326AD45B61 /* ActionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */; };
 		D901C3BA603419AB74AD6C4A /* MenuLayoutEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCD9A518AE7D4FA5E78F529 /* MenuLayoutEditor.swift */; };
 		DA781DD94F14D58A4146EB69 /* FinderSyncExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B0F4FC6E6B11A056F4DA2 /* FinderSyncExtension.swift */; };
+		DA7E9F3B39DCA50989AB29D9 /* ContextKitAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9411014F6D1DDB7E61D1B179 /* ContextKitAppDelegate.swift */; };
 		DB8FFDA89893C8DAACCEEA7B /* WorkflowDraftStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DAE405D91090030B148B2C /* WorkflowDraftStep.swift */; };
 		DD2A7A3E179E07D057A583A8 /* ExecutionRequestListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26161C1B388EE213F1B5B746 /* ExecutionRequestListener.swift */; };
 		DFC3CD251CDEB0224B84C5CF /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0765A526B88295A1D08E5F25 /* ContextKitPluginSDK */; };
@@ -143,6 +144,7 @@
 		90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitMacApp.swift; sourceTree = "<group>"; };
 		93077348A3AC08A0B47C71B9 /* ActionsDropIntoGroupIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsDropIntoGroupIndicator.swift; sourceTree = "<group>"; };
 		931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapper.swift; sourceTree = "<group>"; };
+		9411014F6D1DDB7E61D1B179 /* ContextKitAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitAppDelegate.swift; sourceTree = "<group>"; };
 		96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		97D3757E8A42CD5FD263F00B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FCD9A518AE7D4FA5E78F529 /* MenuLayoutEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLayoutEditor.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 				B678AFF850BE4CD1CE6022DB /* AppScreen.swift */,
 				4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */,
 				F3105F444A7E89958528D094 /* ContextKitAppContainer.swift */,
+				9411014F6D1DDB7E61D1B179 /* ContextKitAppDelegate.swift */,
 				59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */,
 				90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */,
 				3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */,
@@ -706,6 +709,7 @@
 				EE16DAAD29727C83E5DB0A09 /* AppScreen.swift in Sources */,
 				E1F798F7AF4759D70CBF6CEE /* AppSidebarView.swift in Sources */,
 				48B1BA2AA6098612E9A4581A /* ContextKitAppContainer.swift in Sources */,
+				DA7E9F3B39DCA50989AB29D9 /* ContextKitAppDelegate.swift in Sources */,
 				E5AF293C60E528F7387BF71F /* ContextKitAppServices.swift in Sources */,
 				3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */,
 				A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */,

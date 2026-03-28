@@ -34,6 +34,16 @@ final class EmbeddedAgentLauncher {
         }
     }
 
+    func terminateIfRunning(hostBundle: Bundle = .main) {
+        guard let agentURL = agentURL(for: hostBundle) else {
+            return
+        }
+
+        let bundleIdentifier = Bundle(url: agentURL)?.bundleIdentifier ?? "ci.nn.ContextKit.Agent"
+        let runningApplications = NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
+        terminateRunningAgents(runningApplications)
+    }
+
     private func agentURL(for hostBundle: Bundle) -> URL? {
         let candidateURLs = [
             hostBundle.bundleURL.appending(path: "Contents/Library/LoginItems/ContextKitAgent.app", directoryHint: .isDirectory),

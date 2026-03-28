@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct ContextKitMacApp: App {
+    @NSApplicationDelegateAdaptor(ContextKitAppDelegate.self) private var appDelegate
     @State private var container = ContextKitAppContainer()
 
     var body: some Scene {
