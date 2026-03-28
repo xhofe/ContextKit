@@ -4,7 +4,6 @@ import Foundation
 
 public final class ExecutionCoordinator: @unchecked Sendable {
     private let settingsStore: SharedSettingsStore
-    private let menuDescriptorCache: MenuDescriptorCache
     private let logStore: ExecutionLogStore
     private let workflowRepository: WorkflowRepository
     private let pluginRepository: PluginRepository
@@ -14,7 +13,6 @@ public final class ExecutionCoordinator: @unchecked Sendable {
 
     public init(
         settingsStore: SharedSettingsStore = SharedSettingsStore(),
-        menuDescriptorCache: MenuDescriptorCache = MenuDescriptorCache(),
         logStore: ExecutionLogStore = ExecutionLogStore(),
         workflowRepository: WorkflowRepository = WorkflowRepository(),
         pluginRepository: PluginRepository = PluginRepository(),
@@ -23,7 +21,6 @@ public final class ExecutionCoordinator: @unchecked Sendable {
         processRunner: ProcessRunner = ProcessRunner()
     ) {
         self.settingsStore = settingsStore
-        self.menuDescriptorCache = menuDescriptorCache
         self.logStore = logStore
         self.workflowRepository = workflowRepository
         self.pluginRepository = pluginRepository
@@ -58,8 +55,7 @@ public final class ExecutionCoordinator: @unchecked Sendable {
     }
 
     public func refreshMenuCache() throws {
-        let catalog = try catalog()
-        try menuDescriptorCache.save(catalog.menuDescriptors)
+        _ = try catalog()
     }
 
     @discardableResult

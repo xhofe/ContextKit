@@ -3,50 +3,21 @@ import ContextKitCore
 import Foundation
 
 struct MenuBuilder {
-    func matchingDescriptors(
-        descriptors: [MenuDescriptor],
-        selection: SelectionContext
-    ) -> [MenuDescriptor] {
-        let visibleLeaves = descriptors.filter { descriptor in
-            descriptor.kind != .group &&
-            descriptor.isEnabled &&
-            descriptor.contextRules.matches(snapshot: selection.snapshot)
-        }
-
-        let descriptorsByID = Dictionary(uniqueKeysWithValues: descriptors.map { ($0.id, $0) })
-        var visibleIDs = Set(visibleLeaves.map(\.id))
-
-        for leaf in visibleLeaves {
-            var currentParentID = leaf.parentID
-            while let parentID = currentParentID, let parent = descriptorsByID[parentID] {
-                visibleIDs.insert(parent.id)
-                currentParentID = parent.parentID
-            }
-        }
-
-        return descriptors.filter { visibleIDs.contains($0.id) }
-    }
-
     func build(
-        matchingDescriptors: [MenuDescriptor],
+        nodes: [FinderMenuNode],
         target: AnyObject,
         action: Selector
     ) -> NSMenu {
         let menu = NSMenu(title: L10n.string("finder.menu.title", fallback: "ContextKit"))
         menu.autoenablesItems = false
-        guard !matchingDescriptors.isEmpty else {
+        guard !nodes.isEmpty else {
             let item = NSMenuItem(title: L10n.string("finder.menu.noMatchingActions", fallback: "No matching actions"), action: nil, keyEquivalent: "")
             item.isEnabled = false
             menu.addItem(item)
             return menu
         }
 
-        for item in makeMenuItems(
-            parentID: nil,
-            descriptors: matchingDescriptors,
-            target: target,
-            action: action
-        ) {
+        for item in makeMenuItems(nodes: nodes, target: target, action: action) {
             menu.addItem(item)
         }
 
@@ -54,41 +25,31 @@ struct MenuBuilder {
     }
 
     private func makeMenuItems(
-        parentID: String?,
-        descriptors: [MenuDescriptor],
+        nodes: [FinderMenuNode],
         target: AnyObject,
         action: Selector
     ) -> [NSMenuItem] {
-        let childDescriptors = descriptors
-            .filter { $0.parentID == parentID }
-            .sorted(by: { $0.sortOrder < $1.sortOrder })
-
-        return childDescriptors.compactMap { descriptor in
-            switch descriptor.kind {
+        nodes.compactMap { node in
+            switch node.kind {
             case .group:
-                let children = makeMenuItems(
-                    parentID: descriptor.id,
-                    descriptors: descriptors,
-                    target: target,
-                    action: action
-                )
-                guard !children.isEmpty else {
-                    return nil
-                }
-
-                let submenu = NSMenu(title: descriptor.title)
+                let submenu = NSMenu(title: node.title)
                 submenu.autoenablesItems = false
+                let children = makeMenuItems(nodes: node.children, target: target, action: action)
                 children.forEach { submenu.addItem($0) }
 
-                let categoryItem = NSMenuItem(title: descriptor.title, action: nil, keyEquivalent: "")
+                let categoryItem = NSMenuItem(title: node.title, action: nil, keyEquivalent: "")
                 categoryItem.submenu = submenu
                 return categoryItem
             case .action, .workflow:
-                let item = NSMenuItem(title: descriptor.title, action: action, keyEquivalent: "")
-                item.isEnabled = true
+                let item = NSMenuItem(title: node.title, action: action, keyEquivalent: "")
+                item.isEnabled = node.enabled
                 item.target = target
-                item.identifier = NSUserInterfaceItemIdentifier(descriptor.id)
-                item.representedObject = descriptor.id as NSString
+                item.identifier = NSUserInterfaceItemIdentifier(node.id)
+                item.representedObject = node.targetType?.rawValue as NSString?
+                return item
+            case .message:
+                let item = NSMenuItem(title: node.title, action: nil, keyEquivalent: "")
+                item.isEnabled = false
                 return item
             }
         }

@@ -8,19 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		03359A85372304221815643E /* RunWorkflowCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C92EDADE7A0D70B9E0089B8 /* RunWorkflowCommand.swift */; };
-		03FDA39B18D61AF8795677FF /* RequestProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F49FED1BE105FAA30B16C3E /* RequestProcessor.swift */; };
 		064703F1EB10D30A5C38EA66 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14246F8B756E9660590551A /* OverviewView.swift */; };
 		069F1FA8DCAE964663676C2E /* Official in Resources */ = {isa = PBXBuildFile; fileRef = 38814B12B844A59DD017C46B /* Official */; };
 		09F7D8009CC7A281A4F029D0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAF3298086C8708449A0D8 /* SettingsViewModel.swift */; };
 		0D7A1570E7E67F89370C42E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0B30C82D905A880D96CD046 /* Assets.xcassets */; };
 		0E3532492F2239D1F0E73119 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3757E8A42CD5FD263F00B /* OnboardingView.swift */; };
 		0FB85AB59F8567B16F4A5A8B /* ListPluginsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF22F1635ABD98151239A32 /* ListPluginsCommand.swift */; };
-		203E8DC28F41F66AA4967150 /* ContextKitAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF590A342790411E9EAD4A55 /* ContextKitAgentApp.swift */; };
+		17496A4F310FA93B18C6E171 /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0BDB6FFB30E669E3F26F68B2 /* ContextKitPluginSDK */; };
+		18114F9612E4F22F718E033D /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = CC5991D39FB928E7F43D7F31 /* ContextKitCore */; };
+		1DF286E66F6742B7AA33071F /* ContextKitHelperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84B9CE17F6547A045D5249A /* ContextKitHelperService.swift */; };
 		23110BF1E69AF9C54A5DD229 /* RunActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */; };
 		23C9999007AD402FB2207009 /* WorkflowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */; };
 		2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */; };
-		2A47E46DB402C8A22AACE05A /* FinderBridgeSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */; };
 		330CD94AE3B66BFD9938BB7B /* AppDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */; };
+		33BCCC23CAFF894637124FB7 /* ContextKitHelperMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935584A1EFCC0ED324BE3E3 /* ContextKitHelperMain.swift */; };
 		36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */; };
 		37A443D0FAC4C6E18D42AA04 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = A4213454845D19C1A85AEB65 /* ContextKitCore */; };
 		385EC482B29A027FF6EA953C /* WorkflowDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135C456137101D4F589EE19F /* WorkflowDraft.swift */; };
@@ -38,25 +39,22 @@
 		5B766EED3415FF3F7959DEF1 /* LanguageSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69242D31E9E6E1CE66E13CBC /* LanguageSectionView.swift */; };
 		5EB6BAD3EE037F7B2EF75942 /* ConsolePrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB281B9C355522A14882EE9A /* ConsolePrinter.swift */; };
 		5EBDD881D4A8C4F03ABB9883 /* CLIEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A4B0DA5D23CF31D12AC7B0 /* CLIEnvironment.swift */; };
-		5FFCF1093B56EE352FF8413A /* AgentRuntimeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */; };
 		695862EFB52101242ECEC33D /* AppBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931A33E486E6DA3D1C1DEB22 /* AppBootstrapper.swift */; };
 		6BF5BEF884CD808B7ED1B31F /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = EFAEC11F333E35BC1AC8000D /* ContextKitPluginSDK */; };
 		6E01C2BDA73AC76BF628DF2D /* TailLogsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */; };
 		73CB966421397DCA664337CD /* SettingsErrorSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */; };
-		7454CBD7AA5BB55E2B74CAFC /* LocalPluginInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */; };
 		760BD748145E8C924FE35031 /* WorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */; };
-		7CC9926ED968AD3FCF7BB8BA /* FinderAgentLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */; };
 		801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */; };
+		80CFA5B4917F2291930B4239 /* ContextKitHelperRegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C7FC74977CACEB43D84B96 /* ContextKitHelperRegistrationController.swift */; };
 		8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD01C2CA91875C089BA948 /* InfoChip.swift */; };
 		95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0A2875A5522DC179D9195 /* ActionListItem.swift */; };
 		979CB9E615D26B949B001B9D /* InstallPluginCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBC35E880382397DFEFA8F7 /* InstallPluginCommand.swift */; };
 		9B29B7A76A66FF26DCE23129 /* ActionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */; };
-		A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */; };
 		A36D005EA4628D1311865413 /* PluginsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC3CC9A08A2A554A90ED518 /* PluginsView.swift */; };
 		A8C1B343EA940B41BE091842 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D41E7C7AA5E907624845EEE /* SettingsView.swift */; };
 		AB1040B15F38C1D827BBB148 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 86635AA0156BDD928F8CAD37 /* ContextKitCore */; };
-		ABBC67E0C84B84EDA11584ED /* AgentAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */; };
 		AD65EE29C10F43ADD3C38E0D /* MenuSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6817E06F791B150126B280E /* MenuSectionProvider.swift */; };
+		AEC1DA5E1E94787BA25FAC42 /* ContextKitBuiltins in Frameworks */ = {isa = PBXBuildFile; productRef = 36F693E8393B77A6521A2AD4 /* ContextKitBuiltins */; };
 		B04A7EF74263DDC30578C0A7 /* AppLanguage+DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AEE2291AE624224EB4CEB8 /* AppLanguage+DisplayName.swift */; };
 		B36B4C9E4DB65740904445DF /* ActionListRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAD6EBBD845DFA72D78EB7D /* ActionListRowView.swift */; };
 		B942BE269F9C86383F1E57CF /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */; };
@@ -72,16 +70,11 @@
 		DA781DD94F14D58A4146EB69 /* FinderSyncExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7B0F4FC6E6B11A056F4DA2 /* FinderSyncExtension.swift */; };
 		DA7E9F3B39DCA50989AB29D9 /* ContextKitAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9411014F6D1DDB7E61D1B179 /* ContextKitAppDelegate.swift */; };
 		DB8FFDA89893C8DAACCEEA7B /* WorkflowDraftStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DAE405D91090030B148B2C /* WorkflowDraftStep.swift */; };
-		DD2A7A3E179E07D057A583A8 /* ExecutionRequestListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26161C1B388EE213F1B5B746 /* ExecutionRequestListener.swift */; };
-		DFC3CD251CDEB0224B84C5CF /* ContextKitPluginSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0765A526B88295A1D08E5F25 /* ContextKitPluginSDK */; };
 		E1F798F7AF4759D70CBF6CEE /* AppSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */; };
 		E25E09314642079EAD68F4D9 /* ContextKitFinderSync.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5AF293C60E528F7387BF71F /* ContextKitAppServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */; };
 		EE16DAAD29727C83E5DB0A09 /* AppScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B678AFF850BE4CD1CE6022DB /* AppScreen.swift */; };
-		F17B664027298BE1F8878A56 /* GitPluginInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DFA2B86138077A9B5271EE /* GitPluginInstaller.swift */; };
 		F2E2342773A39A3023673CD2 /* CLIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBE36B536EBC4837755B425 /* CLIError.swift */; };
-		FB4DF13F4591102CA504EC70 /* ContextKitBuiltins in Frameworks */ = {isa = PBXBuildFile; productRef = 69B3B8F11F4F6B0EE03205F6 /* ContextKitBuiltins */; };
-		FD52AEAB181DC5911E54B3C8 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3F27B6C3EC00948EECAC1721 /* ContextKitCore */; };
 		FEAB5ABDFCB94B189CBF5FD7 /* ContextKitBuiltins in Frameworks */ = {isa = PBXBuildFile; productRef = EC8472F7972E57E936098C2A /* ContextKitBuiltins */; };
 /* End PBXBuildFile section */
 
@@ -115,10 +108,8 @@
 		0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		135C456137101D4F589EE19F /* WorkflowDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowDraft.swift; sourceTree = "<group>"; };
-		1F49FED1BE105FAA30B16C3E /* RequestProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProcessor.swift; sourceTree = "<group>"; };
+		1935584A1EFCC0ED324BE3E3 /* ContextKitHelperMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitHelperMain.swift; sourceTree = "<group>"; };
 		25853C53482A7B0F97DDEF59 /* WorkflowEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowEditorView.swift; sourceTree = "<group>"; };
-		26161C1B388EE213F1B5B746 /* ExecutionRequestListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionRequestListener.swift; sourceTree = "<group>"; };
-		29DFA2B86138077A9B5271EE /* GitPluginInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitPluginInstaller.swift; sourceTree = "<group>"; };
 		2D41E7C7AA5E907624845EEE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2DBE36B536EBC4837755B425 /* CLIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIError.swift; sourceTree = "<group>"; };
 		353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionActionDispatcher.swift; sourceTree = "<group>"; };
@@ -129,18 +120,16 @@
 		3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBuilder.swift; sourceTree = "<group>"; };
 		3C92EDADE7A0D70B9E0089B8 /* RunWorkflowCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunWorkflowCommand.swift; sourceTree = "<group>"; };
 		3DF22F1635ABD98151239A32 /* ListPluginsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPluginsCommand.swift; sourceTree = "<group>"; };
-		3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedAgentLauncher.swift; sourceTree = "<group>"; };
 		4AF65B4B36BCF07243D7798F /* AppSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebarView.swift; sourceTree = "<group>"; };
 		4B4DC40FB5B9BE0C605387E0 /* ActionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsViewModel.swift; sourceTree = "<group>"; };
 		4E48026D7AA6286D3D8C8C25 /* ContextKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContextKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59C7FC74977CACEB43D84B96 /* ContextKitHelperRegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitHelperRegistrationController.swift; sourceTree = "<group>"; };
 		59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitAppServices.swift; sourceTree = "<group>"; };
 		5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionContextReader.swift; sourceTree = "<group>"; };
 		69242D31E9E6E1CE66E13CBC /* LanguageSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSectionView.swift; sourceTree = "<group>"; };
 		6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailLogsCommand.swift; sourceTree = "<group>"; };
 		7748088E397BC353ABA79D04 /* ContextKitBuiltins */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ContextKitBuiltins; path = Packages/ContextKitBuiltins; sourceTree = SOURCE_ROOT; };
 		79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsErrorSectionView.swift; sourceTree = "<group>"; };
-		82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderBridgeSynchronizer.swift; sourceTree = "<group>"; };
-		8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentAppDelegate.swift; sourceTree = "<group>"; };
 		8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInvocationSnapshot.swift; sourceTree = "<group>"; };
 		8AF1CBF717A170D49E8C9B7E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8BBC35E880382397DFEFA8F7 /* InstallPluginCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallPluginCommand.swift; sourceTree = "<group>"; };
@@ -168,15 +157,12 @@
 		D0F0A2875A5522DC179D9195 /* ActionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionListItem.swift; sourceTree = "<group>"; };
 		D6817E06F791B150126B280E /* MenuSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionProvider.swift; sourceTree = "<group>"; };
 		D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsViewModel.swift; sourceTree = "<group>"; };
+		D84B9CE17F6547A045D5249A /* ContextKitHelperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitHelperService.swift; sourceTree = "<group>"; };
 		DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContextKitFinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE8868B830DCB23211DB0EC /* MonitoredRootsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoredRootsSectionView.swift; sourceTree = "<group>"; };
-		DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderAgentLauncher.swift; sourceTree = "<group>"; };
-		E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRuntimeFactory.swift; sourceTree = "<group>"; };
+		E931A106330414109424B05E /* ContextKitHelper */ = {isa = PBXFileReference; includeInIndex = 0; path = ContextKitHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC3CC9A08A2A554A90ED518 /* PluginsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsView.swift; sourceTree = "<group>"; };
-		EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPluginInstaller.swift; sourceTree = "<group>"; };
-		EF590A342790411E9EAD4A55 /* ContextKitAgentApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitAgentApp.swift; sourceTree = "<group>"; };
 		F3105F444A7E89958528D094 /* ContextKitAppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextKitAppContainer.swift; sourceTree = "<group>"; };
-		F59AC8EE8F9AE523B3A66876 /* ContextKitAgent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContextKitAgent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6F2B2A1BCA82B53CB9F1528 /* ActionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsView.swift; sourceTree = "<group>"; };
 		FB281B9C355522A14882EE9A /* ConsolePrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsolePrinter.swift; sourceTree = "<group>"; };
 		FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemSettingsLauncher.swift; sourceTree = "<group>"; };
@@ -190,16 +176,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB1040B15F38C1D827BBB148 /* ContextKitCore in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7E29408D87087D36CDA46323 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FD52AEAB181DC5911E54B3C8 /* ContextKitCore in Frameworks */,
-				FB4DF13F4591102CA504EC70 /* ContextKitBuiltins in Frameworks */,
-				DFC3CD251CDEB0224B84C5CF /* ContextKitPluginSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +199,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D77C068F5C5D398B138D4E40 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18114F9612E4F22F718E033D /* ContextKitCore in Frameworks */,
+				AEC1DA5E1E94787BA25FAC42 /* ContextKitBuiltins in Frameworks */,
+				17496A4F310FA93B18C6E171 /* ContextKitPluginSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -238,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */,
-				DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */,
 				8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */,
 				5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */,
 			);
@@ -263,17 +248,6 @@
 				2369569B54283B56E0B244B4 /* Plugins */,
 				61D3B5CAA88AD186918CE07E /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		11EDE3C9C2BFA875DF87B5C8 /* ContextKitAgent */ = {
-			isa = PBXGroup;
-			children = (
-				33F81FBE5061543743F46F80 /* Agent */,
-				4852E17576487784AB089EA5 /* Installers */,
-				7FD4662413736F556E6EA23C /* IPC */,
-				FC62C4D5FE4B6F824EA9511D /* Runtime */,
-			);
-			path = ContextKitAgent;
 			sourceTree = "<group>";
 		};
 		2369569B54283B56E0B244B4 /* Plugins */ = {
@@ -316,24 +290,6 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		33F81FBE5061543743F46F80 /* Agent */ = {
-			isa = PBXGroup;
-			children = (
-				8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */,
-				EF590A342790411E9EAD4A55 /* ContextKitAgentApp.swift */,
-			);
-			path = Agent;
-			sourceTree = "<group>";
-		};
-		4852E17576487784AB089EA5 /* Installers */ = {
-			isa = PBXGroup;
-			children = (
-				29DFA2B86138077A9B5271EE /* GitPluginInstaller.swift */,
-				EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */,
-			);
-			path = Installers;
-			sourceTree = "<group>";
-		};
 		48B5DA6DD1849D555C50EFCF /* Actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,8 +310,8 @@
 			children = (
 				8CA6598AC7D7A126F467C0E0 /* contextkit */,
 				4E48026D7AA6286D3D8C8C25 /* ContextKit.app */,
-				F59AC8EE8F9AE523B3A66876 /* ContextKitAgent.app */,
 				DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */,
+				E931A106330414109424B05E /* ContextKitHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -374,8 +330,8 @@
 			isa = PBXGroup;
 			children = (
 				27278D7627982BE21B7EF54B /* contextkit-cli */,
-				11EDE3C9C2BFA875DF87B5C8 /* ContextKitAgent */,
 				640C215E41871C6233A913FF /* ContextKitApp */,
+				C2DAC95D3A77E348DF2319A1 /* ContextKitHelper */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -400,15 +356,6 @@
 				96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */,
 			);
 			path = Overview;
-			sourceTree = "<group>";
-		};
-		7FD4662413736F556E6EA23C /* IPC */ = {
-			isa = PBXGroup;
-			children = (
-				26161C1B388EE213F1B5B746 /* ExecutionRequestListener.swift */,
-				1F49FED1BE105FAA30B16C3E /* RequestProcessor.swift */,
-			);
-			path = IPC;
 			sourceTree = "<group>";
 		};
 		8280B3B962507F857C5807E7 /* Extension */ = {
@@ -448,13 +395,21 @@
 				F3105F444A7E89958528D094 /* ContextKitAppContainer.swift */,
 				9411014F6D1DDB7E61D1B179 /* ContextKitAppDelegate.swift */,
 				59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */,
+				59C7FC74977CACEB43D84B96 /* ContextKitHelperRegistrationController.swift */,
 				90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */,
-				3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */,
-				82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */,
 				0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */,
 				FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		C2DAC95D3A77E348DF2319A1 /* ContextKitHelper */ = {
+			isa = PBXGroup;
+			children = (
+				1935584A1EFCC0ED324BE3E3 /* ContextKitHelperMain.swift */,
+				D84B9CE17F6547A045D5249A /* ContextKitHelperService.swift */,
+			);
+			path = ContextKitHelper;
 			sourceTree = "<group>";
 		};
 		C6EC48777A3204CF3E24F0A7 /* Packages */ = {
@@ -520,17 +475,30 @@
 			path = Commands;
 			sourceTree = "<group>";
 		};
-		FC62C4D5FE4B6F824EA9511D /* Runtime */ = {
-			isa = PBXGroup;
-			children = (
-				E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */,
-			);
-			path = Runtime;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		161CFB092B77DC1FA3097B00 /* ContextKitHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92D25A4CD49F8428AE935F09 /* Build configuration list for PBXNativeTarget "ContextKitHelper" */;
+			buildPhases = (
+				B6241DE66E7E75F451441C23 /* Sources */,
+				D77C068F5C5D398B138D4E40 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ContextKitHelper;
+			packageProductDependencies = (
+				CC5991D39FB928E7F43D7F31 /* ContextKitCore */,
+				36F693E8393B77A6521A2AD4 /* ContextKitBuiltins */,
+				0BDB6FFB30E669E3F26F68B2 /* ContextKitPluginSDK */,
+			);
+			productName = ContextKitHelper;
+			productReference = E931A106330414109424B05E /* ContextKitHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		5A15DB53FB598465A3681CBC /* ContextKitFinderSync */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DE347F4FCC4938EAFF8FBC38 /* Build configuration list for PBXNativeTarget "ContextKitFinderSync" */;
@@ -595,27 +563,6 @@
 			productReference = 8CA6598AC7D7A126F467C0E0 /* contextkit */;
 			productType = "com.apple.product-type.tool";
 		};
-		F77786343EC1C25F23C532FF /* ContextKitAgent */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C98405FC282C039BAE58F0EE /* Build configuration list for PBXNativeTarget "ContextKitAgent" */;
-			buildPhases = (
-				A9352883187D08F7C76A3387 /* Sources */,
-				7E29408D87087D36CDA46323 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ContextKitAgent;
-			packageProductDependencies = (
-				3F27B6C3EC00948EECAC1721 /* ContextKitCore */,
-				69B3B8F11F4F6B0EE03205F6 /* ContextKitBuiltins */,
-				0765A526B88295A1D08E5F25 /* ContextKitPluginSDK */,
-			);
-			productName = ContextKitAgent;
-			productReference = F59AC8EE8F9AE523B3A66876 /* ContextKitAgent.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -625,6 +572,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					161CFB092B77DC1FA3097B00 = {
+						DevelopmentTeam = 6UKCRW5N6G;
+						ProvisioningStyle = Automatic;
+					};
 					5A15DB53FB598465A3681CBC = {
 						DevelopmentTeam = 6UKCRW5N6G;
 						ProvisioningStyle = Automatic;
@@ -634,10 +585,6 @@
 						ProvisioningStyle = Automatic;
 					};
 					F2D1153340948C3C9CC4F85E = {
-						DevelopmentTeam = 6UKCRW5N6G;
-						ProvisioningStyle = Automatic;
-					};
-					F77786343EC1C25F23C532FF = {
 						DevelopmentTeam = 6UKCRW5N6G;
 						ProvisioningStyle = Automatic;
 					};
@@ -663,8 +610,8 @@
 			projectRoot = "";
 			targets = (
 				62968126A95673FB080A0BBC /* ContextKit */,
-				F77786343EC1C25F23C532FF /* ContextKitAgent */,
 				5A15DB53FB598465A3681CBC /* ContextKitFinderSync */,
+				161CFB092B77DC1FA3097B00 /* ContextKitHelper */,
 				F2D1153340948C3C9CC4F85E /* contextkit */,
 			);
 		};
@@ -688,7 +635,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C9B040A7E9408ED719AE9F8 /* ExtensionActionDispatcher.swift in Sources */,
-				7CC9926ED968AD3FCF7BB8BA /* FinderAgentLauncher.swift in Sources */,
 				DA781DD94F14D58A4146EB69 /* FinderSyncExtension.swift in Sources */,
 				2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */,
 				5211B91FDC40AC9594B0B917 /* MenuInvocationSnapshot.swift in Sources */,
@@ -697,17 +643,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9352883187D08F7C76A3387 /* Sources */ = {
+		B6241DE66E7E75F451441C23 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABBC67E0C84B84EDA11584ED /* AgentAppDelegate.swift in Sources */,
-				5FFCF1093B56EE352FF8413A /* AgentRuntimeFactory.swift in Sources */,
-				203E8DC28F41F66AA4967150 /* ContextKitAgentApp.swift in Sources */,
-				DD2A7A3E179E07D057A583A8 /* ExecutionRequestListener.swift in Sources */,
-				F17B664027298BE1F8878A56 /* GitPluginInstaller.swift in Sources */,
-				7454CBD7AA5BB55E2B74CAFC /* LocalPluginInstaller.swift in Sources */,
-				03FDA39B18D61AF8795677FF /* RequestProcessor.swift in Sources */,
+				33BCCC23CAFF894637124FB7 /* ContextKitHelperMain.swift in Sources */,
+				1DF286E66F6742B7AA33071F /* ContextKitHelperService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,10 +671,9 @@
 				48B1BA2AA6098612E9A4581A /* ContextKitAppContainer.swift in Sources */,
 				DA7E9F3B39DCA50989AB29D9 /* ContextKitAppDelegate.swift in Sources */,
 				E5AF293C60E528F7387BF71F /* ContextKitAppServices.swift in Sources */,
+				80CFA5B4917F2291930B4239 /* ContextKitHelperRegistrationController.swift in Sources */,
 				3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */,
-				A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */,
 				801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */,
-				2A47E46DB402C8A22AACE05A /* FinderBridgeSynchronizer.swift in Sources */,
 				BEB406F6BB423C5344CD378C /* FinderIntegrationSectionView.swift in Sources */,
 				8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */,
 				5B766EED3415FF3F7959DEF1 /* LanguageSectionView.swift in Sources */,
@@ -789,7 +729,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Support/Entitlements/ContextKit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Support/Plists/ContextKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -820,19 +759,16 @@
 			};
 			name = Release;
 		};
-		334529890E8538BB8578A6C5 /* Release */ = {
+		345B9DC30C10D05BCE214F90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Support/Entitlements/ContextKitAgent.entitlements;
+				CODE_SIGNING_ALLOWED = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Support/Plists/ContextKitAgent-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ci.nn.ContextKit.Agent;
-				PRODUCT_NAME = ContextKitAgent;
+				PRODUCT_NAME = contextkitd;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -865,19 +801,16 @@
 			};
 			name = Debug;
 		};
-		97FBFD7164D0A0159BEC4DBE /* Debug */ = {
+		9A31E9F05753A3B395F05EAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Support/Entitlements/ContextKitAgent.entitlements;
+				CODE_SIGNING_ALLOWED = NO;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "Support/Plists/ContextKitAgent-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ci.nn.ContextKit.Agent;
-				PRODUCT_NAME = ContextKitAgent;
+				PRODUCT_NAME = contextkitd;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -904,7 +837,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Support/Entitlements/ContextKit.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Support/Plists/ContextKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -951,7 +883,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CONTEXTKIT_APP_GROUP_ID = "$(DEVELOPMENT_TEAM).ci.nn.ContextKit";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6UKCRW5N6G;
@@ -975,7 +906,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1017,7 +947,6 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CONTEXTKIT_APP_GROUP_ID = "$(DEVELOPMENT_TEAM).ci.nn.ContextKit";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 6UKCRW5N6G;
@@ -1048,7 +977,6 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1086,11 +1014,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C98405FC282C039BAE58F0EE /* Build configuration list for PBXNativeTarget "ContextKitAgent" */ = {
+		92D25A4CD49F8428AE935F09 /* Build configuration list for PBXNativeTarget "ContextKitHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				97FBFD7164D0A0159BEC4DBE /* Debug */,
-				334529890E8538BB8578A6C5 /* Release */,
+				9A31E9F05753A3B395F05EAD /* Debug */,
+				345B9DC30C10D05BCE214F90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -1122,7 +1050,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0765A526B88295A1D08E5F25 /* ContextKitPluginSDK */ = {
+		0BDB6FFB30E669E3F26F68B2 /* ContextKitPluginSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ContextKitPluginSDK;
 		};
@@ -1130,11 +1058,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = ContextKitCore;
 		};
-		3F27B6C3EC00948EECAC1721 /* ContextKitCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ContextKitCore;
-		};
-		69B3B8F11F4F6B0EE03205F6 /* ContextKitBuiltins */ = {
+		36F693E8393B77A6521A2AD4 /* ContextKitBuiltins */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ContextKitBuiltins;
 		};
@@ -1147,6 +1071,10 @@
 			productName = ContextKitCore;
 		};
 		A4213454845D19C1A85AEB65 /* ContextKitCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ContextKitCore;
+		};
+		CC5991D39FB928E7F43D7F31 /* ContextKitCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ContextKitCore;
 		};

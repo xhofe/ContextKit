@@ -1,13 +1,10 @@
 import ContextKitCore
-import AppKit
 import Foundation
 
 struct ExtensionActionDispatcher {
-    private let inbox = AgentInbox(directoryProvider: .appGroupBridge())
-    private let agentLauncher = FinderAgentLauncher()
+    private let helperClient = ContextKitHelperClient(timeout: 30.0)
 
-    func dispatch(_ request: ExecutionRequest) throws {
-        agentLauncher.launchIfNeeded()
-        _ = try inbox.enqueue(request)
+    func dispatch(_ request: FinderExecutionRequest) throws -> FinderExecutionResult {
+        try helperClient.execute(request)
     }
 }

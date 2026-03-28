@@ -95,48 +95,62 @@ copy_directory() {
   ditto "$source_dir" "$destination_dir"
 }
 
-read_bundle_app_group_identifier() {
-  local bundle_path="$1"
-  local info_plist="$bundle_path/Contents/Info.plist"
+copy_helper_binary_into_app_bundle() {
+  local app_bundle="$1"
+  local helper_binary="$PRODUCTS_DIR/contextkitd"
+  local helpers_dir="$app_bundle/Contents/Helpers"
+  local destination_path="$helpers_dir/contextkitd"
 
-  if [[ ! -f "$info_plist" ]]; then
-    printf 'Expected Info.plist not found: %s\n' "$info_plist" >&2
+  if [[ ! -f "$helper_binary" ]]; then
+    printf 'Expected helper binary not found: %s\n' "$helper_binary" >&2
     exit 1
   fi
 
-  /usr/libexec/PlistBuddy -c "Print :ContextKitAppGroupIdentifier" "$info_plist"
+  log "Embedding contextkitd inside ContextKit.app"
+  mkdir -p "$helpers_dir"
+  cp "$helper_binary" "$destination_path"
+  chmod +x "$destination_path"
 }
 
-write_entitlements_file() {
-  local output_path="$1"
-  local app_group_identifier="$2"
-  local sandbox_enabled="${3:-NO}"
+copy_launch_agent_template_into_app_bundle() {
+  local app_bundle="$1"
+  local template_source="$ROOT_DIR/Support/LaunchAgents/ci.nn.ContextKit.Helper.plist"
+  local templates_dir="$app_bundle/Contents/Resources/LaunchAgents"
 
-  rm -f "$output_path"
-  /usr/libexec/PlistBuddy -c "Add :com.apple.security.application-groups array" "$output_path"
-  /usr/libexec/PlistBuddy -c "Add :com.apple.security.application-groups:0 string $app_group_identifier" "$output_path"
-
-  if [[ "$sandbox_enabled" == "YES" ]]; then
-    /usr/libexec/PlistBuddy -c "Add :com.apple.security.app-sandbox bool true" "$output_path"
-  fi
-}
-
-codesign_bundle() {
-  local bundle_path="$1"
-  local entitlements_path="$2"
-
-  if [[ ! -e "$bundle_path" ]]; then
-    printf 'Expected bundle not found for signing: %s\n' "$bundle_path" >&2
+  if [[ ! -f "$template_source" ]]; then
+    printf 'Expected LaunchAgent template not found: %s\n' "$template_source" >&2
     exit 1
   fi
 
-  log "Signing $(basename "$bundle_path")"
-  codesign \
-    --force \
-    --options runtime \
-    --sign "$DISTRIBUTION_POST_SIGN_IDENTITY" \
-    --entitlements "$entitlements_path" \
-    "$bundle_path"
+  log "Staging LaunchAgent template"
+  mkdir -p "$templates_dir"
+  cp "$template_source" "$templates_dir/ci.nn.ContextKit.Helper.plist"
+}
+
+codesign_item() {
+  local item_path="$1"
+  local entitlements_path="${2:-}"
+
+  if [[ ! -e "$item_path" ]]; then
+    printf 'Expected item not found for signing: %s\n' "$item_path" >&2
+    exit 1
+  fi
+
+  log "Signing $(basename "$item_path")"
+  if [[ -n "$entitlements_path" ]]; then
+    codesign \
+      --force \
+      --options runtime \
+      --sign "$DISTRIBUTION_POST_SIGN_IDENTITY" \
+      --entitlements "$entitlements_path" \
+      "$item_path"
+  else
+    codesign \
+      --force \
+      --options runtime \
+      --sign "$DISTRIBUTION_POST_SIGN_IDENTITY" \
+      "$item_path"
+  fi
 }
 
 post_sign_distribution_app() {
@@ -151,54 +165,12 @@ post_sign_distribution_app() {
     fi
   fi
 
-  local temp_signing_dir
-  temp_signing_dir="$(mktemp -d "${TMPDIR:-/tmp}/contextkit-signing.XXXXXX")"
-
-  local host_group_id
-  local agent_group_id
-  local finder_group_id
-
-  host_group_id="$(read_bundle_app_group_identifier "$app_bundle")"
-  agent_group_id="$(read_bundle_app_group_identifier "$app_bundle/Contents/Library/LoginItems/ContextKitAgent.app")"
-  finder_group_id="$(read_bundle_app_group_identifier "$app_bundle/Contents/PlugIns/ContextKitFinderSync.appex")"
-
-  local host_entitlements="$temp_signing_dir/ContextKit.entitlements"
-  local agent_entitlements="$temp_signing_dir/ContextKitAgent.entitlements"
-  local finder_entitlements="$temp_signing_dir/ContextKitFinderSync.entitlements"
-
-  write_entitlements_file "$host_entitlements" "$host_group_id"
-  write_entitlements_file "$agent_entitlements" "$agent_group_id"
-  write_entitlements_file "$finder_entitlements" "$finder_group_id" "YES"
-
-  codesign_bundle "$app_bundle/Contents/PlugIns/ContextKitFinderSync.appex" "$finder_entitlements"
-  codesign_bundle "$app_bundle/Contents/Library/LoginItems/ContextKitAgent.app" "$agent_entitlements"
-  codesign_bundle "$app_bundle" "$host_entitlements"
+  codesign_item "$app_bundle/Contents/PlugIns/ContextKitFinderSync.appex" "$ROOT_DIR/Support/Entitlements/ContextKitFinderSync.entitlements"
+  codesign_item "$app_bundle/Contents/Helpers/contextkitd"
+  codesign_item "$app_bundle"
 
   log "Verifying staged app signature"
   codesign --verify --deep --strict --verbose=2 "$app_bundle"
-  rm -rf "$temp_signing_dir"
-}
-
-embed_agent_in_app_bundle() {
-  local app_bundle="$1"
-  local agent_bundle="$PRODUCTS_DIR/ContextKitAgent.app"
-  local login_items_dir="$app_bundle/Contents/Library/LoginItems"
-  local embedded_agent_bundle="$login_items_dir/ContextKitAgent.app"
-
-  if [[ ! -d "$app_bundle" ]]; then
-    printf 'Expected host app bundle not found: %s\n' "$app_bundle" >&2
-    exit 1
-  fi
-
-  if [[ ! -d "$agent_bundle" ]]; then
-    printf 'Expected agent app bundle not found: %s\n' "$agent_bundle" >&2
-    exit 1
-  fi
-
-  log "Embedding ContextKitAgent.app inside ContextKit.app"
-  mkdir -p "$login_items_dir"
-  rm -rf "$embedded_agent_bundle"
-  ditto "$agent_bundle" "$embedded_agent_bundle"
 }
 
 stage_distribution_root() {
@@ -207,7 +179,8 @@ stage_distribution_root() {
   mkdir -p "$DMG_STAGE_DIR"
 
   copy_app_bundle "ContextKit.app" "$DMG_STAGE_DIR"
-  embed_agent_in_app_bundle "$DMG_STAGE_DIR/ContextKit.app"
+  copy_helper_binary_into_app_bundle "$DMG_STAGE_DIR/ContextKit.app"
+  copy_launch_agent_template_into_app_bundle "$DMG_STAGE_DIR/ContextKit.app"
   post_sign_distribution_app "$DMG_STAGE_DIR/ContextKit.app"
 
   ln -s /Applications "$DMG_STAGE_DIR/Applications"
@@ -258,7 +231,7 @@ main() {
   xcodegen generate --spec "$PROJECT_SPEC"
 
   build_app_scheme "ContextKit"
-  build_app_scheme "ContextKitAgent"
+  build_cli_scheme "ContextKitHelper"
   build_cli_scheme "contextkit"
 
   stage_distribution_root

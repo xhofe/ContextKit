@@ -14,12 +14,11 @@ final class ContextKitAppServices {
     private let gitPluginInstaller: GitPluginInstaller
     private let executionCoordinator: ExecutionCoordinator
     private let bootstrapper: AppBootstrapper
-    private let agentLauncher: EmbeddedAgentLauncher
+    private let helperRegistrationController: ContextKitHelperRegistrationController
     private let systemSettingsLauncher: SystemSettingsLauncher
-    private let finderBridgeSynchronizer: FinderBridgeSynchronizer
 
     init() {
-        let localDirectoryProvider = SharedDirectoryProvider.appSupport()
+        let localDirectoryProvider = SharedDirectoryProvider()
         let settingsStore = SharedSettingsStore(directoryProvider: localDirectoryProvider)
         let pluginRepository = PluginRepository(
             directoryProvider: localDirectoryProvider,
@@ -36,24 +35,28 @@ final class ContextKitAppServices {
         self.gitPluginInstaller = GitPluginInstaller(pluginRepository: pluginRepository)
         self.executionCoordinator = ExecutionCoordinator(
             settingsStore: settingsStore,
-            menuDescriptorCache: MenuDescriptorCache(directoryProvider: localDirectoryProvider),
             logStore: logStore,
             workflowRepository: workflowRepository,
             pluginRepository: pluginRepository,
             builtins: BuiltinActionRegistry.commands()
         )
         self.bootstrapper = AppBootstrapper(pluginRepository: pluginRepository)
-        self.agentLauncher = EmbeddedAgentLauncher()
+        self.helperRegistrationController = ContextKitHelperRegistrationController()
         self.systemSettingsLauncher = SystemSettingsLauncher()
-        self.finderBridgeSynchronizer = FinderBridgeSynchronizer(
-            localDirectoryProvider: localDirectoryProvider,
-            bridgeDirectoryProvider: .appGroupBridge()
-        )
     }
 
     func bootstrap(bundle: Bundle = .main) throws {
+        do {
+            try helperRegistrationController.ensureRegistered(bundle: bundle)
+        } catch {
+            NSLog("ContextKit failed to register finder helper: %@", error.localizedDescription)
+        }
         try bootstrapper.installBundledPluginsIfNeeded(from: bundle)
         try executionCoordinator.refreshMenuCache()
+        DistributedNotificationCenter.default().post(
+            name: ContextKitHelperConstants.monitoredRootsDidChangeNotification,
+            object: nil
+        )
     }
 
     func loadSettings() throws -> AppSettings {
@@ -64,6 +67,10 @@ final class ContextKitAppServices {
         try settingsStore.save(settings)
         L10n.invalidateCache()
         try executionCoordinator.refreshMenuCache()
+        DistributedNotificationCenter.default().post(
+            name: ContextKitHelperConstants.monitoredRootsDidChangeNotification,
+            object: nil
+        )
     }
 
     func loadCatalog() throws -> RuntimeCatalog {
@@ -199,8 +206,7 @@ final class ContextKitAppServices {
     }
 
     func openFinderExtensionsSettings() throws {
-        try finderBridgeSynchronizer.sync()
-        agentLauncher.launchIfNeeded()
+        try helperRegistrationController.ensureRegistered()
         guard systemSettingsLauncher.openFinderExtensionsSettings() else {
             throw NSError(
                 domain: "ContextKitAppServices",
@@ -213,6 +219,10 @@ final class ContextKitAppServices {
                 ]
             )
         }
+    }
+
+    func helperRegistrationStatus() -> ContextKitHelperRegistrationStatus {
+        helperRegistrationController.status()
     }
 
     private func slug(for value: String) -> String {

@@ -4,28 +4,44 @@ import Foundation
 
 struct SelectionContext: Sendable {
     var selectedURLs: [URL]
-    var monitoredRootURL: URL?
-    var snapshot: ContextSnapshot
+    var targetedURL: URL?
 }
 
 struct SelectionContextReader {
-    private let settingsStore = SharedSettingsStore(directoryProvider: .appGroupBridge())
-
     func read(from controller: FIFinderSyncController) -> SelectionContext? {
-        let selectedURLs = controller.selectedItemURLs() ?? {
-            if let targetedURL = controller.targetedURL() {
-                return [targetedURL]
-            }
-            return nil
-        }()
+        let selectedURLs = controller.selectedItemURLs() ?? []
+        let targetedURL = controller.targetedURL()
+        let effectiveSelection = selectedURLs.isEmpty ? [targetedURL].compactMap { $0 } : selectedURLs
 
-        guard let selectedURLs, !selectedURLs.isEmpty else {
+        guard !effectiveSelection.isEmpty else {
             return nil
         }
 
-        let settings = try? settingsStore.load()
-        let monitoredRootURL = settings?.monitoredRoot(for: selectedURLs.first)
-        let snapshot = ContextSnapshot(selectedURLs: selectedURLs, monitoredRootURL: monitoredRootURL)
-        return SelectionContext(selectedURLs: selectedURLs, monitoredRootURL: monitoredRootURL, snapshot: snapshot)
+        return SelectionContext(
+            selectedURLs: selectedURLs,
+            targetedURL: targetedURL
+        )
+    }
+
+    func makeRequest(from selection: SelectionContext) -> FinderSelectionRequest {
+        FinderSelectionRequest(
+            selectedPaths: selection.selectedURLs.map(\.path),
+            targetedPath: selection.targetedURL?.path,
+            currentDirectoryPath: selection.targetedURL?.path
+        )
+    }
+
+    func makeExecutionRequest(
+        targetID: String,
+        targetType: TargetType,
+        selection: SelectionContext
+    ) -> FinderExecutionRequest {
+        FinderExecutionRequest(
+            targetID: targetID,
+            targetType: targetType,
+            selectedPaths: selection.selectedURLs.map(\.path),
+            targetedPath: selection.targetedURL?.path,
+            currentDirectoryPath: selection.targetedURL?.path
+        )
     }
 }

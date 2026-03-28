@@ -9,16 +9,23 @@ struct FinderIntegrationSectionView: View {
             Text(
                 L10n.string(
                     "app.settings.finderHint",
-                    fallback: "ContextKit keeps Finder integration in a separate bridge store so normal app usage does not trigger macOS app-data prompts. Open Finder extension settings when you want to sync the latest monitored roots and menu layout for Finder."
+                    fallback: "ContextKit keeps all app state in ~/.config/ContextKit and serves Finder through a background helper, so normal app usage and Finder menus no longer need access to other apps' data."
                 )
             )
             .foregroundStyle(.secondary)
             .fixedSize(horizontal: false, vertical: true)
 
+            if let finderStatusMessage = viewModel.finderStatusMessage {
+                Text(finderStatusMessage)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
             Button(
                 L10n.string(
                     "app.settings.finderOpenButton",
-                    fallback: "Sync And Open Finder Extension Settings"
+                    fallback: "Open Finder Extension Settings"
                 ),
                 action: openFinderSettings
             )

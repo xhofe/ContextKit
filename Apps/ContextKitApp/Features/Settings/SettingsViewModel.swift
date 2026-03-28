@@ -7,6 +7,7 @@ import Observation
 final class SettingsViewModel {
     var settings = AppSettings()
     var errorMessage: String?
+    var finderStatusMessage: String?
 
     var didSaveSettings: (() -> Void)?
 
@@ -19,6 +20,7 @@ final class SettingsViewModel {
     func reload() {
         do {
             settings = try services.loadSettings()
+            finderStatusMessage = services.helperRegistrationStatus().message
             errorMessage = nil
         } catch {
             errorMessage = error.localizedDescription
@@ -47,6 +49,7 @@ final class SettingsViewModel {
     func openFinderExtensionsSettings() {
         do {
             try services.openFinderExtensionsSettings()
+            finderStatusMessage = services.helperRegistrationStatus().message
             errorMessage = nil
         } catch {
             errorMessage = error.localizedDescription
