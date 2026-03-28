@@ -1,15 +1,18 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (for example: 1.2.3)"
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-${{ inputs.version }}
   cancel-in-progress: false
 
 jobs:
@@ -18,9 +21,13 @@ jobs:
     env:
       HOMEBREW_NO_AUTO_UPDATE: 1
       DISTRIBUTION_CODE_SIGNING_ALLOWED: NO
+      RELEASE_VERSION: ${{ inputs.version }}
+      RELEASE_TAG: v${{ inputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Install XcodeGen
         run: |
@@ -33,6 +40,31 @@ jobs:
           if ! command -v gh >/dev/null 2>&1; then
             brew install gh
           fi
+
+      - name: Validate release version
+        run: |
+          if [[ ! "$RELEASE_VERSION" =~ ^[0-9]+(\.[0-9]+){1,2}$ ]]; then
+            echo "Version must look like 1.2 or 1.2.3"
+            exit 1
+          fi
+
+          if git rev-parse "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Tag $RELEASE_TAG already exists"
+            exit 1
+          fi
+
+      - name: Update app versions
+        run: |
+          plists=(
+            "Support/Plists/ContextKit-Info.plist"
+            "Support/Plists/ContextKitAgent-Info.plist"
+            "Support/Plists/ContextKitFinderSync-Info.plist"
+          )
+
+          for plist in "${plists[@]}"; do
+            /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $RELEASE_VERSION" "$plist"
+            /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $RELEASE_VERSION" "$plist"
+          done
 
       - name: Test ContextKitCore
         run: swift test --package-path Packages/ContextKitCore
@@ -49,26 +81,46 @@ jobs:
       - name: Upload release workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: contextkit-${{ github.ref_name }}
+          name: contextkit-${{ env.RELEASE_TAG }}
           path: |
             dist/ContextKit.dmg
             dist/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 30
 
+      - name: Commit version bump and push tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            Support/Plists/ContextKit-Info.plist \
+            Support/Plists/ContextKitAgent-Info.plist \
+            Support/Plists/ContextKitFinderSync-Info.plist
+
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: release $RELEASE_TAG [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+          git tag "$RELEASE_TAG"
+          git push origin "$RELEASE_TAG"
+
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
-            gh release upload "${GITHUB_REF_NAME}" \
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" \
               dist/ContextKit.dmg \
               dist/SHA256SUMS.txt \
               --clobber
           else
-            gh release create "${GITHUB_REF_NAME}" \
+            gh release create "$RELEASE_TAG" \
               dist/ContextKit.dmg \
               dist/SHA256SUMS.txt \
-              --title "${GITHUB_REF_NAME}" \
+              --title "$RELEASE_TAG" \
               --generate-notes
           fi
