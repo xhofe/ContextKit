@@ -33,6 +33,8 @@
 "app.actions.description" = "Edit the Finder menu tree here. Reorder items, create groups, and change nesting without duplicating action logic.";
 "app.actions.navigation" = "Actions";
 "app.actions.addGroup" = "Add Group";
+"app.actions.dropIntoGroup" = "Drop here to move the dragged item into this group.";
+"app.actions.dropToRoot" = "Drop here to move to the top level";
 "app.actions.newGroup" = "New Group";
 "app.actions.groupName" = "Group Name";
 "app.actions.groupLabel" = "Menu Group";
@@ -62,6 +64,8 @@
 "app.settings.terminal" = "Terminal";
 "app.settings.terminalMenu" = "Terminal Menu";
 "app.settings.terminalMenuHint" = "ContextKit shows a terminal submenu in Finder. Choose which terminal apps should appear there.";
+"app.settings.editorMenu" = "Editor Menu";
+"app.settings.editorMenuHint" = "ContextKit shows an editor submenu in Finder. Choose which editors should appear there.";
 "app.settings.editor" = "Editor";
 "app.settings.language" = "Language";
 "app.settings.language.system" = "System Default";
@@ -81,6 +85,7 @@
 "app.workflows.defaultName" = "New Workflow";
 "finder.menu.title" = "ContextKit";
 "finder.menu.noMatchingActions" = "No matching actions";
+"menu.group.openInEditor" = "Open in Editor";
 "menu.group.openInTerminal" = "Open in Terminal";
 "builtin.copyPath.name" = "Copy Path";
 "builtin.copyPath.message" = "Copied %lld path(s).";
@@ -93,6 +98,7 @@
 "builtin.openEditor.name" = "Open in Editor";
 "builtin.openEditor.noItem" = "No item available to open.";
 "builtin.openEditor.opened" = "Opened editor.";
+"builtin.openEditor.openedNamed" = "Opened %@.";
 "builtin.copyMD5.name" = "Copy MD5";
 "builtin.copyMD5.message" = "Copied MD5 hash(es).";
 "builtin.copySHA256.name" = "Copy SHA256";

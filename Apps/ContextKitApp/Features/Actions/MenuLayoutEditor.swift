@@ -63,6 +63,56 @@ enum MenuLayoutEditor {
         move(id: id, delta: 1, in: items)
     }
 
+    static func moveBefore(
+        draggedID: String,
+        targetID: String,
+        in items: [MenuLayoutItem]
+    ) -> [MenuLayoutItem] {
+        guard draggedID != targetID,
+              let draggedPath = indexPath(for: draggedID, in: items),
+              let targetPath = indexPath(for: targetID, in: items),
+              !targetPath.starts(with: draggedPath) else {
+            return items
+        }
+
+        let (draggedItem, withoutDraggedItem) = remove(at: draggedPath, from: items)
+        guard let updatedTargetPath = indexPath(for: targetID, in: withoutDraggedItem) else {
+            return items
+        }
+
+        return insert(draggedItem, at: updatedTargetPath, in: withoutDraggedItem)
+    }
+
+    static func moveIntoGroup(
+        draggedID: String,
+        groupID: String,
+        in items: [MenuLayoutItem]
+    ) -> [MenuLayoutItem] {
+        guard draggedID != groupID,
+              let draggedPath = indexPath(for: draggedID, in: items),
+              let groupPath = indexPath(for: groupID, in: items),
+              item(at: groupPath, in: items).kind == .group,
+              !groupPath.starts(with: draggedPath) else {
+            return items
+        }
+
+        let (draggedItem, withoutDraggedItem) = remove(at: draggedPath, from: items)
+        guard let updatedGroupPath = indexPath(for: groupID, in: withoutDraggedItem) else {
+            return items
+        }
+
+        return append(draggedItem, toPath: updatedGroupPath, in: withoutDraggedItem)
+    }
+
+    static func moveToRootEnd(draggedID: String, in items: [MenuLayoutItem]) -> [MenuLayoutItem] {
+        guard let draggedPath = indexPath(for: draggedID, in: items) else {
+            return items
+        }
+
+        let (draggedItem, withoutDraggedItem) = remove(at: draggedPath, from: items)
+        return withoutDraggedItem + [draggedItem]
+    }
+
     static func indent(id: String, in items: [MenuLayoutItem]) -> [MenuLayoutItem] {
         guard let path = indexPath(for: id, in: items),
               let currentIndex = path.last,

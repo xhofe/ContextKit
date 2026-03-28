@@ -48,6 +48,16 @@ struct ActionsView: View {
                         Spacer()
 
                         if item.isGroup {
+                            Image(systemName: "tray.and.arrow.down")
+                                .foregroundStyle(.secondary)
+                                .help(L10n.string("app.actions.dropIntoGroup", fallback: "Drop here to move the dragged item into this group."))
+                                .dropDestination(for: String.self) { items, _ in
+                                    guard let draggedID = items.first else {
+                                        return false
+                                    }
+                                    return viewModel.handleDropIntoGroup(draggedItemID: draggedID, groupItem: item)
+                                }
+
                             Button {
                                 viewModel.addGroup(parentID: item.id)
                             } label: {
@@ -104,7 +114,29 @@ struct ActionsView: View {
                         }
                     }
                     .padding(.vertical, 4)
+                    .contentShape(Rectangle())
+                    .draggable(item.id)
+                    .dropDestination(for: String.self) { items, _ in
+                        guard let draggedID = items.first else {
+                            return false
+                        }
+                        return viewModel.handleDrop(draggedItemID: draggedID, before: item)
+                    }
                 }
+
+                Color.clear
+                    .frame(height: 24)
+                    .overlay(
+                        Text(L10n.string("app.actions.dropToRoot", fallback: "Drop here to move to the top level"))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    )
+                    .dropDestination(for: String.self) { items, _ in
+                        guard let draggedID = items.first else {
+                            return false
+                        }
+                        return viewModel.handleDropAtRoot(draggedItemID: draggedID)
+                    }
             }
             .listStyle(.inset)
 

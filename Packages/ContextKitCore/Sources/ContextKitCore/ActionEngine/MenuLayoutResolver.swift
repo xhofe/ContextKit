@@ -59,6 +59,9 @@ public enum MenuLayoutResolver {
         let terminalActionIDs = Set(
             AppLauncher.knownTerminalLaunchers.map(BuiltinActionIdentifier.openInTerminalActionID(for:))
         )
+        let editorActionIDs = Set(
+            AppLauncher.knownEditorLaunchers.map(BuiltinActionIdentifier.openInEditorActionID(for:))
+        )
 
         let orderedActions = actions.sorted { lhs, rhs in
             if lhs.category == rhs.category {
@@ -68,10 +71,13 @@ public enum MenuLayoutResolver {
         }
 
         let openChildren = orderedActions
-            .filter { $0.category == .open && !terminalActionIDs.contains($0.id) }
+            .filter { $0.category == .open && !terminalActionIDs.contains($0.id) && !editorActionIDs.contains($0.id) }
             .map { MenuLayoutItem.action($0.id) }
         let terminalChildren = orderedActions
             .filter { terminalActionIDs.contains($0.id) }
+            .map { MenuLayoutItem.action($0.id) }
+        let editorChildren = orderedActions
+            .filter { editorActionIDs.contains($0.id) }
             .map { MenuLayoutItem.action($0.id) }
         let toolChildren = orderedActions
             .filter { $0.category == .tools }
@@ -85,7 +91,7 @@ public enum MenuLayoutResolver {
 
         var rootItems: [MenuLayoutItem] = []
 
-        if !openChildren.isEmpty || !terminalChildren.isEmpty {
+        if !openChildren.isEmpty || !terminalChildren.isEmpty || !editorChildren.isEmpty {
             var children = openChildren
             if !terminalChildren.isEmpty {
                 children.insert(
@@ -95,6 +101,16 @@ public enum MenuLayoutResolver {
                         children: terminalChildren
                     ),
                     at: 0
+                )
+            }
+            if !editorChildren.isEmpty {
+                children.insert(
+                    .group(
+                        id: "group.open-editors",
+                        title: L10n.string("menu.group.openInEditor", fallback: "Open in Editor"),
+                        children: editorChildren
+                    ),
+                    at: min(children.count, terminalChildren.isEmpty ? 0 : 1)
                 )
             }
 
@@ -146,6 +162,10 @@ public enum MenuLayoutResolver {
         workflowIDs: Set<String>
     ) -> [MenuLayoutItem] {
         items.compactMap { item in
+            if let migratedItem = migrateLegacyItem(item, actionIDs: actionIDs) {
+                return migratedItem
+            }
+
             switch item.kind {
             case .group:
                 var group = item
@@ -156,6 +176,40 @@ public enum MenuLayoutResolver {
             case .workflow:
                 return workflowIDs.contains(item.id) ? item : nil
             }
+        }
+    }
+
+    private static func migrateLegacyItem(
+        _ item: MenuLayoutItem,
+        actionIDs: Set<String>
+    ) -> MenuLayoutItem? {
+        guard item.kind == .action else {
+            return nil
+        }
+
+        switch item.id {
+        case "builtin.open-terminal":
+            let children = AppLauncher.knownTerminalLaunchers
+                .map(BuiltinActionIdentifier.openInTerminalActionID(for:))
+                .filter(actionIDs.contains)
+                .map(MenuLayoutItem.action)
+            return children.isEmpty ? nil : .group(
+                id: "group.open-terminals",
+                title: L10n.string("menu.group.openInTerminal", fallback: "Open in Terminal"),
+                children: children
+            )
+        case "builtin.open-editor":
+            let children = AppLauncher.knownEditorLaunchers
+                .map(BuiltinActionIdentifier.openInEditorActionID(for:))
+                .filter(actionIDs.contains)
+                .map(MenuLayoutItem.action)
+            return children.isEmpty ? nil : .group(
+                id: "group.open-editors",
+                title: L10n.string("menu.group.openInEditor", fallback: "Open in Editor"),
+                children: children
+            )
+        default:
+            return nil
         }
     }
 
@@ -252,6 +306,12 @@ public enum MenuLayoutResolver {
         }
 
         guard BuiltinActionIdentifier.isOpenInTerminalActionID(actionID) else {
+            if BuiltinActionIdentifier.isOpenInEditorActionID(actionID) {
+                return AppLauncher.knownEditorLaunchers.contains { launcher in
+                    BuiltinActionIdentifier.openInEditorActionID(for: launcher) == actionID &&
+                    settings.visibleEditorLauncherIDs.contains(launcher.id)
+                }
+            }
             return true
         }
 

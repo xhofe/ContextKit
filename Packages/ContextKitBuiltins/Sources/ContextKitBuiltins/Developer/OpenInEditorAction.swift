@@ -2,13 +2,14 @@ import Foundation
 import ContextKitCore
 
 struct OpenInEditorAction {
+    let launcher: AppLauncher
     private let opener = LauncherOpener()
 
     var command: AnyActionCommand {
         AnyActionCommand(
             manifest: ActionManifest(
-                id: BuiltinActionIdentifier.openInEditor,
-                name: L10n.string("builtin.openEditor.name", fallback: "Open in Editor"),
+                id: BuiltinActionIdentifier.openInEditorActionID(for: launcher),
+                name: launcher.name,
                 category: .open,
                 kind: .builtin,
                 contextRules: ContextRules(),
@@ -23,8 +24,14 @@ struct OpenInEditorAction {
                 )
             }
 
-            try self.opener.open(targets, with: context.settings.defaultEditor)
-            return ExecutionResult(status: .success, message: L10n.string("builtin.openEditor.opened", fallback: "Opened editor."))
+            try self.opener.open(targets, with: launcher)
+            return ExecutionResult(
+                status: .success,
+                message: String(
+                    format: L10n.string("builtin.openEditor.openedNamed", fallback: "Opened %@."),
+                    launcher.name
+                )
+            )
         }
     }
 }

@@ -52,6 +52,19 @@ final class SettingsViewModel: ObservableObject {
         }
     }
 
+    func setEditorVisibility(_ isVisible: Bool, for launcher: AppLauncher) {
+        performSettingsMutation {
+            var visibleIDs = settings.visibleEditorLauncherIDs
+            visibleIDs.removeAll(where: { $0 == launcher.id })
+
+            if isVisible {
+                visibleIDs.append(launcher.id)
+            }
+
+            try services.updateVisibleEditorLauncherIDs(visibleIDs)
+        }
+    }
+
     func saveEditor(_ launcher: AppLauncher) {
         performSettingsMutation {
             try services.updateDefaultEditor(launcher)
@@ -75,6 +88,10 @@ final class SettingsViewModel: ObservableObject {
 
     func isTerminalVisible(_ launcher: AppLauncher) -> Bool {
         settings.visibleTerminalLauncherIDs.contains(launcher.id)
+    }
+
+    func isEditorVisible(_ launcher: AppLauncher) -> Bool {
+        settings.visibleEditorLauncherIDs.contains(launcher.id)
     }
 
     private func performSettingsMutation(_ operation: () throws -> Void) {

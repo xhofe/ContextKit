@@ -107,6 +107,43 @@ final class ActionsViewModel: ObservableObject {
         MenuLayoutEditor.canOutdent(id: item.id, in: menuLayout)
     }
 
+    @discardableResult
+    func handleDrop(draggedItemID: String, before targetItem: ActionListItem) -> Bool {
+        guard draggedItemID != targetItem.id else {
+            return false
+        }
+
+        menuLayout = MenuLayoutEditor.moveBefore(
+            draggedID: draggedItemID,
+            targetID: targetItem.id,
+            in: menuLayout
+        )
+        saveMenuLayout()
+        return true
+    }
+
+    @discardableResult
+    func handleDropIntoGroup(draggedItemID: String, groupItem: ActionListItem) -> Bool {
+        guard groupItem.isGroup, draggedItemID != groupItem.id else {
+            return false
+        }
+
+        menuLayout = MenuLayoutEditor.moveIntoGroup(
+            draggedID: draggedItemID,
+            groupID: groupItem.id,
+            in: menuLayout
+        )
+        saveMenuLayout()
+        return true
+    }
+
+    @discardableResult
+    func handleDropAtRoot(draggedItemID: String) -> Bool {
+        menuLayout = MenuLayoutEditor.moveToRootEnd(draggedID: draggedItemID, in: menuLayout)
+        saveMenuLayout()
+        return true
+    }
+
     private func rebuildItems() {
         items = MenuLayoutEditor.flatten(
             items: menuLayout,

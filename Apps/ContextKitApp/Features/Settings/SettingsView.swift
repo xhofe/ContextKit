@@ -8,8 +8,8 @@ struct SettingsView: View {
         Form {
             monitoredRootsSection
             finderSection
-            defaultsSection
             terminalMenuSection
+            editorMenuSection
             localizationSection
             errorSection
         }
@@ -39,16 +39,6 @@ struct SettingsView: View {
         }
     }
 
-    private var defaultsSection: some View {
-        Section(L10n.string("app.settings.defaults", fallback: "Defaults")) {
-            Picker(L10n.string("app.settings.editor", fallback: "Editor"), selection: editorSelection) {
-                ForEach(viewModel.editorChoices) { launcher in
-                    Text(launcher.name).tag(launcher.id)
-                }
-            }
-        }
-    }
-
     private var terminalMenuSection: some View {
         Section(L10n.string("app.settings.terminalMenu", fallback: "Terminal Menu")) {
             Text(
@@ -66,6 +56,29 @@ struct SettingsView: View {
                     isOn: Binding(
                         get: { viewModel.isTerminalVisible(launcher) },
                         set: { viewModel.setTerminalVisibility($0, for: launcher) }
+                    )
+                )
+            }
+        }
+    }
+
+    private var editorMenuSection: some View {
+        Section(L10n.string("app.settings.editorMenu", fallback: "Editor Menu")) {
+            Text(
+                L10n.string(
+                    "app.settings.editorMenuHint",
+                    fallback: "ContextKit shows an editor submenu in Finder. Choose which editors should appear there."
+                )
+            )
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
+
+            ForEach(viewModel.editorChoices) { launcher in
+                Toggle(
+                    launcher.name,
+                    isOn: Binding(
+                        get: { viewModel.isEditorVisible(launcher) },
+                        set: { viewModel.setEditorVisibility($0, for: launcher) }
                     )
                 )
             }
@@ -111,17 +124,6 @@ struct SettingsView: View {
                     .foregroundStyle(.red)
             }
         }
-    }
-
-    private var editorSelection: Binding<String> {
-        Binding(
-            get: { viewModel.settings.defaultEditor.id },
-            set: { id in
-                if let launcher = viewModel.editorChoices.first(where: { $0.id == id }) {
-                    viewModel.saveEditor(launcher)
-                }
-            }
-        )
     }
 
     private var languageSelection: Binding<String> {

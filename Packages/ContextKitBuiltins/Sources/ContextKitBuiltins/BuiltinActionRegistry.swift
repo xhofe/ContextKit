@@ -6,7 +6,6 @@ public enum BuiltinActionRegistry {
         let baseCommands = [
             CopyPathAction().command,
             CopyRelativePathAction().command,
-            OpenInEditorAction().command,
             CopyMD5Action().command,
             CopySHA256Action().command,
             CompressAction().command,
@@ -16,7 +15,10 @@ public enum BuiltinActionRegistry {
         let terminalCommands = AppLauncher.knownTerminalLaunchers.map { launcher in
             OpenInTerminalAction(launcher: launcher).command
         }
+        let editorCommands = AppLauncher.knownEditorLaunchers.map { launcher in
+            OpenInEditorAction(launcher: launcher).command
+        }
 
-        return terminalCommands + baseCommands
+        return terminalCommands + editorCommands + baseCommands
     }
 }
