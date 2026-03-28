@@ -12,6 +12,7 @@
 		064703F1EB10D30A5C38EA66 /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14246F8B756E9660590551A /* OverviewView.swift */; };
 		069F1FA8DCAE964663676C2E /* Official in Resources */ = {isa = PBXBuildFile; fileRef = 38814B12B844A59DD017C46B /* Official */; };
 		09F7D8009CC7A281A4F029D0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAF3298086C8708449A0D8 /* SettingsViewModel.swift */; };
+		0D7A1570E7E67F89370C42E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0B30C82D905A880D96CD046 /* Assets.xcassets */; };
 		0E3532492F2239D1F0E73119 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3757E8A42CD5FD263F00B /* OnboardingView.swift */; };
 		0FB85AB59F8567B16F4A5A8B /* ListPluginsCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF22F1635ABD98151239A32 /* ListPluginsCommand.swift */; };
 		203E8DC28F41F66AA4967150 /* ContextKitAgentApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF590A342790411E9EAD4A55 /* ContextKitAgentApp.swift */; };
@@ -148,6 +149,7 @@
 		96F4A6FFD5E73EA65DF9D268 /* OverviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		97D3757E8A42CD5FD263F00B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9FCD9A518AE7D4FA5E78F529 /* MenuLayoutEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuLayoutEditor.swift; sourceTree = "<group>"; };
+		A0B30C82D905A880D96CD046 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsView.swift; sourceTree = "<group>"; };
 		A8A4B0DA5D23CF31D12AC7B0 /* CLIEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIEnvironment.swift; sourceTree = "<group>"; };
 		A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				67F4DC156199D4FF196E1372 /* Apps */,
+				D81A628F03978C66A67B89C2 /* ContextKit */,
 				CE3D4A6390BE47E7E429F455 /* Extensions */,
 				C6EC48777A3204CF3E24F0A7 /* Packages */,
 				2369569B54283B56E0B244B4 /* Plugins */,
@@ -475,6 +478,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		D81A628F03978C66A67B89C2 /* ContextKit */ = {
+			isa = PBXGroup;
+			children = (
+				A0B30C82D905A880D96CD046 /* Assets.xcassets */,
+			);
+			path = ContextKit;
+			sourceTree = "<group>";
+		};
 		E4C574A935A6031301B54E5F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,6 +669,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D7A1570E7E67F89370C42E8 /* Assets.xcassets in Resources */,
 				069F1FA8DCAE964663676C2E /* Official in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

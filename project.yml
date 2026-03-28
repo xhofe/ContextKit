@@ -31,6 +31,8 @@ targets:
     platform: macOS
     sources:
       - path: Apps/ContextKitApp
+      - path: ContextKit/Assets.xcassets
+        buildPhase: resources
       - path: Plugins/Official
         buildPhase: resources
         type: folder
