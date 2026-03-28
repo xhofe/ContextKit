@@ -27,13 +27,11 @@ final class EmbeddedAgentLauncher {
         configuration.activates = false
         configuration.addsToRecentItems = false
 
-        workspace.openApplication(at: agentURL, configuration: configuration) { _, error in
-            Task { @MainActor in
-                if let error {
-                    NSLog("ContextKit failed to launch agent: %@", error.localizedDescription)
-                }
-            }
-        }
+        workspace.openApplication(
+            at: agentURL,
+            configuration: configuration,
+            completionHandler: Self.agentLaunchCompletionHandler
+        )
     }
 
     func terminateIfRunning(hostBundle: Bundle = .main) {
@@ -76,5 +74,16 @@ final class EmbeddedAgentLauncher {
         for application in applications where !application.isTerminated {
             _ = application.forceTerminate()
         }
+    }
+
+    nonisolated private static func agentLaunchCompletionHandler(
+        _ application: NSRunningApplication?,
+        _ error: Error?
+    ) {
+        guard let error else {
+            return
+        }
+
+        NSLog("ContextKit failed to launch agent: %@", error.localizedDescription)
     }
 }
