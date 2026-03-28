@@ -1,20 +1,28 @@
 import Foundation
 import Security
 
+public enum ContextKitStorageDomain: Sendable {
+    case appSupport
+    case appGroupBridge
+}
+
 public final class SharedDirectoryProvider: @unchecked Sendable {
     public let appGroupIdentifier: String?
     public let legacyAppGroupIdentifier: String?
+    public let storageDomain: ContextKitStorageDomain
     private let fileManager: FileManager
     private let containerURLProvider: (String) -> URL?
     private let hasApplicationGroupEntitlement: (String) -> Bool
 
     public init(
+        storageDomain: ContextKitStorageDomain = .appSupport,
         appGroupIdentifier: String? = SharedDirectoryProvider.defaultAppGroupIdentifier(),
         legacyAppGroupIdentifier: String? = "group.ci.nn.ContextKit",
         fileManager: FileManager = .default,
         containerURLProvider: ((String) -> URL?)? = nil,
         hasApplicationGroupEntitlement: ((String) -> Bool)? = nil
     ) {
+        self.storageDomain = storageDomain
         self.appGroupIdentifier = appGroupIdentifier
         self.legacyAppGroupIdentifier = legacyAppGroupIdentifier
         self.fileManager = fileManager
@@ -25,15 +33,20 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
     }
 
     public func baseURL() throws -> URL {
-        if let groupURL = try preferredBaseURL() {
-            return groupURL
-        }
+        switch storageDomain {
+        case .appSupport:
+            return try fallbackBaseURL()
+        case .appGroupBridge:
+            if let groupURL = try preferredBaseURL() {
+                return groupURL
+            }
 
-        if let legacyGroupURL = try legacyBaseURL() {
-            return legacyGroupURL
-        }
+            if let legacyGroupURL = try legacyBaseURL() {
+                return legacyGroupURL
+            }
 
-        return try fallbackBaseURL()
+            return try fallbackBaseURL()
+        }
     }
 
     public static func defaultAppGroupIdentifier(bundle: Bundle = .main) -> String? {
@@ -88,14 +101,22 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
     }
 
     public func ipcBaseURLs() throws -> [URL] {
-        let candidates = [
-            try preferredBaseURL(),
-            try legacyBaseURL(),
-            try fallbackBaseURL(),
-        ].compactMap { $0?.resolvingSymlinksInPath().standardizedFileURL }
+        let candidates: [URL]
+        switch storageDomain {
+        case .appSupport:
+            candidates = [try fallbackBaseURL()]
+        case .appGroupBridge:
+            candidates = [
+                try preferredBaseURL(),
+                try legacyBaseURL(),
+                try fallbackBaseURL(),
+            ].compactMap { $0 }
+        }
+
+        let normalizedCandidates = candidates.map { $0.resolvingSymlinksInPath().standardizedFileURL }
 
         var uniqueURLs: [URL] = []
-        for candidate in candidates where !uniqueURLs.contains(candidate) {
+        for candidate in normalizedCandidates where !uniqueURLs.contains(candidate) {
             uniqueURLs.append(candidate)
         }
         return uniqueURLs
@@ -206,5 +227,27 @@ public final class SharedDirectoryProvider: @unchecked Sendable {
         }
 
         return groups.contains(identifier)
+    }
+
+    public static func appSupport(
+        bundle: Bundle = .main,
+        fileManager: FileManager = .default
+    ) -> SharedDirectoryProvider {
+        SharedDirectoryProvider(
+            storageDomain: .appSupport,
+            appGroupIdentifier: defaultAppGroupIdentifier(bundle: bundle),
+            fileManager: fileManager
+        )
+    }
+
+    public static func appGroupBridge(
+        bundle: Bundle = .main,
+        fileManager: FileManager = .default
+    ) -> SharedDirectoryProvider {
+        SharedDirectoryProvider(
+            storageDomain: .appGroupBridge,
+            appGroupIdentifier: defaultAppGroupIdentifier(bundle: bundle),
+            fileManager: fileManager
+        )
     }
 }

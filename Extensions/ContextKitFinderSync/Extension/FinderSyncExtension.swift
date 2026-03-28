@@ -4,8 +4,8 @@ import FinderSync
 import Foundation
 
 final class FinderSyncExtension: FIFinderSync {
-    private let settingsStore = SharedSettingsStore()
-    private let cache = MenuDescriptorCache()
+    private let settingsStore = SharedSettingsStore(directoryProvider: .appGroupBridge())
+    private let cache = MenuDescriptorCache(directoryProvider: .appGroupBridge())
     private let selectionContextReader = SelectionContextReader()
     private let menuInvocationCache = MenuInvocationCache()
     private let menuBuilder = MenuBuilder()
@@ -72,7 +72,7 @@ final class FinderSyncExtension: FIFinderSync {
         snapshot: MenuInvocationSnapshot?
     ) {
         let selectionContextReader = SelectionContextReader()
-        let cache = MenuDescriptorCache()
+        let cache = MenuDescriptorCache(directoryProvider: .appGroupBridge())
         let dispatcher = ExtensionActionDispatcher()
         let controller = FIFinderSyncController.default()
         guard let selection = selectionContextReader.read(from: controller) ?? snapshot?.selection else {

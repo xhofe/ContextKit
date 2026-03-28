@@ -12,10 +12,14 @@ struct CLIEnvironment {
     let executionCoordinator: ExecutionCoordinator
 
     init() {
-        let settingsStore = SharedSettingsStore()
-        let pluginRepository = PluginRepository(settingsStore: settingsStore)
-        let workflowRepository = WorkflowRepository()
-        let logStore = ExecutionLogStore()
+        let localDirectoryProvider = SharedDirectoryProvider.appSupport()
+        let settingsStore = SharedSettingsStore(directoryProvider: localDirectoryProvider)
+        let pluginRepository = PluginRepository(
+            directoryProvider: localDirectoryProvider,
+            settingsStore: settingsStore
+        )
+        let workflowRepository = WorkflowRepository(directoryProvider: localDirectoryProvider)
+        let logStore = ExecutionLogStore(directoryProvider: localDirectoryProvider)
 
         self.settingsStore = settingsStore
         self.pluginRepository = pluginRepository
@@ -25,6 +29,7 @@ struct CLIEnvironment {
         self.gitPluginInstaller = GitPluginInstaller(pluginRepository: pluginRepository)
         self.executionCoordinator = ExecutionCoordinator(
             settingsStore: settingsStore,
+            menuDescriptorCache: MenuDescriptorCache(directoryProvider: localDirectoryProvider),
             logStore: logStore,
             workflowRepository: workflowRepository,
             pluginRepository: pluginRepository,

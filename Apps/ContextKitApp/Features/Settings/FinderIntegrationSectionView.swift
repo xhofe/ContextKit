@@ -9,7 +9,7 @@ struct FinderIntegrationSectionView: View {
             Text(
                 L10n.string(
                     "app.settings.finderHint",
-                    fallback: "Enable the ContextKit Finder extension in System Settings, then use Finder inside one of the monitored roots above. The menu will not appear outside monitored roots."
+                    fallback: "ContextKit keeps Finder integration in a separate bridge store so normal app usage does not trigger macOS app-data prompts. Open Finder extension settings when you want to sync the latest monitored roots and menu layout for Finder."
                 )
             )
             .foregroundStyle(.secondary)
@@ -18,7 +18,7 @@ struct FinderIntegrationSectionView: View {
             Button(
                 L10n.string(
                     "app.settings.finderOpenButton",
-                    fallback: "Open Finder Extension Settings"
+                    fallback: "Sync And Open Finder Extension Settings"
                 ),
                 action: openFinderSettings
             )

@@ -16,12 +16,17 @@ final class ContextKitAppServices {
     private let bootstrapper: AppBootstrapper
     private let agentLauncher: EmbeddedAgentLauncher
     private let systemSettingsLauncher: SystemSettingsLauncher
+    private let finderBridgeSynchronizer: FinderBridgeSynchronizer
 
     init() {
-        let settingsStore = SharedSettingsStore()
-        let pluginRepository = PluginRepository(settingsStore: settingsStore)
-        let workflowRepository = WorkflowRepository()
-        let logStore = ExecutionLogStore()
+        let localDirectoryProvider = SharedDirectoryProvider.appSupport()
+        let settingsStore = SharedSettingsStore(directoryProvider: localDirectoryProvider)
+        let pluginRepository = PluginRepository(
+            directoryProvider: localDirectoryProvider,
+            settingsStore: settingsStore
+        )
+        let workflowRepository = WorkflowRepository(directoryProvider: localDirectoryProvider)
+        let logStore = ExecutionLogStore(directoryProvider: localDirectoryProvider)
 
         self.settingsStore = settingsStore
         self.pluginRepository = pluginRepository
@@ -31,6 +36,7 @@ final class ContextKitAppServices {
         self.gitPluginInstaller = GitPluginInstaller(pluginRepository: pluginRepository)
         self.executionCoordinator = ExecutionCoordinator(
             settingsStore: settingsStore,
+            menuDescriptorCache: MenuDescriptorCache(directoryProvider: localDirectoryProvider),
             logStore: logStore,
             workflowRepository: workflowRepository,
             pluginRepository: pluginRepository,
@@ -39,12 +45,15 @@ final class ContextKitAppServices {
         self.bootstrapper = AppBootstrapper(pluginRepository: pluginRepository)
         self.agentLauncher = EmbeddedAgentLauncher()
         self.systemSettingsLauncher = SystemSettingsLauncher()
+        self.finderBridgeSynchronizer = FinderBridgeSynchronizer(
+            localDirectoryProvider: localDirectoryProvider,
+            bridgeDirectoryProvider: .appGroupBridge()
+        )
     }
 
     func bootstrap(bundle: Bundle = .main) throws {
         try bootstrapper.installBundledPluginsIfNeeded(from: bundle)
         try executionCoordinator.refreshMenuCache()
-        agentLauncher.launchIfNeeded(hostBundle: bundle)
     }
 
     func loadSettings() throws -> AppSettings {
@@ -190,6 +199,8 @@ final class ContextKitAppServices {
     }
 
     func openFinderExtensionsSettings() throws {
+        try finderBridgeSynchronizer.sync()
+        agentLauncher.launchIfNeeded()
         guard systemSettingsLauncher.openFinderExtensionsSettings() else {
             throw NSError(
                 domain: "ContextKitAppServices",

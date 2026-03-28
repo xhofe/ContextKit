@@ -9,7 +9,7 @@ struct SelectionContext: Sendable {
 }
 
 struct SelectionContextReader {
-    private let settingsStore = SharedSettingsStore()
+    private let settingsStore = SharedSettingsStore(directoryProvider: .appGroupBridge())
 
     func read(from controller: FIFinderSyncController) -> SelectionContext? {
         let selectedURLs = controller.selectedItemURLs() ?? {

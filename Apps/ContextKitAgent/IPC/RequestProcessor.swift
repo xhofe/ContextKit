@@ -2,7 +2,7 @@ import ContextKitCore
 import Foundation
 
 final class RequestProcessor {
-    private let inbox = AgentInbox()
+    private let inbox = AgentInbox(directoryProvider: .appGroupBridge())
     private let coordinator = AgentRuntimeFactory.makeCoordinator()
 
     func processPendingRequests() {

@@ -19,6 +19,7 @@
 		23110BF1E69AF9C54A5DD229 /* RunActionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBC6F7E7A536F49486363C5 /* RunActionCommand.swift */; };
 		23C9999007AD402FB2207009 /* WorkflowsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */; };
 		2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C87A5625E7820A861CA8AD0 /* MenuBuilder.swift */; };
+		2A47E46DB402C8A22AACE05A /* FinderBridgeSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */; };
 		330CD94AE3B66BFD9938BB7B /* AppDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9592A6167AA39CFAA98D5EA /* AppDetailView.swift */; };
 		36877CA2B333A14199079254 /* SystemSettingsLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */; };
 		37A443D0FAC4C6E18D42AA04 /* ContextKitCore in Frameworks */ = {isa = PBXBuildFile; productRef = A4213454845D19C1A85AEB65 /* ContextKitCore */; };
@@ -44,6 +45,7 @@
 		73CB966421397DCA664337CD /* SettingsErrorSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */; };
 		7454CBD7AA5BB55E2B74CAFC /* LocalPluginInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */; };
 		760BD748145E8C924FE35031 /* WorkflowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CC24A00D1C13D0763C66C6 /* WorkflowsView.swift */; };
+		7CC9926ED968AD3FCF7BB8BA /* FinderAgentLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */; };
 		801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1070D81B677B49FF5672C7A1 /* EmptyStateView.swift */; };
 		8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFD01C2CA91875C089BA948 /* InfoChip.swift */; };
 		95640317E010854FAA3E35B1 /* ActionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F0A2875A5522DC179D9195 /* ActionListItem.swift */; };
@@ -137,6 +139,7 @@
 		6B9BA0EFAA7F9A46048AAFA8 /* TailLogsCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailLogsCommand.swift; sourceTree = "<group>"; };
 		7748088E397BC353ABA79D04 /* ContextKitBuiltins */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ContextKitBuiltins; path = Packages/ContextKitBuiltins; sourceTree = SOURCE_ROOT; };
 		79DB67B0B3F28767FF1E80B9 /* SettingsErrorSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsErrorSectionView.swift; sourceTree = "<group>"; };
+		82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderBridgeSynchronizer.swift; sourceTree = "<group>"; };
 		8519AAE020930595B6D7F11D /* AgentAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentAppDelegate.swift; sourceTree = "<group>"; };
 		8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInvocationSnapshot.swift; sourceTree = "<group>"; };
 		8AF1CBF717A170D49E8C9B7E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 		D68D4E542581D0E0A2BAD018 /* WorkflowsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkflowsViewModel.swift; sourceTree = "<group>"; };
 		DC3D3999E2023543A9B0D427 /* ContextKitFinderSync.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ContextKitFinderSync.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE8868B830DCB23211DB0EC /* MonitoredRootsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoredRootsSectionView.swift; sourceTree = "<group>"; };
+		DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderAgentLauncher.swift; sourceTree = "<group>"; };
 		E26F11F09A9531ECEE8C5390 /* AgentRuntimeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRuntimeFactory.swift; sourceTree = "<group>"; };
 		EAC3CC9A08A2A554A90ED518 /* PluginsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginsView.swift; sourceTree = "<group>"; };
 		EE278B7D1BF92D4E07E7FAB5 /* LocalPluginInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPluginInstaller.swift; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				353A47CBAFB53DA16DD1BE61 /* ExtensionActionDispatcher.swift */,
+				DF3884D3E64EFC19CA86A255 /* FinderAgentLauncher.swift */,
 				8AB6A25B8068F0015D498942 /* MenuInvocationSnapshot.swift */,
 				5F729346714B2AB3566A2EA1 /* SelectionContextReader.swift */,
 			);
@@ -445,6 +450,7 @@
 				59E8EB423078B345ABA79664 /* ContextKitAppServices.swift */,
 				90A99CF087DC2A7DCA1377E9 /* ContextKitMacApp.swift */,
 				3EB24513CFCD664F9429E4F5 /* EmbeddedAgentLauncher.swift */,
+				82FEC623A1415A4848BDF426 /* FinderBridgeSynchronizer.swift */,
 				0B9C4D66F2B5BBB15BB5BBE5 /* RootView.swift */,
 				FBA7C830A28F973DA1B92339 /* SystemSettingsLauncher.swift */,
 			);
@@ -682,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C9B040A7E9408ED719AE9F8 /* ExtensionActionDispatcher.swift in Sources */,
+				7CC9926ED968AD3FCF7BB8BA /* FinderAgentLauncher.swift in Sources */,
 				DA781DD94F14D58A4146EB69 /* FinderSyncExtension.swift in Sources */,
 				2999C7D8256E6E0882D60801 /* MenuBuilder.swift in Sources */,
 				5211B91FDC40AC9594B0B917 /* MenuInvocationSnapshot.swift in Sources */,
@@ -726,6 +733,7 @@
 				3F9129A44A54FEACFDE2B7E7 /* ContextKitMacApp.swift in Sources */,
 				A0E95B86D37FB44848DD2C95 /* EmbeddedAgentLauncher.swift in Sources */,
 				801F593F5A2D440F63DA1FC0 /* EmptyStateView.swift in Sources */,
+				2A47E46DB402C8A22AACE05A /* FinderBridgeSynchronizer.swift in Sources */,
 				BEB406F6BB423C5344CD378C /* FinderIntegrationSectionView.swift in Sources */,
 				8FAE5F7256CBD3E22FC19808 /* InfoChip.swift in Sources */,
 				5B766EED3415FF3F7959DEF1 /* LanguageSectionView.swift in Sources */,
